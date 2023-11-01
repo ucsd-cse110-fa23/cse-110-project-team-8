@@ -20,9 +20,15 @@ import javafx.scene.text.*;
 import java.io.*;
 import java.util.*;
 
-public class Recipe extends HBox{
-    public Recipe() {
-        this.setPrefSize(500, 50); // sets size of task
-        this.setStyle("-fx-background-color: #DAE5EA; -fx-border-width: 0; -fx-font-weight: bold;");
+public class Header extends HBox {
+
+    public Header() {
+        this.setPrefSize(500, 60); // Size of the header
+        this.setStyle("-fx-background-color: #F0F8FF;");
+
+        Text titleText = new Text("Pantry Pal"); // Text of the Header
+        titleText.setStyle("-fx-font-weight: bold; -fx-font-size: 20;");
+        this.getChildren().add(titleText);
+        this.setAlignment(Pos.CENTER); // Align the text to the Center
     }
 }
