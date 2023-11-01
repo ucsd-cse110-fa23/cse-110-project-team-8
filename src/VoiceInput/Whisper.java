@@ -1,12 +1,14 @@
+package VoiceInput;
+
 import java.io.*;
 import java.net.*;
 import org.json.*;
 
 public class Whisper {
-    private static final String API_ENDPOINT = "https://api.openai.com/v1/audio/transcriptions";
-    private static final String TOKEN = "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";
-    private static final String MODEL = "whisper-1";
-    private static final String FILE_PATH = "Y:\\Onedrive\\Study\\CSE_110\\Lab4\\audio.mp3";
+    private final String API_ENDPOINT = "https://api.openai.com/v1/audio/transcriptions";
+    private final String TOKEN = "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";
+    private final String MODEL = "whisper-1";
+    private final String FILE_PATH = "Y:\\Onedrive\\Study\\CSE_110\\Lab4\\audio.mp3";
 
     private static void writeParameterToOutputStream(OutputStream outputStream, String parameterName,
             String parameterValue, String boundary) throws IOException {
@@ -69,7 +71,7 @@ public class Whisper {
         System.out.println("Error Result: " + errorResult);
     }
 
-    public static void main(String[] args) throws IOException, URISyntaxException {
+    public void ActivateWhisper() throws IOException, URISyntaxException {
         // Create file object from file path
         File file = new File(FILE_PATH);
 
