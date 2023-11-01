@@ -1,3 +1,5 @@
+package PantryPal;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.FileChooser;
@@ -20,15 +22,25 @@ import javafx.scene.text.*;
 import java.io.*;
 import java.util.*;
 
-public class Header extends HBox {
+public class Footer extends HBox {
 
-    public Header() {
-        this.setPrefSize(500, 60); // Size of the header
+    private Button addButton;
+
+    public Footer() {
+        this.setPrefSize(500, 60);
         this.setStyle("-fx-background-color: #F0F8FF;");
+        this.setSpacing(15);
 
-        Text titleText = new Text("Pantry Pal"); // Text of the Header
-        titleText.setStyle("-fx-font-weight: bold; -fx-font-size: 20;");
-        this.getChildren().add(titleText);
-        this.setAlignment(Pos.CENTER); // Align the text to the Center
+        // set a default style for buttons - background color, font size, italics
+        String defaultButtonStyle = "-fx-font-style: italic; -fx-background-color: #FFFFFF;  -fx-font-weight: bold; -fx-font: 11 arial;";
+
+        addButton = new Button("New Recipe"); // text displayed on add button
+
+        this.getChildren().add(addButton); // adding buttons to footer
+        this.setAlignment(Pos.CENTER); // aligning the buttons to center
+    }
+
+    public Button getAddButton() {
+        return this.addButton;
     }
 }

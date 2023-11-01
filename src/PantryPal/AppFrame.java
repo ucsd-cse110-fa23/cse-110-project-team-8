@@ -1,3 +1,5 @@
+package PantryPal;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.FileChooser;
@@ -12,7 +14,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 
-
 public class AppFrame extends BorderPane {
     private Header header;
     public Footer footer;
@@ -25,9 +26,9 @@ public class AppFrame extends BorderPane {
         header = new Header();
         footer = new Footer();
         RecipeList = new RecipeList();
-        //scroller = new ScrollPane();
-        //scroller.setContent(RecipeList);
-        //scroller.setFitToWidth(true);
+        // scroller = new ScrollPane();
+        // scroller.setContent(RecipeList);
+        // scroller.setFitToWidth(true);
 
         this.setTop(header);
         this.setCenter(scroller);
