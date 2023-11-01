@@ -8,7 +8,7 @@ public class Whisper {
     private final String API_ENDPOINT = "https://api.openai.com/v1/audio/transcriptions";
     private final String TOKEN = "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";
     private final String MODEL = "whisper-1";
-    private final String FILE_PATH = "Y:\\Onedrive\\Study\\CSE_110\\Lab4\\audio.mp3";
+    private final String FILE_PATH = "../VoiceInput/userAudio.mp3";
 
     private static void writeParameterToOutputStream(OutputStream outputStream, String parameterName,
             String parameterValue, String boundary) throws IOException {
