@@ -27,7 +27,7 @@ import java.util.*;
 
 import javax.print.DocFlavor.URL;
 
-import VoiceInput.Whisper;
+import VoiceInput.*;
 
 public class Recipe extends HBox {
     public Recipe() {
@@ -38,6 +38,7 @@ public class Recipe extends HBox {
     }
 
     public void CreateRecipe() {
+
         Whisper whisper = new Whisper();
         // Create file object from file path
         try {
