@@ -26,6 +26,7 @@ import java.net.URISyntaxException;
 import java.util.*;
 
 import javax.print.DocFlavor.URL;
+import javax.sound.sampled.AudioFormat;
 
 import VoiceInput.*;
 
@@ -37,25 +38,51 @@ public class Recipe extends HBox {
     Button stopButton;
 
     public Recipe() {
+        recorder = new AudioRecorder();
+        whisper = new Whisper();
+        chatGPT = new ChatGPT();
+        startButton = new Button("Start");
+        stopButton = new Button("Stop");
+        recorder.audioFormat = recorder.getAudioFormat();
 
         this.setPrefSize(500, 50); // sets size of task
         this.setStyle("-fx-background-color: #DAE5EA; -fx-border-width: 0; -fx-font-weight: bold;");
-
     }
 
     public void CreateRecipe() {
 
-        Whisper whisper = new Whisper();
+    }
+
+    public void addListeners() {
+        // Start Button
+        startButton.setOnAction(e -> {
+            recorder.startRecording();
+        });
+
+        // Stop Button
+        stopButton.setOnAction(e -> {
+            recorder.stopRecording();
+        });
+    }
+
+    // Method for getting user's voice, return a formated string for the input of
+    // chatGPT
+    public String getUserInput() {
+        String voiceInput;
         // Create file object from file path
         try {
-            whisper.ActivateWhisper();
+            voiceInput = whisper.ActivateWhisper();
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
+            voiceInput = "Error";
         } catch (URISyntaxException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
+            voiceInput = "Error";
         }
+
+        return voiceInput;
     }
 
     public void createUI() { // create the UI of recipe (record button, stop button and prompt)

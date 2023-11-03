@@ -38,7 +38,7 @@ public class Whisper {
         fileInputStream.close();
     }
 
-    private static void handleSuccessResponse(HttpURLConnection connection)
+    private String handleSuccessResponse(HttpURLConnection connection)
             throws IOException, JSONException {
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(connection.getInputStream()));
@@ -53,11 +53,10 @@ public class Whisper {
 
         String generatedText = responseJson.getString("text");
 
-        // Print the transcription result
-        System.out.println("Transcription Result: " + generatedText);
+        return generatedText;
     }
 
-    private static void handleErrorResponse(HttpURLConnection connection)
+    private String handleErrorResponse(HttpURLConnection connection)
             throws IOException, JSONException {
         BufferedReader errorReader = new BufferedReader(
                 new InputStreamReader(connection.getErrorStream()));
@@ -68,13 +67,13 @@ public class Whisper {
         }
         errorReader.close();
         String errorResult = errorResponse.toString();
-        System.out.println("Error Result: " + errorResult);
+        return errorResult;
     }
 
-    public void ActivateWhisper() throws IOException, URISyntaxException {
+    public String ActivateWhisper() throws IOException, URISyntaxException {
         // Create file object from file path
         File file = new File(FILE_PATH);
-
+        String output = "";
         // Set up HTTP connection
         URL url = new URI(API_ENDPOINT).toURL();
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -109,13 +108,14 @@ public class Whisper {
 
         // Check response code and handle response accordingly
         if (responseCode == HttpURLConnection.HTTP_OK) {
-            handleSuccessResponse(connection);
+            output = handleSuccessResponse(connection);
         } else {
-            handleErrorResponse(connection);
+            output = handleErrorResponse(connection);
         }
 
         // Disconnect connection
         connection.disconnect();
+        return output;
     }
 
 }
