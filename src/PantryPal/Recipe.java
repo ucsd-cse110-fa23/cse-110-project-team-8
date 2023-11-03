@@ -30,6 +30,9 @@ import javax.print.DocFlavor.URL;
 import VoiceInput.*;
 
 public class Recipe extends HBox {
+    private Button startButton;
+    private Button stopButton;
+
     public Recipe() {
 
         this.setPrefSize(500, 50); // sets size of task
@@ -50,6 +53,5 @@ public class Recipe extends HBox {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
     }
 }
