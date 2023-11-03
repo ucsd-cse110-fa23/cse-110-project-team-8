@@ -30,8 +30,11 @@ import javax.print.DocFlavor.URL;
 import VoiceInput.*;
 
 public class Recipe extends HBox {
-    private Button startButton;
-    private Button stopButton;
+    AudioRecorder recorder;
+    Whisper whisper;
+    ChatGPT chatGPT;
+    Button startButton;
+    Button stopButton;
 
     public Recipe() {
 
@@ -54,4 +57,14 @@ public class Recipe extends HBox {
             e.printStackTrace();
         }
     }
+
+    public void createUI() { // create the UI of recipe (record button, stop button and prompt)
+
+    }
+
+    public String processUserInput() { // whisper recognizes user input and then chapGPT generate response (reformat
+                                       // the main method of Whisper and ChatGPT class)
+        return "";
+    }
+
 }
