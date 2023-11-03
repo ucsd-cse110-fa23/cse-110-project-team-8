@@ -33,6 +33,8 @@ public class Recipe extends HBox {
     AudioRecorder recorder;
     Whisper whisper;
     ChatGPT chatGPT;
+    Button startButton;
+    Button stopButton;
 
     public Recipe() {
 
