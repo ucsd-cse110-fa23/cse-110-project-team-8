@@ -30,6 +30,10 @@ import javax.print.DocFlavor.URL;
 import VoiceInput.*;
 
 public class Recipe extends HBox {
+    AudioRecorder recorder;
+    Whisper whisper;
+    ChatGPT chatGPT;
+
     public Recipe() {
 
         this.setPrefSize(500, 50); // sets size of task
@@ -52,4 +56,15 @@ public class Recipe extends HBox {
         }
 
     }
+
+    public void createUI(){   //create the UI of recipe (record button, stop button and prompt)
+  
+    }
+
+    public String processUserInput(){   //whisper recognizes user input and then chapGPT generate response (reformat the main method of Whisper and ChatGPT class)
+        return "";
+    }
+
+
+
 }
