@@ -13,6 +13,7 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import PantryPal.Footer;
 
 public class AppFrame extends BorderPane {
     private Header header;
@@ -21,6 +22,7 @@ public class AppFrame extends BorderPane {
     private ScrollPane scroller;
 
     private Button addButton;
+    private Button goBack;
 
     public AppFrame() {
         header = new Header();
@@ -39,9 +41,6 @@ public class AppFrame extends BorderPane {
     }
 
     public void addListeners() {
-        addButton.setOnAction(e -> {
-            Recipe recipe = new Recipe();
-            RecipeList.getChildren().add(recipe);
-        });
+        addButton.setOnAction(e -> footer.switchScene1()); // Set the action on the button
     }
 }
