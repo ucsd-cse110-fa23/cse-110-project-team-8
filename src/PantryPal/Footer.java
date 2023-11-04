@@ -38,6 +38,11 @@ public class Footer extends HBox {
     private Stage thirdStage;
     public Recipe recipe;
 
+    //------------------
+    public String mealType;
+    public String ingredients;
+    //----------------
+
     public Footer() {
         this.setPrefSize(500, 60);
         this.setStyle("-fx-background-color: #F0F8FF;");
@@ -79,9 +84,9 @@ public class Footer extends HBox {
         Button stopRecButton = new Button("Stop Recording"); // Create a new button
         stopRecButton.setOnAction(e -> {
             recipe.stopRecording();
-            String out = recipe.getUserInput(); // Get the user input
+            mealType = recipe.getUserInput(); // Get the user input
             System.out.println("Stop Recording on meal scene pressed");
-            System.out.println(out);
+            System.out.println(mealType);
             switchScene2();
         }); // Switching to second scene
         newRoot.getChildren().add(stopRecButton); // Add the new button to the new root
@@ -125,9 +130,12 @@ public class Footer extends HBox {
 
         Button stopRecButton = new Button("Stop Recording"); // Create a new button
         stopRecButton.setOnAction(e -> {
-            switchScene3();
+            recipe.stopRecording();
+            ingredients = recipe.getUserInput(); // Get the user input
             System.out.println("Stop Recording on ingredient scene pressed");
-        }); // swith to scene3
+            System.out.println(ingredients);
+            switchScene3();
+        }); // Switching to second scene
         newRoot.getChildren().add(stopRecButton); // Add the new button to the new root
 
         Button goBack = new Button("Go Back"); // Create a new button
@@ -150,8 +158,10 @@ public class Footer extends HBox {
 
         VBox newRoot = new VBox(); // Create a new root for the new scene
 
+        String recipeGenerated = recipe.processUserInput(mealType, ingredients);
+
         Text text1 = new Text("This is where the created recipe will be displayed");
-        Text text2 = new Text("(fill this through interactions)");
+        Text text2 = new Text(recipeGenerated);
         TextFlow recipeInstructions = new TextFlow(text1, text2); // adding all lines of text into one big text
         recipeInstructions.setPrefSize(200, 200);
         recipeInstructions.setStyle("-fx-font-style: italic; ");
@@ -202,4 +212,13 @@ public class Footer extends HBox {
     public Button getGoBack() {
         return this.goBack;
     }
+
+    //-----------------------------------------
+    // public String getMealTypeString() {
+    //     return this.mealType;
+    // }
+
+    // public String getIngredientsString() {
+    //     return this.ingredients;
+    // }
 }

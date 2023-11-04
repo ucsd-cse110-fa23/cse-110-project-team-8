@@ -77,13 +77,11 @@ public class Recipe extends HBox {
         return voiceInput;
     }
 
-    public String processUserInput() { // whisper recognizes user input and then chapGPT generate response (reformat
+    public String processUserInput(String mealType, String ingredients) { // whisper recognizes user input and then chapGPT generate response (reformat
                                        // the main method of Whisper and ChatGPT class)
-
-        // Note that the 2 strigns will need to be 2 seperate inputs from the User and I
+ 
+        // Note that the 2 strigns will need to be 2 seperate inputs from the User and Ingredients
         // don't think these 2 calls should happen here
-        String mealType = getUserInput();
-        String ingredients = getUserInput();
 
         String skeletonGPTinput = "I am going to give you a list of ingredients and my preferred " +
                 "meal type either: breakfast, lunch, or dinner. I want you to create a simple recipe for " +
