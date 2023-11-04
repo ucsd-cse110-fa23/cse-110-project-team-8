@@ -70,20 +70,27 @@ public class Footer extends HBox {
         newRoot.getChildren().add(recipeInstructions); // add the textbox to the new root
 
         Button startRecButton = new Button("Start Recording"); // Create a new button
-        startRecButton.setOnAction(e -> recipe.startRecording()); // Add Temporary action
-                                                                  // to the button
+        startRecButton.setOnAction(e -> {
+            recipe.startRecording();
+            System.out.println("Start Recording on Meal scene pressed");
+        }); // Add Temporary action
         newRoot.getChildren().add(startRecButton); // Add the new button to the new root
 
         Button stopRecButton = new Button("Stop Recording"); // Create a new button
         stopRecButton.setOnAction(e -> {
             recipe.stopRecording();
             String out = recipe.getUserInput(); // Get the user input
+            System.out.println("Stop Recording on meal scene pressed");
             System.out.println(out);
+            switchScene2();
         }); // Switching to second scene
         newRoot.getChildren().add(stopRecButton); // Add the new button to the new root
 
         Button goBack = new Button("Go Back"); // Create a new button
-        goBack.setOnAction(e -> switchToMainScene()); // Switch back to main screen
+        goBack.setOnAction(e -> {
+            switchToMainScene();
+            System.out.println("Go Back on meal scene pressed");
+        }); // Switch back to main screen
         newRoot.getChildren().add(goBack); // Add the new button to the new root
         newRoot.setSpacing(10); // Set the spacing between the children of newRoot
         newRoot.setAlignment(Pos.CENTER); // Set the alignment of the children of newRoot
@@ -109,16 +116,25 @@ public class Footer extends HBox {
         newRoot.getChildren().add(recipeInstructions); // add the textbox to the new root
 
         Button startRecButton = new Button("Start Recording"); // Create a new button
-        startRecButton.setOnAction(e -> recipe.startRecording()); // Add Temporary action
+        startRecButton.setOnAction(e -> {
+            recipe.startRecording();
+            System.out.println("Start Recording on ingredient scene pressed");
+        }); // Add Temporary action
                                                                   // to the button
         newRoot.getChildren().add(startRecButton); // Add the new button to the new root
 
         Button stopRecButton = new Button("Stop Recording"); // Create a new button
-        stopRecButton.setOnAction(e -> switchScene3()); // swith to scene3
+        stopRecButton.setOnAction(e -> {
+            switchScene3();
+            System.out.println("Stop Recording on ingredient scene pressed");
+        }); // swith to scene3
         newRoot.getChildren().add(stopRecButton); // Add the new button to the new root
 
         Button goBack = new Button("Go Back"); // Create a new button
-        goBack.setOnAction(e -> switchToMainScene()); // Switch back to main screen
+        goBack.setOnAction(e -> {
+            switchToMainScene();
+            System.out.println("Go Back on ingredient scene pressed");
+        }); // Switch back to main screen
         newRoot.getChildren().add(goBack); // Add the new button to the new root
         newRoot.setSpacing(10); // Set the spacing between the children of newRoot
         newRoot.setAlignment(Pos.CENTER); // Set the alignment of the children of newRoot
@@ -134,7 +150,7 @@ public class Footer extends HBox {
 
         VBox newRoot = new VBox(); // Create a new root for the new scene
 
-        Text text1 = new Text("dummy text");
+        Text text1 = new Text("This is where the created recipe will be displayed");
         Text text2 = new Text("(fill this through interactions)");
         TextFlow recipeInstructions = new TextFlow(text1, text2); // adding all lines of text into one big text
         recipeInstructions.setPrefSize(200, 200);
@@ -147,11 +163,17 @@ public class Footer extends HBox {
         newRoot.getChildren().add(editButton); // Add the new button to the new root
 
         Button saveButton = new Button("Save"); // Create a new button
-        saveButton.setOnAction(e -> switchToMainScene()); // Switch to main screen after saving
+        saveButton.setOnAction(e -> {
+            switchToMainScene();
+            System.out.println("Save Button Clicked on third(recipe) scene");
+        }); // Switch to main screen after saving
         newRoot.getChildren().add(saveButton); // Add the new button to the new root
 
         Button goBack = new Button("Go Back"); // Create a new button
-        goBack.setOnAction(e -> switchToMainScene()); // Switch back to main screen
+        goBack.setOnAction(e -> {
+            switchToMainScene();
+            System.out.println("Go Back on third(recipe) scene pressed");
+        }); // Switch back to main screen
         newRoot.getChildren().add(goBack); // Add the new button to the new root
         newRoot.setSpacing(10); // Set the spacing between the children of newRoot
         newRoot.setAlignment(Pos.CENTER); // Set the alignment of the children of newRoot
