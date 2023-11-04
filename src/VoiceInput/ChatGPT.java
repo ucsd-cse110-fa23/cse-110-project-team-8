@@ -12,17 +12,20 @@ import java.net.http.HttpResponse;
 
 public class ChatGPT {
     private static final String API_ENDPOINT = "https://api.openai.com/v1/completions";
-    private static final String API_KEY = "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";
+    private static final String API_KEY = "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";
+    // Jonathan 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
+    // Henry    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
     private static final String MODEL = "text-davinci-003";
 
-    public static void main(String[] args) throws IOException, InterruptedException, URISyntaxException {
-        String prompt = "What is velocity in agile development?";
+
+    public String chefGPT(String userInsructions) throws IOException, InterruptedException, URISyntaxException {
+
         int maxTokens = 100;
 
         // Create a request body which you will pass into request object
         JSONObject requestBody = new JSONObject();
         requestBody.put("model", MODEL);
-        requestBody.put("prompt", prompt);
+        requestBody.put("prompt", userInsructions);
         requestBody.put("max_tokens", maxTokens);
         requestBody.put("temperature", 1.0);
 
@@ -43,9 +46,9 @@ public class ChatGPT {
         JSONObject responseJson = new JSONObject(responseBody);
 
         JSONArray choices = responseJson.getJSONArray("choices");
-        String generatedText = choices.getJSONObject(0).getString("text");
+        String generatedRecipe = choices.getJSONObject(0).getString("text");
 
-        System.out.println(generatedText);
+        return generatedRecipe;
     }
 
 }
