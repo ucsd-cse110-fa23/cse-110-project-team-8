@@ -124,7 +124,7 @@ public class Footer extends HBox {
         newRoot.getChildren().add(startRecButton); // Add the new button to the new root
 
         Button stopRecButton = new Button("Stop Recording"); // Create a new button
-        stopRecButton.setOnAction(e -> {// TODO: add functionality to stop recording, I am not sure if it works as of right now.
+        stopRecButton.setOnAction(e -> {// TODO: add functionality to stop recording, I am not sure if it works as of right now
             switchScene3();
             System.out.println("Stop Recording on ingredient scene pressed");
         }); // swith to scene3
