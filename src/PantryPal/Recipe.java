@@ -42,11 +42,7 @@ public class Recipe extends HBox {
         whisper = new Whisper();
         chatGPT = new ChatGPT();
         recorder.recordingLabel = new Label("Recording...");
-
-        startButton = new Button("Start");
-        stopButton = new Button("Stop");
         recorder.audioFormat = recorder.getAudioFormat();
-
         this.setPrefSize(500, 50); // sets size of task
         this.setStyle("-fx-background-color: #DAE5EA; -fx-border-width: 0; -fx-font-weight: bold;");
     }
@@ -55,16 +51,12 @@ public class Recipe extends HBox {
 
     }
 
-    public void addListeners() {
-        // Start Button
-        startButton.setOnAction(e -> {
-            recorder.startRecording();
-        });
+    public void startRecording() {
+        recorder.startRecording();
+    }
 
-        // Stop Button
-        stopButton.setOnAction(e -> {
-            recorder.stopRecording();
-        });
+    public void stopRecording() {
+        recorder.stopRecording();
     }
 
     // Method for getting user's voice, return a formated string for the input of
@@ -75,11 +67,9 @@ public class Recipe extends HBox {
         try {
             voiceInput = whisper.ActivateWhisper();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
             voiceInput = "Error";
         } catch (URISyntaxException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
             voiceInput = "Error";
         }
@@ -87,12 +77,11 @@ public class Recipe extends HBox {
         return voiceInput;
     }
 
-    public void createUI() { // create the UI of recipe (record button, stop button and prompt)
-
-    }
-
     public String processUserInput() { // whisper recognizes user input and then chapGPT generate response (reformat
                                        // the main method of Whisper and ChatGPT class)
+
+        // Note that the 2 strigns will need to be 2 seperate inputs from the User and I
+        // don't think these 2 calls should happen here
         String mealType = getUserInput();
         String ingredients = getUserInput();
 
