@@ -108,7 +108,7 @@ public class Footer extends HBox {
 
         Text text1 = new Text("Now please state your ingredients \n");
         Text text2 = new Text(
-                "'Start Recording' then say your meal type. Press 'Stop Recording' when you are done speaking. ");
+                "'Start Recording' then say your ingredients. Press 'Stop Recording' when you are done speaking. ");
         TextFlow recipeInstructions = new TextFlow(text1, text2); // adding all lines of text into one big text
         recipeInstructions.setPrefSize(200, 200);
         recipeInstructions.setStyle("-fx-font-style: italic; ");
@@ -124,7 +124,7 @@ public class Footer extends HBox {
         newRoot.getChildren().add(startRecButton); // Add the new button to the new root
 
         Button stopRecButton = new Button("Stop Recording"); // Create a new button
-        stopRecButton.setOnAction(e -> {
+        stopRecButton.setOnAction(e -> {// TODO: add functionality to stop recording, I am not sure if it works as of right now.
             switchScene3();
             System.out.println("Stop Recording on ingredient scene pressed");
         }); // swith to scene3
