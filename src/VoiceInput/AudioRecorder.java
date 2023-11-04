@@ -11,11 +11,11 @@ import java.io.*;
 import javax.sound.sampled.*;
 
 public class AudioRecorder {
-    private AudioFormat audioFormat;
+    public AudioFormat audioFormat;
     private TargetDataLine targetDataLine;
     private Label recordingLabel;
 
-    private AudioFormat getAudioFormat() {
+    public AudioFormat getAudioFormat() {
         // the number of samples of audio per second.
         // 44100 represents the typical sample rate for CD-quality audio.
         float sampleRate = 44100;
@@ -40,7 +40,7 @@ public class AudioRecorder {
                 bigEndian);
     }
 
-    private void startRecording() {
+    public void startRecording() {
         Thread t = new Thread(
                 new Runnable() {
                     @Override
@@ -75,7 +75,7 @@ public class AudioRecorder {
         t.start();
     }
 
-    private void stopRecording() {
+    public void stopRecording() {
         targetDataLine.stop();
         targetDataLine.close();
     }
