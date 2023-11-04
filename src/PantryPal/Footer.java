@@ -140,7 +140,6 @@ public class Footer extends HBox {
         newRoot.setAlignment(Pos.CENTER); // Set the alignment of the children of newRoot
 
         Scene newScene = new Scene(newRoot, 800, 800); // Create a new scene
-
         secondStage.setScene(newScene); // Set the new scene on the current stage
     }
 
