@@ -12,8 +12,8 @@ import javax.sound.sampled.*;
 
 public class AudioRecorder {
     public AudioFormat audioFormat;
-    private TargetDataLine targetDataLine;
-    private Label recordingLabel;
+    public TargetDataLine targetDataLine;
+    public Label recordingLabel;
 
     public AudioFormat getAudioFormat() {
         // the number of samples of audio per second.
