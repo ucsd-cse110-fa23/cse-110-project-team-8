@@ -11,12 +11,12 @@ import VoiceInput.*;
 import PantryPal.*;
 
 public class VoiceInputTest {
-    private Recipe recipe;
+    private Generate generate;
 
     @BeforeEach
     void setUp() {
-        recipe = new Recipe();
-        recipe.FILE_PATH = "test1.wav";
+        generate = new Generate();
+        generate.FILE_PATH = "test1.wav";
     }
 
     @Test
