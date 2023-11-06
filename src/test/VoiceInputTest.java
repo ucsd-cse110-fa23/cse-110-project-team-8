@@ -70,6 +70,5 @@ public class VoiceInputTest {
         }
 
         assertEquals("\n" + "\n" + "123", testGPToutput);
->>>>>>> c98c7524b80a32be9661d31e69b8ff6a222c94ff
     }
 }
