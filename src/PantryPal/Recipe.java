@@ -46,6 +46,9 @@ public class Recipe extends HBox {
         recorder.recordingLabel = new Label("Recording...");
         recorder.audioFormat = recorder.getAudioFormat();
 
+        //ADDED THIS FILE PATH DURING THE REFORMAT PROCESS
+        FILE_PATH = "userAudio.wav";
+
         title = new Button("Recipe Test"); // creates a button for marking the Contact as done
         
         title.setPrefSize(800, 50); // sets size of button

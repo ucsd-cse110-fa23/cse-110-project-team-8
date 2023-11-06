@@ -23,7 +23,7 @@ public class MealSelectScreen {
     public MealSelectScreen(Recipe recipe, Stage mainStage, Scene mainScene) {
         this.recipe = recipe;
         this.mainStage = mainStage;
-        //this.mainScene = mainScene;
+        this.mainScene = mainScene;
 
         VBox newRoot = new VBox(); // Create a new root for the new scene
 
@@ -46,15 +46,15 @@ public class MealSelectScreen {
 
         stopRecButton = new Button("Stop Recording"); // Create a new button
         stopRecButton.setOnAction(e -> {
-            /*this.recipe.stopRecording();
+            this.recipe.stopRecording();
             String userInput = this.recipe.getUserInput();
             if (userInput != null) { // Check if userInput is not null
                 this.mealType = userInput;
                 System.out.println("Stop Recording on meal scene pressed");
                 System.out.println(this.mealType);
-            }*/
+            }
             switchToIngredientsScreen();
-            System.out.println("Stop Recording on meal scene pressed");
+            //System.out.println("Stop Recording on meal scene pressed");
         });
         newRoot.getChildren().add(stopRecButton); // Add the new button to the new root
 

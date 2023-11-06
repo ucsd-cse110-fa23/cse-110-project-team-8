@@ -32,6 +32,7 @@ public class AppFrame extends BorderPane {
         this.mainStage = mainStage;
         this.recipe = new Recipe();
         this.mainScene = this.getScene();
+
         header = new Header();
         footer = new Footer();
         recipeList = new RecipeList();
@@ -68,7 +69,7 @@ public class AppFrame extends BorderPane {
     }
 
     public void switchToThisScene() {
-        mainStage.setScene(this.getScene());
+        mainStage.setScene(mainScene);
     }
 
 }

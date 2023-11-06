@@ -44,10 +44,10 @@ public class IngredientsScreen {
 
         stopRecButton = new Button("Stop Recording"); // Create a new button
         stopRecButton.setOnAction(e -> {
-            //this.recipe.stopRecording();
-            //this.ingredients = this.recipe.getUserInput(); // Get the user input
+            this.recipe.stopRecording();
+            this.ingredients = this.recipe.getUserInput(); // Get the user input
             System.out.println("Stop Recording on Ingredients scene pressed");
-            //System.out.println(this.ingredients);
+            System.out.println(this.ingredients);
             switchToGeneratedRecipeScreen();
         });
         newRoot.getChildren().add(stopRecButton); // Add the new button to the new root
