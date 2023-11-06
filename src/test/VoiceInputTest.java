@@ -47,13 +47,13 @@ public class VoiceInputTest {
     @BeforeEach
     void setUp() {
         testRecipe = new TestRecipe();
-        testRecipe.setPath("audio/userAudio.wav");
     }
 
     @Test
     public void testRecipe() {
-        String testinput = testRecipe.getUserInput();
-        assertEquals();
+        testRecipe.setPath("audio/test1.wav");
+        String testoutput = testRecipe.getUserInput();
+        assertEquals("My preferred meal type is dinner, and my ingredients are steak, onion, and butter.", testoutput);
     }
 
     @Test
@@ -61,7 +61,7 @@ public class VoiceInputTest {
         String testGPTinput = "I want you to give print the numbers '123' exactly like that, do not type anything else.";
 
         String testGPToutput;
-        
+
         try {
             testGPToutput = chatGPT.chefGPT(testGPTinput);
         } catch (IOException | InterruptedException | URISyntaxException e) {

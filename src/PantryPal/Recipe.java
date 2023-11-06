@@ -86,7 +86,7 @@ public class Recipe extends HBox {
                 "many. Remember to keep the recipe simple. For your output I only want you to display: a " +
                 "recipe title, the ingredients, and the instructions. Do not add any extra text.";
 
-        String userInput = " My preffered meal type is " + mealType + " and my ingredients are " + ingredients;
+        String userInput = " My prefered meal type is " + mealType + " and my ingredients are " + ingredients;
         String finalGPTinput = skeletonGPTinput + userInput;
 
         String generatedRecipe;
@@ -100,4 +100,7 @@ public class Recipe extends HBox {
         return generatedRecipe;
     }
 
+    public void setPath(String path) {
+        this.FILE_PATH = path;
+    }
 }

@@ -55,7 +55,7 @@ public class Footer extends HBox {
         this.getChildren().add(addButton);
         this.setAlignment(Pos.CENTER);
         recipe = new Recipe();
-        recipe.FILE_PATH = "./audio/userAudio.wav";
+        recipe.setPath("./audio/userAudio.wav");
     }
 
     public void switchScene1() {
