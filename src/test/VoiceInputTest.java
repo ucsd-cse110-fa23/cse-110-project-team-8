@@ -27,7 +27,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.*;
 import org.junit.jupiter.api.Test;
-import org.junit.AfterClass;
 import org.junit.jupiter.api.BeforeEach;
 import javafx.application.Platform;
 
@@ -43,35 +42,18 @@ import VoiceInput.*;
 import PantryPal.*;
 
 public class VoiceInputTest {
-    private static Recipe recipe;
+    private TestRecipe testRecipe;
 
     @BeforeEach
-    void setUp1() {
-        recipe = new Recipe();
-        recipe.FILE_PATH = "userAudio.wav";
+    void setUp() {
+        testRecipe = new TestRecipe();
+        testRecipe.setPath("audio/userAudio.wav");
     }
 
     @Test
-    void testRecipe() {
-        String output = recipe.getUserInput();
-        assertEquals(output, output);
-    }
-
-    @AfterClass
-    public static void shutdownJavaFXToolkit() {
-        Platform.exit();
-    }
-
-
-    //private Recipe recipe;
-    private ChatGPT chatGPT;
-
-    @BeforeEach
-    void setUp2() {
-        //recipe = new Recipe();
-        chatGPT = new ChatGPT();
-        //recipe.FILE_PATH = "test1.wav";
-
+    public void testRecipe() {
+        String testinput = testRecipe.getUserInput();
+        assertEquals();
     }
 
     @Test
@@ -88,5 +70,6 @@ public class VoiceInputTest {
         }
 
         assertEquals("\n" + "\n" + "123", testGPToutput);
+>>>>>>> c98c7524b80a32be9661d31e69b8ff6a222c94ff
     }
 }
