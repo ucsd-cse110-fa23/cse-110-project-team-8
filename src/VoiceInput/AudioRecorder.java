@@ -40,7 +40,7 @@ public class AudioRecorder {
                 bigEndian);
     }
 
-    public void startRecording() {
+    public void startRecording(String FILE_PATH) {
         Thread t = new Thread(
                 new Runnable() {
                     @Override
@@ -61,7 +61,7 @@ public class AudioRecorder {
                                     targetDataLine);
 
                             // the file that will contain the audio data
-                            File audioFile = new File("userAudio.wav");
+                            File audioFile = new File(FILE_PATH);
                             AudioSystem.write(
                                     audioInputStream,
                                     AudioFileFormat.Type.WAVE,

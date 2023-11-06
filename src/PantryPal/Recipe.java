@@ -31,11 +31,12 @@ import javax.sound.sampled.AudioFormat;
 import VoiceInput.*;
 
 public class Recipe extends HBox {
-    AudioRecorder recorder;
-    Whisper whisper;
-    ChatGPT chatGPT;
-    Button startButton;
-    Button stopButton;
+    private AudioRecorder recorder;
+    private Whisper whisper;
+    private ChatGPT chatGPT;
+    public Button startButton;
+    public Button stopButton;
+    public String FILE_PATH;
 
     public Recipe() {
         recorder = new AudioRecorder();
@@ -47,12 +48,8 @@ public class Recipe extends HBox {
         this.setStyle("-fx-background-color: #DAE5EA; -fx-border-width: 0; -fx-font-weight: bold;");
     }
 
-    public void CreateRecipe() {
-
-    }
-
     public void startRecording() {
-        recorder.startRecording();
+        recorder.startRecording(FILE_PATH);
     }
 
     public void stopRecording() {
@@ -65,7 +62,7 @@ public class Recipe extends HBox {
         String voiceInput;
         // Create file object from file path
         try {
-            voiceInput = whisper.ActivateWhisper();
+            voiceInput = whisper.ActivateWhisper(FILE_PATH);
         } catch (IOException e) {
             e.printStackTrace();
             voiceInput = "Error";
@@ -77,10 +74,12 @@ public class Recipe extends HBox {
         return voiceInput;
     }
 
-    public String processUserInput(String mealType, String ingredients) { // whisper recognizes user input and then chapGPT generate response (reformat
-                                       // the main method of Whisper and ChatGPT class)
- 
-        // Note that the 2 strigns will need to be 2 seperate inputs from the User and Ingredients
+    public String processUserInput(String mealType, String ingredients) { // whisper recognizes user input and then
+                                                                          // chapGPT generate response (reformat
+        // the main method of Whisper and ChatGPT class)
+
+        // Note that the 2 strigns will need to be 2 seperate inputs from the User and
+        // Ingredients
         // don't think these 2 calls should happen here
 
         String skeletonGPTinput = "I am going to give you a list of ingredients and my preferred " +

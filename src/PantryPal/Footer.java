@@ -38,10 +38,10 @@ public class Footer extends HBox {
     private Stage thirdStage;
     public Recipe recipe;
 
-    //------------------
+    // ------------------
     public String mealType;
     public String ingredients;
-    //----------------
+    // ----------------
 
     public Footer() {
         this.setPrefSize(500, 60);
@@ -55,6 +55,7 @@ public class Footer extends HBox {
         this.getChildren().add(addButton);
         this.setAlignment(Pos.CENTER);
         recipe = new Recipe();
+        recipe.FILE_PATH = "userAudio.wav";
     }
 
     public void switchScene1() {
@@ -125,7 +126,7 @@ public class Footer extends HBox {
             recipe.startRecording();
             System.out.println("Start Recording on ingredient scene pressed");
         }); // Add Temporary action
-                                                                  // to the button
+            // to the button
         newRoot.getChildren().add(startRecButton); // Add the new button to the new root
 
         Button stopRecButton = new Button("Stop Recording"); // Create a new button
@@ -212,12 +213,12 @@ public class Footer extends HBox {
         return this.goBack;
     }
 
-    //-----------------------------------------
+    // -----------------------------------------
     // public String getMealTypeString() {
-    //     return this.mealType;
+    // return this.mealType;
     // }
 
     // public String getIngredientsString() {
-    //     return this.ingredients;
+    // return this.ingredients;
     // }
 }

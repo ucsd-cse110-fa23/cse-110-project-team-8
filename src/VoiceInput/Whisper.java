@@ -8,7 +8,6 @@ public class Whisper {
     private final String API_ENDPOINT = "https://api.openai.com/v1/audio/transcriptions";
     private final String TOKEN = "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";
     private final String MODEL = "whisper-1";
-    private final String FILE_PATH = "userAudio.wav";
 
     private static void writeParameterToOutputStream(OutputStream outputStream, String parameterName,
             String parameterValue, String boundary) throws IOException {
@@ -70,7 +69,7 @@ public class Whisper {
         return errorResult;
     }
 
-    public String ActivateWhisper() throws IOException, URISyntaxException {
+    public String ActivateWhisper(String FILE_PATH) throws IOException, URISyntaxException {
         // Create file object from file path
         File file = new File(FILE_PATH);
         String output = "";
