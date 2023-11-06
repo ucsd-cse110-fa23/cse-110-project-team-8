@@ -18,21 +18,24 @@ import PantryPal.Footer;
 public class AppFrame extends BorderPane {
     private Header header;
     public Footer footer;
-    private RecipeList RecipeList;
+    private RecipeList recipeList;
     private ScrollPane scroller;
     private Button addButton;
     private Button goBack;
+    private Button saveButton;
+    private Button title;
 
     public AppFrame() {
         header = new Header();
         footer = new Footer();
-        RecipeList = new RecipeList();
+        recipeList = new RecipeList();
+        ScrollPane scrollPane = new ScrollPane(recipeList);
         // scroller = new ScrollPane();
         // scroller.setContent(RecipeList);
         // scroller.setFitToWidth(true);
 
         this.setTop(header);
-        this.setCenter(scroller);
+        this.setCenter(scrollPane);
         this.setBottom(footer);
         addButton = footer.getAddButton();
         addListeners();
@@ -42,7 +45,19 @@ public class AppFrame extends BorderPane {
         addButton.setOnAction(e -> {
             footer.switchScene1();
         }); // Set the action on the button
-
+        saveButton = footer.getSaveButton();
+        saveButton.setOnAction(e -> {
+            Recipe recipe = new Recipe();
+            footer.getRecipe().getRecipeTitle().setText(footer.getGeneratedRecipe());
+            recipeList.getChildren().add(recipe);//footer.getRecipe());
+            footer.switchToMainScene();
+            System.out.println("Save Button Clicked on third(recipe) scene");
+        });
+        title = footer.getRecipe().getRecipeTitle();
+        title.setOnAction(e -> {
+            footer.switchScene3();
+        });
     }
+
 
 }

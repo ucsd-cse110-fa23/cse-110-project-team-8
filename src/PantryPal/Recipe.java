@@ -37,6 +37,7 @@ public class Recipe extends HBox {
     public Button startButton;
     public Button stopButton;
     public String FILE_PATH;
+    private Button title;
 
     public Recipe() {
         recorder = new AudioRecorder();
@@ -44,6 +45,13 @@ public class Recipe extends HBox {
         chatGPT = new ChatGPT();
         recorder.recordingLabel = new Label("Recording...");
         recorder.audioFormat = recorder.getAudioFormat();
+
+        title = new Button("Recipe Test"); // creates a button for marking the Contact as done
+        
+        title.setPrefSize(800, 50); // sets size of button
+        title.setStyle("-fx-background-color: #ffffff; -fx-border-width: 0;"); // sets style of button
+        this.getChildren().add(title);
+
         this.setPrefSize(500, 50); // sets size of task
         this.setStyle("-fx-background-color: #DAE5EA; -fx-border-width: 0; -fx-font-weight: bold;");
     }
@@ -101,6 +109,10 @@ public class Recipe extends HBox {
         }
 
         return generatedRecipe;
+    }
+
+    public Button getRecipeTitle(){
+        return this.title;
     }
 
 }

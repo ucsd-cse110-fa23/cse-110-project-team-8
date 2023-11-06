@@ -20,6 +20,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.geometry.Insets;
 import javafx.scene.text.*;
+import java.util.random.*;
 import java.io.*;
 import java.util.*;
 import PantryPal.App;
@@ -36,7 +37,9 @@ public class Footer extends HBox {
     private Stage secondStage;
     private Scene thirdScene; // Field to store third scene(stating ingredients)
     private Stage thirdStage;
+    private Button saveButton;
     public Recipe recipe;
+    private String recipeGenerated;
 
     // ------------------
     public String mealType;
@@ -51,6 +54,7 @@ public class Footer extends HBox {
         String defaultButtonStyle = "-fx-font-style: italic; -fx-background-color: #FFFFFF;  -fx-font-weight: bold; -fx-font: 11 arial;";
 
         addButton = new Button("New Recipe");
+        saveButton = new Button("Save"); // Create a new button
 
         this.getChildren().add(addButton);
         this.setAlignment(Pos.CENTER);
@@ -158,7 +162,7 @@ public class Footer extends HBox {
 
         VBox newRoot = new VBox(); // Create a new root for the new scene
 
-        String recipeGenerated = recipe.processUserInput(mealType, ingredients);
+        recipeGenerated = recipe.processUserInput(mealType, ingredients);
 
         Text text1 = new Text("This is where the created recipe will be displayed");
         Text text2 = new Text(recipeGenerated);
@@ -172,11 +176,14 @@ public class Footer extends HBox {
         editButton.setOnAction(e -> System.out.println("Edit Button Clicked")); // Add Temporary action to the button
         newRoot.getChildren().add(editButton); // Add the new button to the new root
 
-        Button saveButton = new Button("Save"); // Create a new button
-        saveButton.setOnAction(e -> {
-            switchToMainScene();
-            System.out.println("Save Button Clicked on third(recipe) scene");
-        }); // Switch to main screen after saving
+        // saveButton.setOnAction(e -> {
+            
+        //     recipe.getRecipeTitle().setText(recipeGenerated);
+        //     switchToMainScene();
+        //     System.out.println("Save Button Clicked on third(recipe) scene");
+        // }); 
+        
+        // Switch to main screen after saving
         newRoot.getChildren().add(saveButton); // Add the new button to the new root
 
         Button goBack = new Button("Go Back"); // Create a new button
@@ -211,6 +218,15 @@ public class Footer extends HBox {
 
     public Button getGoBack() {
         return this.goBack;
+    }
+    public Button getSaveButton(){
+        return this.saveButton;
+    }
+    public Recipe getRecipe(){
+        return this.recipe;
+    }
+    public String getGeneratedRecipe(){
+        return recipeGenerated;
     }
 
     // -----------------------------------------
