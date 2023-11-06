@@ -13,7 +13,6 @@ import javax.sound.sampled.*;
 public class AudioRecorder {
     public AudioFormat audioFormat;
     public TargetDataLine targetDataLine;
-    public Label recordingLabel;
 
     public AudioFormat getAudioFormat() {
         // the number of samples of audio per second.
@@ -54,7 +53,6 @@ public class AudioRecorder {
                             targetDataLine = (TargetDataLine) AudioSystem.getLine(dataLineInfo);
                             targetDataLine.open(audioFormat);
                             targetDataLine.start();
-                            recordingLabel.setVisible(true);
 
                             // the AudioInputStream that will be used to write the audio data to a file
                             AudioInputStream audioInputStream = new AudioInputStream(
@@ -66,7 +64,6 @@ public class AudioRecorder {
                                     audioInputStream,
                                     AudioFileFormat.Type.WAVE,
                                     audioFile);
-                            recordingLabel.setVisible(false);
                         } catch (Exception ex) {
                             ex.printStackTrace();
                         }

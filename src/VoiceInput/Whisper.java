@@ -21,6 +21,7 @@ public class Whisper {
             OutputStream outputStream,
             File file,
             String boundary) throws IOException {
+
         outputStream.write(("--" + boundary + "\r\n").getBytes());
         outputStream.write(
                 ("Content-Disposition: form-data; name=\"file\"; filename=\"" +
@@ -35,6 +36,7 @@ public class Whisper {
             outputStream.write(buffer, 0, bytesRead);
         }
         fileInputStream.close();
+
     }
 
     private String handleSuccessResponse(HttpURLConnection connection)
@@ -70,6 +72,7 @@ public class Whisper {
     }
 
     public String ActivateWhisper(String FILE_PATH) throws IOException, URISyntaxException {
+
         // Create file object from file path
         File file = new File(FILE_PATH);
         String output = "";
