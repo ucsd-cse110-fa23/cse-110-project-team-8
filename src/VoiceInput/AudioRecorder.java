@@ -1,12 +1,5 @@
 package VoiceInput;
 
-import javafx.application.Application;
-import javafx.stage.Stage;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.layout.FlowPane;
-import javafx.geometry.Insets;
 import java.io.*;
 import javax.sound.sampled.*;
 
