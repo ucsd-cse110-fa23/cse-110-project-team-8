@@ -24,8 +24,14 @@ public class AppFrame extends BorderPane {
     private Button goBack;
     private Button saveButton;
     private Button title;
+    private Stage mainStage;
+    private Recipe recipe;
+    private Scene mainScene; // Field to store the main scene
 
-    public AppFrame() {
+    public AppFrame(Stage mainStage) {
+        this.mainStage = mainStage;
+        this.recipe = new Recipe();
+        this.mainScene = this.getScene();
         header = new Header();
         footer = new Footer();
         recipeList = new RecipeList();
@@ -43,11 +49,13 @@ public class AppFrame extends BorderPane {
 
     public void addListeners() {
         addButton.setOnAction(e -> {
-            footer.switchScene1();
+            MealSelectScreen mealSelectScreen = new MealSelectScreen(recipe, mainStage, this.mainScene);
+            mealSelectScreen.switchToThisScene();
+            //this.setCenter(mealSelectScreen.getScene().getRoot());
         }); // Set the action on the button
         saveButton = footer.getSaveButton();
         saveButton.setOnAction(e -> {
-            Recipe recipe = new Recipe();
+            //recipe = new Recipe();
             footer.getRecipe().getRecipeTitle().setText(footer.getGeneratedRecipe());
             recipeList.getChildren().add(recipe);//footer.getRecipe());
             footer.switchToMainScene();
@@ -55,9 +63,12 @@ public class AppFrame extends BorderPane {
         });
         title = footer.getRecipe().getRecipeTitle();
         title.setOnAction(e -> {
-            footer.switchScene3();
+            
         });
     }
 
+    public void switchToThisScene() {
+        mainStage.setScene(this.getScene());
+    }
 
 }

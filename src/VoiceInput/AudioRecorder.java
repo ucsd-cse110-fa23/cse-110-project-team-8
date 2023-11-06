@@ -48,8 +48,8 @@ public class AudioRecorder {
                         try {
                             // the format of the TargetDataLine
                             DataLine.Info dataLineInfo = new DataLine.Info(
-                                    TargetDataLine.class,
-                                    audioFormat);
+                                TargetDataLine.class,
+                                audioFormat);
                             // the TargetDataLine used to capture audio data from the microphone
                             targetDataLine = (TargetDataLine) AudioSystem.getLine(dataLineInfo);
                             targetDataLine.open(audioFormat);
@@ -58,15 +58,19 @@ public class AudioRecorder {
 
                             // the AudioInputStream that will be used to write the audio data to a file
                             AudioInputStream audioInputStream = new AudioInputStream(
-                                    targetDataLine);
+                                targetDataLine);
 
                             // the file that will contain the audio data
-                            File audioFile = new File(FILE_PATH);
-                            AudioSystem.write(
+                            if (FILE_PATH != null) {
+                                File audioFile = new File(FILE_PATH);
+                                AudioSystem.write(
                                     audioInputStream,
                                     AudioFileFormat.Type.WAVE,
                                     audioFile);
-                            recordingLabel.setVisible(false);
+                                recordingLabel.setVisible(false);
+                            } else {
+                                System.err.println("FILE_PATH is null");
+                            }
                         } catch (Exception ex) {
                             ex.printStackTrace();
                         }

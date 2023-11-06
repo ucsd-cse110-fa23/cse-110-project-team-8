@@ -16,7 +16,7 @@ public class App extends Application {
 
         // Setting the Layout of the Window- Should contain a Header, Footer and the
         // ContactList
-        root = new AppFrame();
+        root = new AppFrame(primaryStage);
 
         // Set the title of the app
         primaryStage.setTitle("Pantry Pal");
