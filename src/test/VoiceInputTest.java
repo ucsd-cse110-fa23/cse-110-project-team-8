@@ -27,19 +27,15 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.*;
 import org.junit.jupiter.api.Test;
+import org.junit.AfterClass;
 import org.junit.jupiter.api.BeforeEach;
 import javafx.application.Platform;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-<<<<<<< HEAD
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-=======
 import java.io.IOException;
 import java.net.URISyntaxException;
->>>>>>> c98c7524b80a32be9661d31e69b8ff6a222c94ff
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -47,11 +43,10 @@ import VoiceInput.*;
 import PantryPal.*;
 
 public class VoiceInputTest {
-<<<<<<< HEAD
     private static Recipe recipe;
 
     @BeforeEach
-    void setUp() {
+    void setUp1() {
         recipe = new Recipe();
         recipe.FILE_PATH = "userAudio.wav";
     }
@@ -65,12 +60,14 @@ public class VoiceInputTest {
     @AfterClass
     public static void shutdownJavaFXToolkit() {
         Platform.exit();
-=======
+    }
+
+
     //private Recipe recipe;
     private ChatGPT chatGPT;
 
     @BeforeEach
-    void setUp() {
+    void setUp2() {
         //recipe = new Recipe();
         chatGPT = new ChatGPT();
         //recipe.FILE_PATH = "test1.wav";
@@ -91,6 +88,5 @@ public class VoiceInputTest {
         }
 
         assertEquals("\n" + "\n" + "123", testGPToutput);
->>>>>>> c98c7524b80a32be9661d31e69b8ff6a222c94ff
     }
 }
