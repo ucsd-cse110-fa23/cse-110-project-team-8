@@ -1,4 +1,4 @@
-package PantryPal;
+package main.java.PantryPal;
 
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -42,10 +42,12 @@ public class AppFrame extends BorderPane {
     public Generate getGenerate() {
         return this.generate;
     }
+
     public void setMainScene(Scene scene) {
         this.mainScene = scene;
     }
-    public RecipeList getRecipeList(){
+
+    public RecipeList getRecipeList() {
         return this.recipeList;
     }
 

@@ -1,4 +1,4 @@
-package PantryPal;
+package main.java.PantryPal;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -8,7 +8,6 @@ import javafx.scene.text.TextFlow;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.geometry.Pos;
-
 
 public class MealSelectScreen {
     private Scene scene;
@@ -52,7 +51,8 @@ public class MealSelectScreen {
                 System.out.println("Stop Recording on meal scene pressed");
                 System.out.println(this.mealType);
             }
-            IngredientsScreen ingredientsScreen = new IngredientsScreen(recipeList,mealType, primaryStage, mainScene, generate);
+            IngredientsScreen ingredientsScreen = new IngredientsScreen(recipeList, mealType, primaryStage, mainScene,
+                    generate);
             ingredientsScreen.switchToThisScene();
         });
         newRoot.getChildren().add(stopRecButton); // Add the new button to the new root
@@ -65,7 +65,7 @@ public class MealSelectScreen {
         newRoot.getChildren().add(goBack); // Add the new button to the new root
 
         newRoot.setSpacing(10); // Set the spacing between the children of newRoot
-        
+
         newRoot.setAlignment(Pos.CENTER); // Set the alignment of the children of newRoot
 
         this.scene = new Scene(newRoot, 800, 800); // Create a new scene
@@ -95,7 +95,7 @@ public class MealSelectScreen {
         primaryStage.setScene(this.scene);
     }
 
-    public void switchToMainScene(){
+    public void switchToMainScene() {
         primaryStage.setScene(mainScene);
     }
 

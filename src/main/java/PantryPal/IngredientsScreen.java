@@ -1,4 +1,4 @@
-package PantryPal;
+package main.java.PantryPal;
 
 // Ingredients.java
 import javafx.scene.Scene;
@@ -10,7 +10,6 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.geometry.Pos;
 
-
 public class IngredientsScreen {
     private Scene scene;
     private String ingredients;
@@ -21,14 +20,16 @@ public class IngredientsScreen {
     private Button stopRecButton;
     private Button goBack;
 
-    public IngredientsScreen(RecipeList recipeList,String mealType ,Stage primaryStage, Scene mainScene, Generate generate) {
+    public IngredientsScreen(RecipeList recipeList, String mealType, Stage primaryStage, Scene mainScene,
+            Generate generate) {
         this.primaryStage = primaryStage;
         this.mainScene = mainScene;
 
         VBox newRoot = new VBox(); // Create a new root for the new scene
 
         Text text1 = new Text("Please state your ingredients. \n");
-        Text text2 = new Text("'Start Recording' then say your ingredients. Press 'Stop Recording' when you are done speaking. ");
+        Text text2 = new Text(
+                "'Start Recording' then say your ingredients. Press 'Stop Recording' when you are done speaking. ");
         TextFlow recipeInstructions = new TextFlow(text1, text2); // adding all lines of text into one big text
         recipeInstructions.setPrefSize(200, 200);
         recipeInstructions.setStyle("-fx-font-style: italic; ");
@@ -48,7 +49,8 @@ public class IngredientsScreen {
             this.ingredients = generate.getUserInput(); // Get the user input
             System.out.println("Stop Recording on Ingredients scene pressed");
             System.out.println(this.ingredients);
-            GeneratedRecipeScreen generatedRecipeScreen = new GeneratedRecipeScreen(recipeList, mealType, ingredients, primaryStage, mainScene, generate);
+            GeneratedRecipeScreen generatedRecipeScreen = new GeneratedRecipeScreen(recipeList, mealType, ingredients,
+                    primaryStage, mainScene, generate);
             generatedRecipeScreen.switchToThisScene();
         });
         newRoot.getChildren().add(stopRecButton); // Add the new button to the new root
@@ -61,8 +63,8 @@ public class IngredientsScreen {
         newRoot.getChildren().add(goBack); // Add the new button to the new root
 
         newRoot.setSpacing(10); // Set the spacing between the children of newRoot
-        
-        newRoot.setAlignment( Pos.CENTER); // Set the alignment of the children of newRoot
+
+        newRoot.setAlignment(Pos.CENTER); // Set the alignment of the children of newRoot
 
         this.scene = new Scene(newRoot, 800, 800); // Create a new scene
     }
@@ -91,7 +93,7 @@ public class IngredientsScreen {
         primaryStage.setScene(this.scene);
     }
 
-    public void switchToMainScene(){
+    public void switchToMainScene() {
         primaryStage.setScene(mainScene);
     }
 }

@@ -1,16 +1,16 @@
-package PantryPal;
+package main.java.PantryPal;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.FileChooser.ExtensionFilter;
-import PantryPal.Footer;
-
+import main.java.PantryPal.Footer;
 
 public class App extends Application {
 
     public AppFrame root;
+
     @Override
     public void start(Stage primaryStage) throws Exception {
 
@@ -30,7 +30,6 @@ public class App extends Application {
 
     }
 
-    
     public static void main(String[] args) {
         launch(args);
     }

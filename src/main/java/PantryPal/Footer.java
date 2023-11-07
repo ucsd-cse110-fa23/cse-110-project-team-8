@@ -1,4 +1,4 @@
-package PantryPal;
+package main.java.PantryPal;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;

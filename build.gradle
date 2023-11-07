@@ -20,11 +20,14 @@ dependencies {
     // This provides the TestEngine to actually run the tests.
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
 
-    // telling gradle where packages are located in project
-    implementation project('src/PantryPal') 
-    implementation project('src/VoiceInput')  
 }
 
 test {
     useJUnitPlatform()
+}
+
+dependencies {
+    implementation 'javafx.fxml:javafx-fxml-sdk:11.0.2'
+    implementation 'javafx.graphics:javafx-graphics-sdk:11.0.2'
+    implementation 'javafx.controls:javafx-controls-sdk:11.0.2'
 }

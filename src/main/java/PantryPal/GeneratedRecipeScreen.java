@@ -1,4 +1,4 @@
-package PantryPal;
+package main.java.PantryPal;
 
 // GeneratedRecipe.java
 import javafx.scene.Scene;
@@ -10,7 +10,6 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.geometry.Pos;
 
-
 public class GeneratedRecipeScreen {
     private Scene scene;
     private String recipeGenerated;
@@ -19,9 +18,9 @@ public class GeneratedRecipeScreen {
     private Button editButton;
     private Button goBack;
     private Button save;
-    
 
-    public GeneratedRecipeScreen(RecipeList recipeList,String mealType, String ingredients, Stage primaryStage, Scene mainScene, Generate generate) {
+    public GeneratedRecipeScreen(RecipeList recipeList, String mealType, String ingredients, Stage primaryStage,
+            Scene mainScene, Generate generate) {
         this.primaryStage = primaryStage;
         this.mainScene = mainScene;
 
@@ -68,8 +67,8 @@ public class GeneratedRecipeScreen {
         newRoot.getChildren().add(save);
 
         newRoot.setSpacing(10); // Set the spacing between the children of newRoot
-        
-        newRoot.setAlignment( Pos.CENTER); // Set the alignment of the children of newRoot
+
+        newRoot.setAlignment(Pos.CENTER); // Set the alignment of the children of newRoot
 
         this.scene = new Scene(newRoot, 800, 800); // Create a new scene
     }
@@ -81,7 +80,7 @@ public class GeneratedRecipeScreen {
     public Button getEditButton() {
         return this.editButton;
     }
-    
+
     public Button getGoBackButton() {
         return this.goBack;
     }
@@ -90,7 +89,7 @@ public class GeneratedRecipeScreen {
         primaryStage.setScene(this.scene);
     }
 
-    public void switchToMainScene(){
+    public void switchToMainScene() {
         primaryStage.setScene(mainScene);
     }
 }

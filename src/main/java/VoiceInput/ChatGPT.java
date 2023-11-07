@@ -1,4 +1,4 @@
-package VoiceInput;
+package main.java.VoiceInput;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -14,9 +14,8 @@ public class ChatGPT {
     private static final String API_ENDPOINT = "https://api.openai.com/v1/completions";
     private static final String API_KEY = "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";
     // Jonathan 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
-    // Henry    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
+    // Henry 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
     private static final String MODEL = "text-davinci-003";
-
 
     public String chefGPT(String userInsructions) throws IOException, InterruptedException, URISyntaxException {
 

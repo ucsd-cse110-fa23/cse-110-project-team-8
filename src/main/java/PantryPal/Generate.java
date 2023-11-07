@@ -1,9 +1,9 @@
-package PantryPal;
+package main.java.PantryPal;
 
 import java.io.*;
 import java.net.URISyntaxException;
 
-import VoiceInput.*;
+import main.java.VoiceInput.*;
 
 public class Generate {
     private AudioRecorder recorder;
