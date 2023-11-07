@@ -20,9 +20,9 @@ dependencies {
     // This provides the TestEngine to actually run the tests.
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
 
-    // // telling gradle where packages are located in project
-    implementation project(':PantryPal') 
-    implementation project(':VoiceInput')  
+    // // // telling gradle where packages are located in project
+    // implementation project(':PantryPal') 
+    // implementation project(':VoiceInput')  
 }
 
 test {
@@ -30,10 +30,10 @@ test {
 }
 
 
-sourceSets {
-    test {
-        java {
-            srcDirs += ['/PantryPal', '/VoiceInput']
-        }
-    }
-}
+// sourceSets {
+//     test {
+//         java {
+//             srcDirs += ['/PantryPal', '/VoiceInput']
+//         }
+//     }
+// }
