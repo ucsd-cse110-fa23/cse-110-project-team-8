@@ -25,9 +25,3 @@ dependencies {
 test {
     useJUnitPlatform()
 }
-
-dependencies {
-    implementation 'javafx.fxml:javafx-fxml-sdk:11.0.2'
-    implementation 'javafx.graphics:javafx-graphics-sdk:11.0.2'
-    implementation 'javafx.controls:javafx-controls-sdk:11.0.2'
-}
