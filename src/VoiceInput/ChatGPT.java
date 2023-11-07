@@ -1,4 +1,4 @@
-package main.java.VoiceInput;
+package VoiceInput;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

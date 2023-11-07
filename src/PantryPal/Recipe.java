@@ -1,4 +1,4 @@
-package main.java.PantryPal;
+package PantryPal;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Button;

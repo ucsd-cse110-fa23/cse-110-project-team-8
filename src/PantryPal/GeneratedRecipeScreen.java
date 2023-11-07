@@ -1,4 +1,4 @@
-package main.java.PantryPal;
+package PantryPal;
 
 // GeneratedRecipe.java
 import javafx.scene.Scene;

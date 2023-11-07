@@ -1,4 +1,4 @@
-package main.java.VoiceInput;
+package VoiceInput;
 
 import java.io.*;
 import java.net.*;

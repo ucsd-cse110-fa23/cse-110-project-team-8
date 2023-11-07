@@ -1,11 +1,11 @@
-package main.java.PantryPal;
+package PantryPal;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.FileChooser.ExtensionFilter;
-import main.java.PantryPal.Footer;
+import PantryPal.Footer;
 
 public class App extends Application {
 
