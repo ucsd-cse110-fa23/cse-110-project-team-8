@@ -7,10 +7,9 @@ import javafx.scene.layout.*;
 
 public class Recipe extends HBox {
     private Button titleButton;
-    private TextField title; 
+    private TextField title;
     private TextField body;
     private Scene description;
-
 
     public Recipe() {
         titleButton = new Button(); // creates a button for marking the Contact as done
@@ -22,19 +21,23 @@ public class Recipe extends HBox {
         body = new TextField();
     }
 
-    public Button getRecipeTitleButton(){
+    public Button getRecipeTitleButton() {
         return this.titleButton;
     }
-    public TextField getRecipeTitle(){
+
+    public TextField getRecipeTitle() {
         return this.title;
     }
-    public TextField getRecipeBody(){
+
+    public TextField getRecipeBody() {
         return this.body;
     }
-    public Scene getDescription(){
+
+    public Scene getDescription() {
         return this.description;
     }
-    public void setDescription(Scene scene){
+
+    public void setDescription(Scene scene) {
         this.description = scene;
     }
 

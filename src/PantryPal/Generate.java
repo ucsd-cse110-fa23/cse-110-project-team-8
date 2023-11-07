@@ -1,6 +1,5 @@
 package PantryPal;
 
-import javafx.scene.control.Label;
 import java.io.*;
 import java.net.URISyntaxException;
 
@@ -16,7 +15,6 @@ public class Generate {
         recorder = new AudioRecorder();
         whisper = new Whisper();
         chatGPT = new ChatGPT();
-        recorder.recordingLabel = new Label("Recording...");
         recorder.audioFormat = recorder.getAudioFormat();
         FILE_PATH = "userAudio.wav";
     }
@@ -29,7 +27,7 @@ public class Generate {
         recorder.stopRecording();
     }
 
-        // Method for getting user's voice, return a formated string for the input of
+    // Method for getting user's voice, return a formated string for the input of
     // chatGPT
     public String getUserInput() {
         String voiceInput;
@@ -75,5 +73,5 @@ public class Generate {
 
         return generatedRecipe;
     }
-    
+
 }

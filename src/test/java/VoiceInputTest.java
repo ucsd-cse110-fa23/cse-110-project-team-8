@@ -1,4 +1,4 @@
-package test;
+package test.java;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,15 +16,16 @@ public class VoiceInputTest {
     @BeforeEach
     void setUp() {
         generate = new Generate();
-        generate.FILE_PATH = "test1.wav";
     }
 
     @Test
-    public void testRecipe() {
-
+    void testRecipe() {
+        generate.FILE_PATH = "./audio/test1.wav";
+        String output = generate.getUserInput();
+        assertEquals("My preferred meal type is dinner, and my ingredients are steak, onion, and butter.", output);
     }
 
     @Test
-    public void testRecipe2() {
+    void testRecipe2() {
     }
 }
