@@ -19,6 +19,10 @@ dependencies {
     testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
     // This provides the TestEngine to actually run the tests.
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
+
+    // telling gradle where packages are located in project
+    implementation project(src/PantryPal) 
+    implementation project(src/VoiceInput)  
 }
 
 test {
