@@ -1,2 +1,2 @@
-rootProject.name = 'java'
-include ':src:PantryPal', ':src:VoiceInput', ':src:test:java'
+rootProject.name = 'src'
+include ':PantryPal', ':VoiceInput', ':test:java'
