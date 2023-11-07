@@ -1,2 +1,2 @@
 rootProject.name = 'cse-110-project-team-8'
-include(':src:PantryPal', ':src:VoiceInput', ':src:test:java')
+include ':src:PantryPal', ':src:VoiceInput', ':src:test:java'
