@@ -6,16 +6,23 @@
     "configurations": [
         {
             "type": "java",
+            "name": "App",
+            "request": "launch",
+            "mainClass": "PantryPal.App",
+            "projectName": "app"
+        },
+        {
+            "type": "java",
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}"
         },
         {
             "type": "java",
-            "name": "App",
+            "name": "App1",
             "request": "launch",
             "mainClass": "PantryPal.App",
-            "projectName": "app"
+            "vmArgs": "--module-path 'Y:/Onedrive/Study/CSE_110/javafx-sdk-17.0.9/lib' --add-modules javafx.controls,javafx.fxml"
         }
     ]
 }

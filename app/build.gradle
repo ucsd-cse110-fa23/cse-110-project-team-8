@@ -29,6 +29,11 @@ test {
 }
 
 javafx{
-    version = '11'
+    version = '17'
     modules = ['javafx.controls', 'javafx.fxml']
+}
+
+tasks.register('copyReportsDirForArchiving', Copy) {
+    from layout.buildDirectory.dir("audio")
+    into layout.buildDirectory.dir("toArchive")
 }
