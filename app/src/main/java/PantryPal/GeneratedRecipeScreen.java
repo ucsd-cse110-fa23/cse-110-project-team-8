@@ -77,40 +77,72 @@ public class GeneratedRecipeScreen {
 
         this.scene = new Scene(newRoot, 800, 800); // Create a new scene
     }
-    public String getTitle(String recipeGenerated){
+
+    public String getTitle(String recipeGenerated) {
         String output = "";
-        String[] words = recipeGenerated.split(" ");
+        String[] words = recipeGenerated.split("\\s+");
         int index = 0;
-        while (index < words.length){
+        while (index < words.length) {
             index++;
-            if (words[index].equals("Title:")){
+            if (words[index].equals("Title:")) {
                 break;
             }
         }
-        for (String s: words){
-            System.out.print("["+ s + "]");
-        }
-        
-        while (index < words.length && !words[index].equals("Ingredients:\\n")) {
+        while (index < words.length && !words[index].equals("Ingredients:")) {
             output += words[index] + " ";
-            System.out.println(index);
             index++;
         }
-        System.out.println(output);
         return output;
     }
-    public String getIngredient(String recipeGenerated){
+
+    public String getIngredient(String recipeGenerated) {
         String output = "";
+        String[] words = recipeGenerated.split("\\s+");
+        int index = 0;
+        while (index < words.length) {
+            index++;
+            if (words[index].equals("Ingredients:")) {
+                break;
+            }
+        }
+        while (index < words.length && !words[index].equals("Instructions:")) {
+            output += words[index] + " ";
+            index++;
+        }
         return output;
     }
-        
-    public String getInstructions(String recipeGenerated){
+
+    public String getInstructions(String recipeGenerated) {
         String output = "";
+        String[] words = recipeGenerated.split("\\s+");
+        int index = 0;
+        while (index < words.length) {
+            index++;
+            if (words[index].equals("Instructions:")) {
+                break;
+            }
+        }
+        while (index < words.length && !words[index].equals("Time:")) {
+            output += words[index] + " ";
+            index++;
+        }
         return output;
     }
-        
-    public String getTime(String recipeGenerated){
+
+    public String getTime(String recipeGenerated) {
         String output = "";
+        String[] words = recipeGenerated.split("\\s+");
+        int index = 0;
+        while (index < words.length) {
+            index++;
+            if (words[index].equals("Time:")) {
+                break;
+            }
+        }
+        while (index < words.length) {
+            output += words[index] + " ";
+            index++;
+        }
         return output;
     }
 
