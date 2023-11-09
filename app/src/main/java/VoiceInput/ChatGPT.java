@@ -1,4 +1,4 @@
-package PantryPal;
+package VoiceInput;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -12,14 +12,14 @@ import java.net.http.HttpResponse;
 
 public class ChatGPT {
     private static final String API_ENDPOINT = "https://api.openai.com/v1/completions";
-    private static final String API_KEY = "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";
+    private static final String API_KEY = "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";
     // Jonathan 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
     // Henry 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
     private static final String MODEL = "text-davinci-003";
 
     public String chefGPT(String userInsructions) throws IOException, InterruptedException, URISyntaxException {
 
-        int maxTokens = 100;
+        int maxTokens = 1000;
 
         // Create a request body which you will pass into request object
         JSONObject requestBody = new JSONObject();

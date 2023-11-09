@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import PantryPal.*;
+import VoiceInput.ChatGPT;
 
 public class VoiceInputTest {
     private Generate generate;
@@ -26,14 +27,13 @@ public class VoiceInputTest {
     // void testRecipe() {
     // generate.FILE_PATH = "test1.wav";
     // String output = generate.getUserInput();
-    // assertEquals("My preferred meal type is dinner, and my ingredients are steak,
-    // onion, and butter.", output);
+    // assertEquals("My preferred meal type is dinner, and my ingredients are
+    // steak,onion, and butter.", output);
     // }
 
     @Test
     public void testGPT() {
         String testGPTinput = "I want you to give print the numbers '123' exactly like that, do not type anything else.";
-
         String testGPToutput;
 
         try {

@@ -1,4 +1,4 @@
-package PantryPal;
+package VoiceInput;
 
 import java.io.*;
 import java.net.*;
@@ -6,7 +6,7 @@ import org.json.*;
 
 public class Whisper {
     private final String API_ENDPOINT = "https://api.openai.com/v1/audio/transcriptions";
-    private final String TOKEN = "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";
+    private final String TOKEN = "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";
     private final String MODEL = "whisper-1";
 
     private static void writeParameterToOutputStream(OutputStream outputStream, String parameterName,
