@@ -11,6 +11,11 @@ public class Recipe extends HBox {
     private TextField body;
     private Scene description;
 
+    private String titleString;
+    private String ingredient;
+    private String instructions;
+    private String time;
+
     public Recipe() {
         titleButton = new Button(); // creates a button for marking the Contact as done
         titleButton.setPrefSize(800, 50); // sets size of button
@@ -19,6 +24,9 @@ public class Recipe extends HBox {
 
         title = new TextField();
         body = new TextField();
+    }
+    public void setButtonTitle(){
+        this.titleButton.setText(titleString);
     }
 
     public Button getRecipeTitleButton() {
@@ -41,4 +49,19 @@ public class Recipe extends HBox {
         this.description = scene;
     }
 
+    public void setTitle(String title){
+        this.titleString = title;
+    }
+
+    public void setIngredient(String ingredient){
+        this.ingredient = ingredient;
+    }
+
+    public void setInstructions(String instructions){
+        this.instructions = instructions;
+    }
+
+    public void setTime(String time){
+        this.time = time;
+    }
 }

@@ -13,6 +13,11 @@ public class RecipeList extends VBox {
         this.setStyle("-fx-background-color: #F0F8FF;");
     }
 
+
+    public void load(){
+
+    }
+
     // TODO: Iteration 2
     public void delete(String RecipeName) {
 

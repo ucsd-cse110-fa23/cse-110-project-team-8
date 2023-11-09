@@ -51,8 +51,13 @@ public class GeneratedRecipeScreen {
         save = new Button("Save");
         save.setOnAction(e -> {
             Recipe recipe = new Recipe();
+            recipe.setTitle(this.getTitle(recipeGenerated));
+            recipe.setIngredient(this.getIngredient(recipeGenerated));
+            recipe.setInstructions(this.getInstructions(recipeGenerated));
+            recipe.setTime(this.getTime(recipeGenerated));
+            recipe.setButtonTitle();
+
             recipe.getRecipeTitle().setText(recipeGenerated);
-            recipe.getRecipeTitleButton().setText(recipeGenerated);
             recipe.getRecipeBody().setText(recipeGenerated);
             recipe.setDescription(scene);
             recipeList.getChildren().add(recipe);
@@ -71,6 +76,42 @@ public class GeneratedRecipeScreen {
         newRoot.setAlignment(Pos.CENTER); // Set the alignment of the children of newRoot
 
         this.scene = new Scene(newRoot, 800, 800); // Create a new scene
+    }
+    public String getTitle(String recipeGenerated){
+        String output = "";
+        String[] words = recipeGenerated.split(" ");
+        int index = 0;
+        while (index < words.length){
+            index++;
+            if (words[index].equals("Title:")){
+                break;
+            }
+        }
+        for (String s: words){
+            System.out.print("["+ s + "]");
+        }
+        
+        while (index < words.length && !words[index].equals("Ingredients:\\n")) {
+            output += words[index] + " ";
+            System.out.println(index);
+            index++;
+        }
+        System.out.println(output);
+        return output;
+    }
+    public String getIngredient(String recipeGenerated){
+        String output = "";
+        return output;
+    }
+        
+    public String getInstructions(String recipeGenerated){
+        String output = "";
+        return output;
+    }
+        
+    public String getTime(String recipeGenerated){
+        String output = "";
+        return output;
     }
 
     public Scene getScene() {

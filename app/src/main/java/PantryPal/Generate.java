@@ -1,11 +1,8 @@
 package PantryPal;
 
+import VoiceInput.*;
 import java.io.*;
 import java.net.URISyntaxException;
-
-import VoiceInput.AudioRecorder;
-import VoiceInput.ChatGPT;
-import VoiceInput.Whisper;
 
 public class Generate {
     private AudioRecorder recorder;
@@ -59,8 +56,7 @@ public class Generate {
                 "meal type either: breakfast, lunch, or dinner. I want you to create a simple recipe for " +
                 "the preferred meal type I tell you. You have to use the ingredients I give you in your " +
                 "recipe, you cannot remove any, however you can add a few extra ingredients but not too " +
-                "many. Also I want you to provide a estimate preparation time for me. Remember to keep the recipe simple. For your output I only want you to display: a "
-                +
+                "many. Remember to keep the recipe simple. For your output I only want you to display: a " +
                 "recipe title, the ingredients, the instructions, and the preparation time. Do not add any extra text.";
 
         String userInput = " My preffered meal type is " + mealType + " and my ingredients are " + ingredients;
