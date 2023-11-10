@@ -99,8 +99,9 @@ public class GeneratedRecipeScreen {
 
         goBack = new Button("Go Back"); // Create a new button
         goBack.setOnAction(e -> {
-            //switchToMainScene();
-            primaryStage.setScene(recipe.getRecipeScreen().getMainScene());
+            // switchToMainScene();
+            switchToMainScene();
+            System.out.println(mainScene + "aaa");
             System.out.println("Go Back on third(recipe) scene pressed");
         }); // Switch back to main screen
         newRoot.getChildren().add(goBack); // Add the new button to the new root
@@ -206,7 +207,7 @@ public class GeneratedRecipeScreen {
         primaryStage.setScene(mainScene);
     }
 
-    public Scene getMainScene(){
+    public Scene getMainScene() {
         return this.mainScene;
     }
 }

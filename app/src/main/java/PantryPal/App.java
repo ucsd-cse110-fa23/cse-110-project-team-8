@@ -24,6 +24,7 @@ public class App extends Application {
         // Create scene of mentioned size with the border pane
         primaryStage.setScene(new Scene(root, 800, 800));
         root.setMainScene(primaryStage.getScene());
+        root.rebuild();
         // Make window non-resizable
         primaryStage.setResizable(false);
         primaryStage.setOnCloseRequest(event -> handleCloseRequest(event, recipeList));

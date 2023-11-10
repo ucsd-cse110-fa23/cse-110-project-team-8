@@ -26,14 +26,17 @@ public class AppFrame extends BorderPane {
         header = new Header();
         footer = new Footer();
         recipeList = new RecipeList();
-        recipeList.setStage(this.primaryStage);
-        recipeList.setScene(this.mainScene);
         ScrollPane scrollPane = new ScrollPane(recipeList);
         this.setTop(header);
         this.setCenter(scrollPane);
         this.setBottom(footer);
         addButton = footer.getAddButton();
         addListeners();
+    }
+
+    public void rebuild() throws CsvValidationException {
+        recipeList.setStage(this.primaryStage);
+        recipeList.setScene(this.mainScene);
         recipeList.loadCSV();
     }
 
