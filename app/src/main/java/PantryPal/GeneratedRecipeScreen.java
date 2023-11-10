@@ -85,8 +85,8 @@ public class GeneratedRecipeScreen {
 
         VBox newRoot = new VBox(); // Create a new root for the new scene
 
-        Text text1 = new Text("This is where the created recipe will be displayed");
-        Text text2 = new Text(recipeGenerated);
+        Text text1 = new Text(title);
+        Text text2 = new Text("\n" + ingredients + "\n" + instructions + "\n" + time);
         TextFlow recipeInstructions = new TextFlow(text1, text2); // adding all lines of text into one big text
         recipeInstructions.setPrefSize(200, 200);
         recipeInstructions.setStyle("-fx-font-style: italic; ");
@@ -100,7 +100,7 @@ public class GeneratedRecipeScreen {
         goBack = new Button("Go Back"); // Create a new button
         goBack.setOnAction(e -> {
             // switchToMainScene();
-            switchToMainScene();
+            this.switchToMainScene();
             System.out.println("Go Back on third(recipe) scene pressed");
         }); // Switch back to main screen
         newRoot.getChildren().add(goBack); // Add the new button to the new root
@@ -109,7 +109,6 @@ public class GeneratedRecipeScreen {
         titleButton.setOnAction(e1 -> {
             primaryStage.setScene(recipe.getDescription());
         });
-        switchToMainScene();
 
         newRoot.setSpacing(10); // Set the spacing between the children of newRoot
 

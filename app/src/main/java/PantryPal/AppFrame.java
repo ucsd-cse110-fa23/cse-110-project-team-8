@@ -26,15 +26,15 @@ public class AppFrame extends BorderPane {
         header = new Header();
         footer = new Footer();
         recipeList = new RecipeList();
-        recipeList.setStage(primaryStage);
-        recipeList.setScene(mainScene);
-        recipeList.loadCSV();
+        recipeList.setStage(this.primaryStage);
+        recipeList.setScene(this.mainScene);
         ScrollPane scrollPane = new ScrollPane(recipeList);
         this.setTop(header);
         this.setCenter(scrollPane);
         this.setBottom(footer);
         addButton = footer.getAddButton();
         addListeners();
+        recipeList.loadCSV();
     }
 
     public void addListeners() {

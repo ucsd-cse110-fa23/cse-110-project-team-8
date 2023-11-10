@@ -16,7 +16,7 @@ import javafx.stage.Stage;
 public class RecipeList extends VBox {
     private Stage primaryStage;
     private Scene mainScene;
-    private GeneratedRecipeScreen recipeScreen;
+    // private recipeScreen;
 
     public RecipeList() {
         this.setSpacing(5); // sets spacing between tasks
@@ -33,11 +33,10 @@ public class RecipeList extends VBox {
         try {
             // Create a CSV reader and specify the file to read
             CSVReader reader = new CSVReader(new FileReader("RecipeList.csv"));
-
+            reader.readNext();
             // Read the CSV file and process each row
             while (reader.peek() != null) {
                 String[] row = reader.readNext();
-                System.out.print(row);
                 Recipe recipe = new Recipe();
                 recipe.setTitle(row[0]);
                 recipe.setIngredients(row[1]);
@@ -47,9 +46,9 @@ public class RecipeList extends VBox {
                 recipe.getRecipeTitle().setText(row[0]);
                 recipe.getRecipeBody().setText(row[1] + "\n" + row[2] + "\n" + row[3]);
                 recipe.getRecipeTitleButton().setText(row[0]);
-                recipeScreen = new GeneratedRecipeScreen(recipe, row[0], row[1], row[2],
-                        row[3], primaryStage, mainScene);
                 this.getChildren().add(recipe);
+                GeneratedRecipeScreen recipeScreen = new GeneratedRecipeScreen(recipe, row[0], row[1], row[2],
+                        row[3], primaryStage, mainScene);
             }
 
             // Close the CSV reader
