@@ -101,7 +101,6 @@ public class GeneratedRecipeScreen {
         goBack.setOnAction(e -> {
             // switchToMainScene();
             switchToMainScene();
-            System.out.println(mainScene + "aaa");
             System.out.println("Go Back on third(recipe) scene pressed");
         }); // Switch back to main screen
         newRoot.getChildren().add(goBack); // Add the new button to the new root
