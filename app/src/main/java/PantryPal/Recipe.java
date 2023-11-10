@@ -25,7 +25,8 @@ public class Recipe extends HBox {
         title = new TextField();
         body = new TextField();
     }
-    public void setButtonTitle(){
+
+    public void setButtonTitle() {
         this.titleButton.setText(titleString);
     }
 
@@ -49,19 +50,35 @@ public class Recipe extends HBox {
         this.description = scene;
     }
 
-    public void setTitle(String title){
+    public void setTitle(String title) {
         this.titleString = title;
     }
 
-    public void setIngredient(String ingredient){
+    public void setIngredients(String ingredient) {
         this.ingredient = ingredient;
     }
 
-    public void setInstructions(String instructions){
+    public void setInstructions(String instructions) {
         this.instructions = instructions;
     }
 
-    public void setTime(String time){
-        this.time = time;
+    public String setTime(String time) {
+        return this.time = time;
+    }
+
+    public String getTitle() {
+        return this.titleString;
+    }
+
+    public String getIngredients() {
+        return this.ingredient;
+    }
+
+    public String getInstructions() {
+        return this.instructions;
+    }
+
+    public String getTime() {
+        return this.time;
     }
 }

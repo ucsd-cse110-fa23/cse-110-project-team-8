@@ -1,5 +1,7 @@
 package PantryPal;
 
+import com.opencsv.exceptions.CsvValidationException;
+
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
@@ -17,13 +19,16 @@ public class AppFrame extends BorderPane {
     private Generate generate;
     private MealSelectScreen mealSelectScreen;
 
-    public AppFrame(Stage primaryStage) {
+    public AppFrame(Stage primaryStage) throws CsvValidationException {
         this.primaryStage = primaryStage;
         this.mainScene = this.getScene();
         generate = new Generate();
         header = new Header();
         footer = new Footer();
         recipeList = new RecipeList();
+        recipeList.setStage(primaryStage);
+        recipeList.setScene(mainScene);
+        recipeList.loadCSV();
         ScrollPane scrollPane = new ScrollPane(recipeList);
         this.setTop(header);
         this.setCenter(scrollPane);

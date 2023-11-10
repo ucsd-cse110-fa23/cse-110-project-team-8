@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.stage.FileChooser.ExtensionFilter;
 import PantryPal.Footer;
 
@@ -17,7 +18,7 @@ public class App extends Application {
         // Setting the Layout of the Window- Should contain a Header, Footer and the
         // ContactList
         root = new AppFrame(primaryStage);
-
+        RecipeList recipeList = root.getRecipeList();
         // Set the title of the app
         primaryStage.setTitle("Pantry Pal");
         // Create scene of mentioned size with the border pane
@@ -27,7 +28,11 @@ public class App extends Application {
         primaryStage.setResizable(false);
         // Show the app
         primaryStage.show();
+        primaryStage.setOnCloseRequest(event -> handleCloseRequest(event, recipeList));
+    }
 
+    private void handleCloseRequest(WindowEvent e, RecipeList recipeList) {
+        recipeList.toCSV();
     }
 
     public static void main(String[] args) {
