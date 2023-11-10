@@ -28,6 +28,7 @@ public class RecipeList extends VBox {
 
     }
 
+    // reload the CSV and regenerate the recipe to recipelist
     public void loadCSV() throws CsvValidationException {
         try {
             // Create a CSV reader and specify the file to read

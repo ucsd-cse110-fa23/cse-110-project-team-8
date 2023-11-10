@@ -78,6 +78,7 @@ public class GeneratedRecipeScreen {
         this.scene = new Scene(newRoot, 800, 800); // Create a new scene
     }
 
+    // Use for rebuild the recipes when reopen the app
     public GeneratedRecipeScreen(Recipe recipe, String title, String ingredients, String instructions,
             String time, Stage primaryStage, Scene mainScene) {
         this.primaryStage = primaryStage;

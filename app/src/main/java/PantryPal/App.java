@@ -32,6 +32,7 @@ public class App extends Application {
         primaryStage.show();
     }
 
+    // Used to convert the recipelist to a csv file when click the "close" button
     private void handleCloseRequest(WindowEvent e, RecipeList recipeList) {
         recipeList.toCSV();
     }

@@ -34,6 +34,7 @@ public class AppFrame extends BorderPane {
         addListeners();
     }
 
+    // rebuild the recipelist
     public void rebuild() throws CsvValidationException {
         recipeList.setStage(this.primaryStage);
         recipeList.setScene(this.mainScene);
