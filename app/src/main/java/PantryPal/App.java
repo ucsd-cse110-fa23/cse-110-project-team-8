@@ -26,9 +26,9 @@ public class App extends Application {
         root.setMainScene(primaryStage.getScene());
         // Make window non-resizable
         primaryStage.setResizable(false);
+        primaryStage.setOnCloseRequest(event -> handleCloseRequest(event, recipeList));
         // Show the app
         primaryStage.show();
-        primaryStage.setOnCloseRequest(event -> handleCloseRequest(event, recipeList));
     }
 
     private void handleCloseRequest(WindowEvent e, RecipeList recipeList) {

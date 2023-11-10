@@ -15,6 +15,7 @@ public class Recipe extends HBox {
     private String ingredient;
     private String instructions;
     private String time;
+    private GeneratedRecipeScreen recipeScreen;
 
     public Recipe() {
         titleButton = new Button(); // creates a button for marking the Contact as done
@@ -80,5 +81,13 @@ public class Recipe extends HBox {
 
     public String getTime() {
         return this.time;
+    }
+
+    public void setRecipeScreen(GeneratedRecipeScreen rs){
+        this.recipeScreen = rs;
+    }
+
+    public GeneratedRecipeScreen getRecipeScreen(){
+        return this.recipeScreen;
     }
 }
