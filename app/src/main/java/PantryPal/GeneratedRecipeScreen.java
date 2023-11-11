@@ -254,10 +254,10 @@ public class GeneratedRecipeScreen {
         
 
 
-        // newRoot.setSpacing(10); // Set the spacing between the children of newRoot
+        
+        vRoot.setSpacing(10); // Set the spacing between the children of newRoot
 
-        // newRoot.setAlignment(Pos.CENTER); // Set the alignment of the children of newRoot
-
+        vRoot.setAlignment(Pos.CENTER); // Set the alignment of the children of newRoot
         vRoot.getChildren().add(hRoot);
         this.scene = new Scene(vRoot, 800, 800); // Create a new scene
     }
