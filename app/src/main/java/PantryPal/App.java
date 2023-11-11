@@ -27,15 +27,15 @@ public class App extends Application {
         root.rebuild();
         // Make window non-resizable
         primaryStage.setResizable(false);
-        primaryStage.setOnCloseRequest(event -> handleCloseRequest(event, recipeList));
+        // primaryStage.setOnCloseRequest(event -> handleCloseRequest(event, recipeList));
         // Show the app
         primaryStage.show();
     }
 
-    // Used to convert the recipelist to a csv file when click the "close" button
-    private void handleCloseRequest(WindowEvent e, RecipeList recipeList) {
-        recipeList.toCSV();
-    }
+    // // Used to convert the recipelist to a csv file when click the "close" button
+    // private void handleCloseRequest(WindowEvent e, RecipeList recipeList) {
+    //     recipeList.toCSV();
+    // }
 
     public static void main(String[] args) {
         launch(args);

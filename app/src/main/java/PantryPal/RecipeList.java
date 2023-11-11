@@ -24,9 +24,10 @@ public class RecipeList extends VBox {
     }
 
     // TODO: Iteration 2
-    public void delete(String RecipeName) {
-
+    public void delete(Recipe recipe) {
+        this.getChildren().remove(recipe);
     }
+    
 
     // reload the CSV and regenerate the recipe to recipelist
     public void loadCSV() throws CsvValidationException {
@@ -41,14 +42,12 @@ public class RecipeList extends VBox {
                 recipe.setTitle(row[0]);
                 recipe.setIngredients(row[1]);
                 recipe.setInstructions(row[2]);
-                recipe.setTime(row[3]);
 
                 recipe.getRecipeTitle().setText(row[0]);
-                recipe.getRecipeBody().setText(row[1] + "\n" + row[2] + "\n" + row[3]);
+                recipe.getRecipeBody().setText(row[1] + "\n" + row[2]);
                 recipe.getRecipeTitleButton().setText(row[0]);
                 this.getChildren().add(recipe);
-                GeneratedRecipeScreen screen = new GeneratedRecipeScreen(recipe, row[0], row[1], row[2],
-                        row[3], primaryStage, mainScene);
+                SavedRecipeScreen screen = new SavedRecipeScreen(recipe, row[0], row[1], row[2],primaryStage, mainScene);
             }
 
             // Close the CSV reader
@@ -59,18 +58,20 @@ public class RecipeList extends VBox {
     }
 
     // Save to a CSV file whenever "close" is clicked
-    public void toCSV() {
+    public void toCSV(Recipe toDelete) {
         try {
             // Create a CSV writer and specify the file to write to
             CSVWriter writer = new CSVWriter(new FileWriter("RecipeList.csv"));
 
             // Write data to the CSV file
-            String[] header = { "Title", "Ingredients", "Instructions", "Preparation Time" };
+            String[] header = { "Title", "Ingredients", "Instructions"};
             writer.writeNext(header);
             for (int i = 0; i < this.getChildren().size(); i++) {
                 Recipe recipe = (Recipe) this.getChildren().get(i);
-                String[] data = { recipe.getTitle(), recipe.getIngredients(), recipe.getInstructions(),
-                        recipe.getTime() };
+                if (recipe == toDelete){
+                    continue;
+                }
+                String[] data = {recipe.getTitle(), recipe.getIngredients(), recipe.getInstructions()};
                 writer.writeNext(data);
             }
             // Close the CSV writer
