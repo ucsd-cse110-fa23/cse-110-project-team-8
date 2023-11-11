@@ -1,4 +1,4 @@
-Welcome to the PantryPal App for CSE 110 Team 8!
+***Welcome to the PantryPal App for CSE 110 Team 8!***
 
 Below are the instructions to use the app and create/store your very own recipes!
 
@@ -11,4 +11,3 @@ Below are the instructions to use the app and create/store your very own recipes
 7) Once you have clicked "Stop Recording" on the Ingredients Screen, you should see your generated recipe. 
 8) To save your recipe, click "Save". To edit, click "Edit". Click "Go Back" if you would like to not save this created recipe and return to the main screen.
 9) Once you have clicked "Save', your recipe will be saved and will appear in the main screen of the app where it can be clicked on and viewed, editted, or deleted, at any time.
- 
