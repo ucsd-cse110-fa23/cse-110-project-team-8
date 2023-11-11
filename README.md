@@ -3,7 +3,7 @@
 Below are the instructions to use the app and create/store your very own recipes!
 
 1) First, download the code on your local device and create a launch.json file by going to the "Run and Debug" tab and clicking "create a launch file" (if you are using VS Code).
-2) Next, in the launch.json file add a path to your javajdk file under the configuration labeled "App". Make sure you are using java jdk version 17.
+2) Next, in the launch.json file add a path to your javajdk file under the configuration labeled "App". Make sure you are using javafx-sdk version 17.
 3) Next, on the "Run and Debug" tab, click on the green arrow in the top left to run the app. The app should open up and you should be greeted with a button at the bottom of the app that says "New Recipe".
 4) To create a new recipe, click the "New Recipe" button. 
 5) To select your meal type, click the "Start Recording" button to start recording your voice. State your meal type and click "Stop Recording".
