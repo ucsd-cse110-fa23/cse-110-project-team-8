@@ -14,32 +14,36 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.geometry.Pos;
 
-public class SavedRecipeScreen {
+public class RecipeDescriptionScreen {
     private Scene scene;
-    private String recipeGenerated;
     private Stage primaryStage;
     private Scene mainScene;
     private Button editButton;
     private Button goBack;
-    //private Button save;
+    private Button save;
     private Button deleteButton;
     private Button done;
     private Button cancel;
 
     private String ingredientsOG;
     private String instructionsOG;
-    //private Boolean savedHit;
+    private Boolean savedHit;
     private Button confirmDelete;
     private Button cancelDelete;
     private Recipe recipe;
 
 
     // Use for rebuild the recipes when reopen the app
-    public SavedRecipeScreen(Recipe recipe, String title, String ingredients, String instructions,
+    public RecipeDescriptionScreen(Recipe recipe1, String title, String ingredients, String instructions,
         Stage primaryStage, Scene mainScene, RecipeList recipeList) {
-            
+        if (recipe1 == null) {
+            savedHit = false;
+        } else {
+            savedHit = true;
+        }
         this.primaryStage = primaryStage;
         this.mainScene = mainScene;
+        this.recipe = recipe1;
 
         VBox newRoot = new VBox(); // Create a new root for the new scene
 
@@ -79,8 +83,18 @@ public class SavedRecipeScreen {
             // ADD: GOBACK, EDIT, DELETE
             hRoot.getChildren().add(goBack);
             hRoot.getChildren().add(editButton);;
-            hRoot.getChildren().add(deleteButton);
+
+            if (savedHit == false){
+                hRoot.getChildren().add(save);
+            }
+
+   
+            if (savedHit == true){
+                hRoot.getChildren().add(deleteButton);
+            }
             
+
+
             // REMOVE: CANCEL, DONE
             hRoot.getChildren().remove(done);
             hRoot.getChildren().remove(cancel);
@@ -102,20 +116,24 @@ public class SavedRecipeScreen {
 
             // ADD: GOBACK, EDIT, DELETE
             hRoot.getChildren().add(goBack);
-            hRoot.getChildren().add(editButton);
-            hRoot.getChildren().add(deleteButton);
-            
+            hRoot.getChildren().add(editButton);;
+
+            if (savedHit == false){
+                hRoot.getChildren().add(save);
+            }
+
+   
+            if (savedHit == true){
+                hRoot.getChildren().add(deleteButton);
+                //TODO update the CSV
+                recipe.setIngredients(ingredientsArea.getText());
+                recipe.setInstructions(instructionsArea.getText());
+                recipeList.toCSV(null);
+            }
 
             // REMOVE: CANCEL, DONE
             hRoot.getChildren().remove(done);
             hRoot.getChildren().remove(cancel);
-
-            recipe.setIngredients(ingredientsArea.getText());
-            recipe.setInstructions(instructionsArea.getText());
-
-
-            //TODO update the CSV
-            recipeList.toCSV(null);
 
             
             ingredientsOG = ingredientsArea.getText();
@@ -141,22 +159,63 @@ public class SavedRecipeScreen {
             ingredientsArea.setEditable(true);
             instructionsArea.setEditable(true);
             // ADD: DONE, CANCEL
-            hRoot.getChildren().add(cancel);  //Add done and cancel buttons when edit is pressed
+            hRoot.getChildren().add(cancel);
             hRoot.getChildren().add(done);
 
 
             // REMOVE: GOBACK, DELETE
             hRoot.getChildren().remove(editButton);
             hRoot.getChildren().remove(goBack);
-            hRoot.getChildren().remove(deleteButton);
+
+            if (savedHit == false){
+                hRoot.getChildren().remove(save);
+            }
             
+            
+            if (savedHit == true){
+                hRoot.getChildren().remove(deleteButton);
+            }
+    
+
             System.out.println("Edit Button Clicked");
         }); 
         
         hRoot.getChildren().add(editButton); // Add the new button to the new root
 
 
-    
+        // SAVE BUTTON --------------------------------------------------------------------------------------------
+        if (savedHit == false) {
+            save = new Button("Save");
+            save.setOnAction(e -> {
+                recipe = new Recipe();
+                recipe.setTitle(title);
+                recipe.setIngredients(ingredientsArea.getText());
+                recipe.setInstructions(instructionsArea.getText());
+                recipe.setButtonTitle();
+
+                savedHit = true;
+                // recipe.getRecipeTitle().setText(recipeGenerated);
+                // recipe.getRecipeBody().setText(recipeGenerated);
+                recipe.setDescription(scene);
+                recipeList.getChildren().add(recipe);
+
+                Button titleButton = recipe.getRecipeTitleButton();
+                titleButton.setOnAction(e1 -> {
+                    primaryStage.setScene(recipe.getDescription());
+                });
+
+                recipeList.toCSV(null);
+
+                hRoot.getChildren().remove(save);
+                hRoot.getChildren().add(deleteButton);
+
+                switchToMainScene();
+            });
+            hRoot.getChildren().add(save);
+        }
+
+
+
 // DELETE BUTTON --------------------------------------------------------------------------------------------
         deleteButton = new Button("Delete");
         deleteButton.setOnAction(e -> {
@@ -171,7 +230,9 @@ public class SavedRecipeScreen {
             //recipeList.getChildren().remove(recipe);
             System.out.println("OG Delete Button Clicked");
         });
-        hRoot.getChildren().add(deleteButton);
+        if (savedHit) {
+            hRoot.getChildren().add(deleteButton);
+        }
 
         // CONFIRM DELETE BUTTON --------------------------------------------------------------------------------------------
         confirmDelete = new Button("Confirm Delete");
@@ -202,17 +263,25 @@ public class SavedRecipeScreen {
         });
 
     // TITLE BUTTON --------------------------------------------------------------------------------------------
-        Button titleButton = recipe.getRecipeTitleButton();
-        titleButton.setOnAction(e1 -> {
-            primaryStage.setScene(recipe.getDescription());
-        });
+        if (savedHit) {
+            Button titleButton = recipe.getRecipeTitleButton();
+            titleButton.setOnAction(e1 -> {
+                primaryStage.setScene(recipe.getDescription());
+            });
 
-        newRoot.setSpacing(10); // Set the spacing between the children of newRoot
+            newRoot.setSpacing(10); // Set the spacing between the children of newRoot
 
-        newRoot.setAlignment(Pos.CENTER); // Set the alignment of the children of newRoot
-        newRoot.getChildren().add(hRoot);
-        this.scene = new Scene(newRoot, 800, 800); // Create a new scene
-        recipe.setDescription(scene);
+            newRoot.setAlignment(Pos.CENTER); // Set the alignment of the children of newRoot
+            newRoot.getChildren().add(hRoot);
+            this.scene = new Scene(newRoot, 800, 800); // Create a new scene
+            recipe.setDescription(scene);
+        } else {
+            newRoot.setSpacing(10); // Set the spacing between the children of newRoot
+
+            newRoot.setAlignment(Pos.CENTER); // Set the alignment of the children of newRoot
+            newRoot.getChildren().add(hRoot);
+            this.scene = new Scene(newRoot, 800, 800); // Create a new scene
+        }
     }
 
     

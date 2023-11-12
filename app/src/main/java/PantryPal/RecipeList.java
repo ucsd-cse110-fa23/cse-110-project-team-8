@@ -47,7 +47,7 @@ public class RecipeList extends VBox {
                 recipe.getRecipeBody().setText(row[1] + "\n" + row[2]);
                 recipe.getRecipeTitleButton().setText(row[0]);
                 this.getChildren().add(recipe);
-                SavedRecipeScreen screen = new SavedRecipeScreen(recipe, row[0], row[1], row[2],primaryStage, mainScene, this);
+                RecipeDescriptionScreen screen = new RecipeDescriptionScreen(recipe, row[0], row[1], row[2],primaryStage, mainScene, this);
             }
 
             // Close the CSV reader

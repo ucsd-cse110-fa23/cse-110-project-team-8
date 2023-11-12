@@ -8,7 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
 
-public class AppFrame extends BorderPane {
+public class PrimaryScreen extends BorderPane {
     private Header header;
     public Footer footer;
     private RecipeList recipeList;
@@ -17,9 +17,9 @@ public class AppFrame extends BorderPane {
     private Stage primaryStage;
     private Scene mainScene; // Field to store the main scene
     private Generate generate;
-    private MealSelectScreen mealSelectScreen;
+    private UserInputScreen userInputScreen;
 
-    public AppFrame(Stage primaryStage) throws CsvValidationException {
+    public PrimaryScreen(Stage primaryStage) throws CsvValidationException {
         this.primaryStage = primaryStage;
         this.mainScene = this.getScene();
         generate = new Generate();
@@ -43,8 +43,8 @@ public class AppFrame extends BorderPane {
 
     public void addListeners() {
         addButton.setOnAction(e -> {
-            mealSelectScreen = new MealSelectScreen(recipeList, primaryStage, this.mainScene, this.generate);
-            mealSelectScreen.switchToThisScene();
+            userInputScreen = new UserInputScreen(recipeList, primaryStage, this.mainScene, this.generate);
+            userInputScreen.switchToThisScene();
         }); // Set the action on the button
     }
 

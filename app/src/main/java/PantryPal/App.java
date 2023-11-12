@@ -6,19 +6,26 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.stage.FileChooser.ExtensionFilter;
+
+import java.lang.ModuleLayer.Controller;
+
 import PantryPal.Footer;
 
 public class App extends Application {
 
-    public AppFrame root;
+    public PrimaryScreen root;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
 
         // Setting the Layout of the Window- Should contain a Header, Footer and the
         // ContactList
-        root = new AppFrame(primaryStage);
+        root = new PrimaryScreen(primaryStage);
         RecipeList recipeList = root.getRecipeList();
+
+        // Model model = new Model();
+        // Controller controller = new Controller(view, model);
+
         // Set the title of the app
         primaryStage.setTitle("Pantry Pal");
         // Create scene of mentioned size with the border pane
