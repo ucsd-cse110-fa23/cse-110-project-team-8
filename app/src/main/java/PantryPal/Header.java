@@ -25,11 +25,19 @@ import java.util.*;
 public class Header extends HBox {
 
     public Header() {
-        this.setPrefSize(500, 60); // Size of the header
-        this.setStyle("-fx-background-color: #F0F8FF;");
+        // this.setPrefSize(500, 60); // Size of the header
+        // this.setStyle("-fx-background-color: #F0F8FF;");
+
+        // Text titleText = new Text("Pantry Pal"); // Text of the Header
+        // titleText.setStyle("-fx-font-weight: bold; -fx-font-size: 20;");
+        // this.getChildren().add(titleText);
+        // this.setAlignment(Pos.CENTER); // Align the text to the Center
+
+        this.setPrefSize(500, 70); // Size of the header
+        this.setStyle("-fx-background-color: #BF2C34; -fx-border-color: #2980b9; -fx-border-width: 0 0 2 0;");
 
         Text titleText = new Text("Pantry Pal"); // Text of the Header
-        titleText.setStyle("-fx-font-weight: bold; -fx-font-size: 20;");
+        titleText.setStyle("-fx-font-weight: bold; -fx-font-size: 30; -fx-fill: #ecf0f1;");
         this.getChildren().add(titleText);
         this.setAlignment(Pos.CENTER); // Align the text to the Center
     }

@@ -2,6 +2,7 @@ package PantryPal;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
@@ -29,24 +30,45 @@ public class UserInputScreen {
         firstInput = true;
 
         VBox newRoot = new VBox(); // Create a new root for the new scene
+        newRoot.setStyle("-fx-background-color: #BF2C34;"); // Ashy white background color
 
-        Text text1 = new Text("To create a new recipe please state your meal type. \n" + "(Breakfast, Lunch, Dinner) \n");
-        Text text3 = new Text(
-                "'Start Recording' then say your meal type. Press 'Stop Recording' when you are done speaking. ");
+        Text text1 = new Text(" \n\n\n\n\n To create a new recipe please state your meal type. \n\n (Breakfast, Lunch, Dinner) \n\n\n\n");
+        Text text3 = new Text("Press'Start Recording' then say your meal type. \n\n Press 'Stop Recording' when you are done speaking. ");
+        
         TextFlow recipeInstructions = new TextFlow(text1, text3); // adding all lines of text into one big text
-        recipeInstructions.setPrefSize(200, 200);
-        recipeInstructions.setStyle("-fx-font-style: italic; ");
+        recipeInstructions.setPrefSize(200, 600);
+        //recipeInstructions.setStyle("-fx-font-style: italic; ");
+        recipeInstructions.setStyle("-fx-font-style: italic; -fx-background-color: #FFFFFF; " + 
+        "-fx-font-weight: bold; -fx-font: 25 Arial; -fx-text-fill: #000000;");
         recipeInstructions.setTextAlignment(TextAlignment.CENTER); // aligning text to the center
         newRoot.getChildren().add(recipeInstructions); // add the textbox to the new root
 
+         String defaultButtonStyle = "-fx-font-style: italic; -fx-background-color: #FFFFFF; " + 
+                                    "-fx-font-weight: bold; -fx-font: 15 Arial; -fx-text-fill: #000000;" +
+                                    " -fx-pref-width: 170; -fx-pref-height: 40;";
+
+
+                                    
+        HBox footer = new HBox();
+        newRoot.getChildren().add(footer);
+        footer.setPrefSize(500, 100); // Increased height for a larger button
+        footer.setStyle("-fx-background-color: #BF2C34;");
+        footer.setSpacing(15);
+
+    // START RECORDING ------------------------------------------------------------------------------------------------------
         startRecButton = new Button("Start Recording"); // Create a new button
+        startRecButton.setStyle(defaultButtonStyle);
         startRecButton.setOnAction(e -> {
             generate.startRecording();
             System.out.println("Start Recording on Meal scene pressed");
-        }); // Add Temporary action
-        newRoot.getChildren().add(startRecButton); // Add the new button to the new root
+        });
+        //newRoot.getChildren().add(startRecButton); // Add the new button to the new root
 
+    
+    // STOP RECORDING ------------------------------------------------------------------------------------------------------    
         stopRecButton = new Button("Stop Recording"); // Create a new button
+        stopRecButton.setStyle(defaultButtonStyle);
+
         stopRecButton.setOnAction(e -> {
             generate.stopRecording();
             if (firstInput == true) {
@@ -56,8 +78,10 @@ public class UserInputScreen {
                     System.out.println("Stop Recording on meal scene pressed");
                     System.out.println(this.mealType);
                 }
-                text1.setText("Please state your ingredients. \n");
-                text3.setText("'Start Recording' then say your ingredients. Press 'Stop Recording' when you are done speaking. ");
+                text1.setText("\n\n\n\n Please state your ingredients. \n\n");
+                text3.setText("(Example: 'salt, pepper, eggs, and bacon!') \n\n\n\n" +
+                              "Press 'Start Recording' then say your ingredients. \n\n" + 
+                              "Press 'Stop Recording' when you are done speaking. ");
                 firstInput = false;
             } else {
                 this.ingredients = generate.getUserInput(); // Get the user input
@@ -69,22 +93,26 @@ public class UserInputScreen {
                 String processedIngredients = this.getIngredient(recipeGenerated);
                 String processedInstructions = this.getInstructions(recipeGenerated);
 
-
-
-
                 RecipeDescriptionScreen generatedRecipeScreen = new RecipeDescriptionScreen(null, processedTitle, processedIngredients, processedInstructions,
                         primaryStage, mainScene,recipeList);
                 generatedRecipeScreen.switchToThisScene();
             }
         });
-        newRoot.getChildren().add(stopRecButton); // Add the new button to the new root
-
-        goBack = new Button("Go Back"); // Create a new button
+        
+    
+    // GO BACK ------------------------------------------------------------------------------------------------------    
+        goBack = new Button("Go Back"); // Create a GO BACK button
+        goBack.setStyle(defaultButtonStyle);
         goBack.setOnAction(e -> {
             switchToMainScene();
             System.out.println("Go Back on input scene pressed");
         }); // Switch back to main screen
-        newRoot.getChildren().add(goBack); // Add the new button to the new root
+
+        footer.getChildren().add(goBack); // Add the new button to the new root
+        footer.getChildren().add(startRecButton); // Add the new button to the new root
+        footer.getChildren().add(stopRecButton); // Add the new button to the new root
+        footer.setAlignment(Pos.CENTER);
+
 
         newRoot.setSpacing(10); // Set the spacing between the children of newRoot
 

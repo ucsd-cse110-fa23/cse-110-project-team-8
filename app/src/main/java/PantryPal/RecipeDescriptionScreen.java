@@ -12,6 +12,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 
 public class RecipeDescriptionScreen {
@@ -35,7 +36,8 @@ public class RecipeDescriptionScreen {
 
     // Use for rebuild the recipes when reopen the app
     public RecipeDescriptionScreen(Recipe recipe1, String title, String ingredients, String instructions,
-        Stage primaryStage, Scene mainScene, RecipeList recipeList) {
+                                   Stage primaryStage, Scene mainScene, RecipeList recipeList) {
+
         if (recipe1 == null) {
             savedHit = false;
         } else {
@@ -46,35 +48,60 @@ public class RecipeDescriptionScreen {
         this.recipe = recipe1;
 
         VBox newRoot = new VBox(); // Create a new root for the new scene
+        newRoot.setStyle("-fx-background-color: #BF2C34;");
 
         Text titleText = new Text(title);//Sets the title of the recipe
-        titleText.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+        titleText.setStyle("-fx-font-weight: bold; -fx-font-size: 45; -fx-fill: #ecf0f1;");
+        VBox titleBox = new VBox(titleText);
+        titleBox.setPadding(new Insets(0, 0, 30, 0)); // Add pixels of padding at the bottom
+        titleBox.setStyle("-fx-border-color: #FFFFFF; -fx-border-width:  0 0 2 0;");
+        titleBox.setAlignment(Pos.CENTER);
+  
 
         Text ingredientsLabel = new Text("Ingredients: ");  //ingredients title
+        ingredientsLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 25; -fx-fill: #ecf0f1;");
+
         TextArea ingredientsArea = new TextArea(ingredients);  //ingredients text area
+        ingredientsArea.setStyle("-fx-font-style: italic; -fx-background-color: #FFFFFF; " + 
+        "-fx-font-weight: bold; -fx-font: 18 Arial; -fx-text-fill: #000000;");
+
         ingredientsOG = ingredients; //original ingredients
         ingredientsArea.setWrapText(true);
         ingredientsArea.setEditable(false);
 
         Text instructionsLabel = new Text("Instructions: "); //instructions title
+        instructionsLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 25; -fx-fill: #ecf0f1;");
+
         TextArea instructionsArea = new TextArea(instructions); //instructions text area
+        instructionsArea.setStyle("-fx-font-style: italic; -fx-background-color: #FFFFFF; " + 
+        "-fx-font-weight: bold; -fx-font: 18 Arial; -fx-text-fill: #000000;");
+
         instructionsOG = instructions; //original instructions
         instructionsArea.setWrapText(true);
         instructionsArea.setEditable(false);
 
-        newRoot.getChildren().add(titleText);
+        // newRoot.getChildren().add(titleText);
+        newRoot.getChildren().add(titleBox);
         newRoot.getChildren().add(ingredientsLabel);
         newRoot.getChildren().add(ingredientsArea); // add the textbox to the new root
         newRoot.getChildren().add(instructionsLabel);
         newRoot.getChildren().add(instructionsArea); // add the textbox to the new root
 
         HBox hRoot = new HBox(); // Create a new root for the new scene
+        hRoot.setAlignment(Pos.CENTER);
+        hRoot.setPrefSize(500, 70); // Increased height for a larger button
+        hRoot.setStyle("-fx-background-color: #BF2C34;");
+        hRoot.setSpacing(15);
 
-       // savedHit = false;
+        String defaultButtonStyle = "-fx-font-style: italic; -fx-background-color: #FFFFFF; " + 
+                                    "-fx-font-weight: bold; -fx-font: 15 Arial; -fx-text-fill: #000000;" +
+                                    " -fx-pref-width: 170; -fx-pref-height: 40;";
+
        
 
     // CANCEL BUTTON -------------------------------------------------------------------------------------------- 
         cancel = new Button("Cancel");
+        cancel.setStyle(defaultButtonStyle);
 
         cancel.setOnAction(e -> {
             ingredientsArea.setEditable(false);
@@ -109,6 +136,7 @@ public class RecipeDescriptionScreen {
         
     // DONE BUTTON --------------------------------------------------------------------------------------------
         done = new Button("Done");
+        done.setStyle(defaultButtonStyle);
 
         done.setOnAction(e -> {
             ingredientsArea.setEditable(false);
@@ -145,6 +173,8 @@ public class RecipeDescriptionScreen {
         
     // GO BACK BUTTON --------------------------------------------------------------------------------------------
         goBack = new Button("Go Back"); // Create a new button
+        goBack.setStyle(defaultButtonStyle);
+
         goBack.setOnAction(e -> {
             switchToMainScene();
             System.out.println("Go Back on third(recipe) scene pressed");
@@ -154,6 +184,7 @@ public class RecipeDescriptionScreen {
 
     // EDIT BUTTON --------------------------------------------------------------------------------------------
         editButton = new Button("Edit"); // Create a new button
+        editButton.setStyle(defaultButtonStyle);
 
         editButton.setOnAction(e -> {
             ingredientsArea.setEditable(true);
@@ -186,6 +217,8 @@ public class RecipeDescriptionScreen {
         // SAVE BUTTON --------------------------------------------------------------------------------------------
         if (savedHit == false) {
             save = new Button("Save");
+            save.setStyle(defaultButtonStyle);
+
             save.setOnAction(e -> {
                 recipe = new Recipe();
                 recipe.setTitle(title);
@@ -218,6 +251,8 @@ public class RecipeDescriptionScreen {
 
 // DELETE BUTTON --------------------------------------------------------------------------------------------
         deleteButton = new Button("Delete");
+        deleteButton.setStyle(defaultButtonStyle);
+
         deleteButton.setOnAction(e -> {
 
             hRoot.getChildren().add(cancelDelete);
@@ -236,6 +271,8 @@ public class RecipeDescriptionScreen {
 
         // CONFIRM DELETE BUTTON --------------------------------------------------------------------------------------------
         confirmDelete = new Button("Confirm Delete");
+        confirmDelete.setStyle(defaultButtonStyle);
+
         confirmDelete.setOnAction(e -> {
 
             //TODO: delete from csv
@@ -249,6 +286,8 @@ public class RecipeDescriptionScreen {
         });
         // CANCEL DELETE BUTTON --------------------------------------------------------------------------------------------
         cancelDelete = new Button("Cancel Delete");
+        cancelDelete.setStyle(defaultButtonStyle);
+
         cancelDelete.setOnAction(e -> {
             
             hRoot.getChildren().add(goBack);

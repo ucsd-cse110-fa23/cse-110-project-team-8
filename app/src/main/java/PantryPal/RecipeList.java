@@ -18,9 +18,13 @@ public class RecipeList extends VBox {
     private Scene mainScene;
 
     public RecipeList() {
-        this.setSpacing(5); // sets spacing between tasks
+        // this.setSpacing(5); // sets spacing between tasks
+        // this.setPrefSize(800, 800);
+        // this.setStyle("-fx-background-color: #F0F8FF;");
+
+        this.setSpacing(10); // Increased spacing for a cleaner look
         this.setPrefSize(800, 800);
-        this.setStyle("-fx-background-color: #F0F8FF;");
+        this.setStyle("-fx-background-color: #EAEAEA;"); // Light blue background color
     }
 
     // TODO: Iteration 2

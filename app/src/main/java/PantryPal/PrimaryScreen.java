@@ -27,6 +27,7 @@ public class PrimaryScreen extends BorderPane {
         footer = new Footer();
         recipeList = new RecipeList();
         ScrollPane scrollPane = new ScrollPane(recipeList);
+        scrollPane.setFitToWidth(true);
         this.setTop(header);
         this.setCenter(scrollPane);
         this.setBottom(footer);
