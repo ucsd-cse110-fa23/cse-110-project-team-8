@@ -32,7 +32,7 @@ public class VoiceInputTest {
     // }
 
     @Test
-    public void testGPT() {
+    void testGPT() {
         String testGPTinput = "I want you to give print the numbers '123' exactly like that, do not type anything else.";
         String testGPToutput;
 
@@ -44,5 +44,37 @@ public class VoiceInputTest {
         }
 
         assertEquals("\n" + "\n" + "123", testGPToutput);
+    }
+
+
+    // Test incrementing number of recipes
+    @Test
+    void testNumRecipe1() {
+        RecipeList recipeList = new RecipeList();
+        recipeList.incNum();
+        assertEquals(1, recipeList.getNum());
+    }
+
+    // Test deleting number of recipes
+    @Test
+    void testNumRecipe2() {
+        RecipeList recipeList = new RecipeList();
+        recipeList.incNum();
+        recipeList.decNum();
+        assertEquals(0, recipeList.getNum());
+    }
+
+    // Test when the number of recipe in the list is 0
+    @Test
+    void testNumRecipe3() {
+        RecipeList recipeList = new RecipeList();
+        String output = "";
+        try {
+            recipeList.decNum();
+        } catch (Exception e) {
+            e.printStackTrace();
+            output = "No Recipe in the list.";
+        }
+        assertEquals("No Recipe in the list.", output);
     }
 }

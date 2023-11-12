@@ -231,7 +231,7 @@ public class RecipeDescriptionScreen {
                 // recipe.getRecipeBody().setText(recipeGenerated);
                 recipe.setDescription(scene);
                 recipeList.getChildren().add(recipe);
-
+                recipeList.incNum();
                 Button titleButton = recipe.getRecipeTitleButton();
                 titleButton.setOnAction(e1 -> {
                     primaryStage.setScene(recipe.getDescription());

@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 public class RecipeList extends VBox {
     private Stage primaryStage;
     private Scene mainScene;
+    private int numRecipe;
 
     public RecipeList() {
         // this.setSpacing(5); // sets spacing between tasks
@@ -25,6 +26,7 @@ public class RecipeList extends VBox {
         this.setSpacing(10); // Increased spacing for a cleaner look
         this.setPrefSize(800, 800);
         this.setStyle("-fx-background-color: #EAEAEA;"); // Light blue background color
+        this.numRecipe = 0;
     }
 
     // TODO: Iteration 2
@@ -91,5 +93,21 @@ public class RecipeList extends VBox {
 
     public void setScene(Scene scene) {
         this.mainScene = scene;
+    }
+
+
+    public void incNum() {
+        this.numRecipe++;
+    }
+
+    public void decNum() {
+        if (this.getNum() == 0) {
+            throw new IllegalArgumentException("No Recipe in the list.");
+        }
+        this.numRecipe--;
+    }
+
+    public int getNum() {
+        return this.numRecipe;
     }
 }
