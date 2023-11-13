@@ -168,7 +168,7 @@ public class PantryPalTests {
 
     // USER STORY 1
     //Test bdd1 accessing first recipe and bdd2 going back to recipe list
-    // Caitlin wants to see the first recipe description
+    // Caitlin wants to see the first recipe description.
     @Test
     void S1_BDD1and2() throws IOException, CsvValidationException {
         //Caitlin sees 2 recipes on her main recipe list titled "Pizza" and "Burger"
