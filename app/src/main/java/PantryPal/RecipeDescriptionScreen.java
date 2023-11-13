@@ -31,12 +31,12 @@ public class RecipeDescriptionScreen {
     private Boolean savedHit;
     private Button confirmDelete;
     private Button cancelDelete;
-    private Recipe recipe;
+    private RecipeTitleButton recipe;
 
 
     // Use for rebuild the recipes when reopen the app
-    public RecipeDescriptionScreen(Recipe recipe1, String title, String ingredients, String instructions,
-                                   Stage primaryStage, Scene mainScene, RecipeList recipeList) {
+    public RecipeDescriptionScreen(RecipeTitleButton recipe1, String title, String ingredients, String instructions,
+                                   Stage primaryStage, Scene mainScene, RecipeListBody recipeList) {
 
         if (recipe1 == null) {
             savedHit = false;
@@ -51,7 +51,7 @@ public class RecipeDescriptionScreen {
         newRoot.setStyle("-fx-background-color: #BF2C34;");
 
         Text titleText = new Text(title);//Sets the title of the recipe
-        titleText.setStyle("-fx-font-weight: bold; -fx-font-size: 45; -fx-fill: #ecf0f1;");
+        titleText.setStyle("-fx-font-weight: bold; -fx-font-size: 30; -fx-fill: #ecf0f1;");
         VBox titleBox = new VBox(titleText);
         titleBox.setPadding(new Insets(0, 0, 30, 0)); // Add pixels of padding at the bottom
         titleBox.setStyle("-fx-border-color: #FFFFFF; -fx-border-width:  0 0 2 0;");
@@ -59,7 +59,7 @@ public class RecipeDescriptionScreen {
   
 
         Text ingredientsLabel = new Text("Ingredients: ");  //ingredients title
-        ingredientsLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 25; -fx-fill: #ecf0f1;");
+        ingredientsLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 20; -fx-fill: #ecf0f1;");
 
         TextArea ingredientsArea = new TextArea(ingredients);  //ingredients text area
         ingredientsArea.setStyle("-fx-font-style: italic; -fx-background-color: #FFFFFF; " + 
@@ -70,7 +70,7 @@ public class RecipeDescriptionScreen {
         ingredientsArea.setEditable(false);
 
         Text instructionsLabel = new Text("Instructions: "); //instructions title
-        instructionsLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 25; -fx-fill: #ecf0f1;");
+        instructionsLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 20; -fx-fill: #ecf0f1;");
 
         TextArea instructionsArea = new TextArea(instructions); //instructions text area
         instructionsArea.setStyle("-fx-font-style: italic; -fx-background-color: #FFFFFF; " + 
@@ -113,14 +113,9 @@ public class RecipeDescriptionScreen {
 
             if (savedHit == false){
                 hRoot.getChildren().add(save);
-            }
-
-   
-            if (savedHit == true){
+            } if (savedHit == true){
                 hRoot.getChildren().add(deleteButton);
             }
-            
-
 
             // REMOVE: CANCEL, DONE
             hRoot.getChildren().remove(done);
@@ -129,7 +124,6 @@ public class RecipeDescriptionScreen {
             //cancels changes
             ingredientsArea.setText(ingredientsOG);
             instructionsArea.setText(instructionsOG);
-
 
             System.out.println("Cancel Button Clicked");
         });
@@ -148,15 +142,12 @@ public class RecipeDescriptionScreen {
 
             if (savedHit == false){
                 hRoot.getChildren().add(save);
-            }
-
-   
-            if (savedHit == true){
+            } if (savedHit == true){
                 hRoot.getChildren().add(deleteButton);
                 //TODO update the CSV
-                recipe.setIngredients(ingredientsArea.getText());
-                recipe.setInstructions(instructionsArea.getText());
-                recipeList.toCSV(null);
+                recipe.getRecipe().setIngredients(ingredientsArea.getText());
+                recipe.getRecipe().setInstructions(instructionsArea.getText());
+                recipeList.getArray().toCSV();
             }
 
             // REMOVE: CANCEL, DONE
@@ -172,18 +163,18 @@ public class RecipeDescriptionScreen {
         
         
     // GO BACK BUTTON --------------------------------------------------------------------------------------------
-        goBack = new Button("Go Back"); // Create a new button
+        goBack = new Button("Go Back"); 
         goBack.setStyle(defaultButtonStyle);
 
         goBack.setOnAction(e -> {
             switchToMainScene();
             System.out.println("Go Back on third(recipe) scene pressed");
-        }); // Switch back to main screen
-        hRoot.getChildren().add(goBack); // Add the new button to the new root
+        }); 
+        hRoot.getChildren().add(goBack); 
 
 
     // EDIT BUTTON --------------------------------------------------------------------------------------------
-        editButton = new Button("Edit"); // Create a new button
+        editButton = new Button("Edit");
         editButton.setStyle(defaultButtonStyle);
 
         editButton.setOnAction(e -> {
@@ -200,18 +191,14 @@ public class RecipeDescriptionScreen {
 
             if (savedHit == false){
                 hRoot.getChildren().remove(save);
-            }
-            
-            
-            if (savedHit == true){
+            } if (savedHit == true){
                 hRoot.getChildren().remove(deleteButton);
             }
     
 
             System.out.println("Edit Button Clicked");
         }); 
-        
-        hRoot.getChildren().add(editButton); // Add the new button to the new root
+        hRoot.getChildren().add(editButton);
 
 
         // SAVE BUTTON --------------------------------------------------------------------------------------------
@@ -220,24 +207,24 @@ public class RecipeDescriptionScreen {
             save.setStyle(defaultButtonStyle);
 
             save.setOnAction(e -> {
-                recipe = new Recipe();
-                recipe.setTitle(title);
-                recipe.setIngredients(ingredientsArea.getText());
-                recipe.setInstructions(instructionsArea.getText());
-                recipe.setButtonTitle();
+                Recipe recipeOB = new Recipe(title, ingredients, instructions);
+                recipe = new RecipeTitleButton(recipeOB);
+                recipe.getRecipe().setTitle(title);
+                recipe.getRecipe().setIngredients(ingredientsArea.getText());
+                recipe.getRecipe().setInstructions(instructionsArea.getText());
 
                 savedHit = true;
                 // recipe.getRecipeTitle().setText(recipeGenerated);
                 // recipe.getRecipeBody().setText(recipeGenerated);
                 recipe.setDescription(scene);
                 recipeList.getChildren().add(recipe);
-                recipeList.incNum();
+                recipeList.getArray().add(recipeOB);
+                // recipeList.incNum();
+                recipeList.getArray().toCSV();
                 Button titleButton = recipe.getRecipeTitleButton();
                 titleButton.setOnAction(e1 -> {
                     primaryStage.setScene(recipe.getDescription());
                 });
-
-                recipeList.toCSV(null);
 
                 hRoot.getChildren().remove(save);
                 hRoot.getChildren().add(deleteButton);
@@ -276,8 +263,9 @@ public class RecipeDescriptionScreen {
         confirmDelete.setOnAction(e -> {
 
             //TODO: delete from csv
-            recipeList.toCSV(recipe);
             recipeList.delete(recipe);
+            recipeList.getArray().delete(recipe.getRecipe());
+            recipeList.getArray().toCSV();
             //recipeList.toCSV(recipe);
             //recipeList.delete(recipe);
             switchToMainScene();
@@ -324,7 +312,6 @@ public class RecipeDescriptionScreen {
     }
 
     
-
     public Scene getScene() {
         return this.scene;
     }

@@ -26,10 +26,10 @@ public class Generate {
         recorder.stopRecording();
     }
 
-    // Method for getting user's voice, return a formated string for the input of
-    // chatGPT
+    // Method for getting user's voice, return a formated string for the input of chatGPT
     public String getUserInput() {
         String voiceInput;
+
         // Create file object from file path
         try {
             voiceInput = whisper.ActivateWhisper(FILE_PATH);
@@ -40,7 +40,6 @@ public class Generate {
             e.printStackTrace();
             voiceInput = "Error";
         }
-
         return voiceInput;
     }
 
@@ -65,9 +64,6 @@ public class Generate {
             e.printStackTrace();
             generatedRecipe = "Error";
         }
-
         return generatedRecipe;
     }
-
-}
-    
+}  

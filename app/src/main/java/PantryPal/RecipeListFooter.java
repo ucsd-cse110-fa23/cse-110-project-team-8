@@ -4,11 +4,11 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
 
-public class Footer extends HBox {
+public class RecipeListFooter extends HBox {
 
     private Button addButton;
 
-    public Footer() {
+    public RecipeListFooter() {
         this.setPrefSize(500, 70); // Increased height for a larger button
         this.setStyle("-fx-background-color: #BF2C34;");
         this.setSpacing(15);

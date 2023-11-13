@@ -8,10 +8,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
 
-public class PrimaryScreen extends BorderPane {
-    private Header header;
-    public Footer footer;
-    private RecipeList recipeList;
+public class RecipeListScreen extends BorderPane {
+    private RecipeListHeader header;
+    public RecipeListFooter footer;
+    private RecipeListBody recipeList;
 
     private Button addButton;
     private Stage primaryStage;
@@ -19,13 +19,14 @@ public class PrimaryScreen extends BorderPane {
     private Generate generate;
     private UserInputScreen userInputScreen;
 
-    public PrimaryScreen(Stage primaryStage) throws CsvValidationException {
+    public RecipeListScreen(Stage primaryStage) throws CsvValidationException {
         this.primaryStage = primaryStage;
         this.mainScene = this.getScene();
         generate = new Generate();
-        header = new Header();
-        footer = new Footer();
-        recipeList = new RecipeList();
+        header = new RecipeListHeader();
+        footer = new RecipeListFooter();
+        RecipeList recipeListArray =  new RecipeList();
+        recipeList = new RecipeListBody(recipeListArray);
         ScrollPane scrollPane = new ScrollPane(recipeList);
         scrollPane.setFitToWidth(true);
         this.setTop(header);
@@ -39,7 +40,7 @@ public class PrimaryScreen extends BorderPane {
     public void rebuild() throws CsvValidationException {
         recipeList.setStage(this.primaryStage);
         recipeList.setScene(this.mainScene);
-        recipeList.loadCSV();
+        recipeList.getArray().loadCSV(recipeList);
     }
 
     public void addListeners() {
@@ -57,7 +58,7 @@ public class PrimaryScreen extends BorderPane {
         this.mainScene = scene;
     }
 
-    public RecipeList getRecipeList() {
+    public RecipeListBody getRecipeList() {
         return this.recipeList;
     }
 

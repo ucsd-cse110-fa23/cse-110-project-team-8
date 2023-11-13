@@ -1,42 +1,43 @@
 package PantryPal;
 
-import java.io.*;
-import java.util.*;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
 
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvValidationException;
 
-import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
-import javafx.stage.Stage;
+import javafx.scene.control.Button;
 
-public class RecipeList extends VBox {
-    private Stage primaryStage;
-    private Scene mainScene;
-    private int numRecipe;
+public class RecipeList {
+    // private int numRecipe;
+    private ArrayList<Recipe> list;
 
-    public RecipeList() {
-        // this.setSpacing(5); // sets spacing between tasks
-        // this.setPrefSize(800, 800);
-        // this.setStyle("-fx-background-color: #F0F8FF;");
-
-        this.setSpacing(10); // Increased spacing for a cleaner look
-        this.setPrefSize(800, 800);
-        this.setStyle("-fx-background-color: #EAEAEA;"); // Light blue background color
-        this.numRecipe = 0;
+    public RecipeList(){
+        // this.numRecipe = 0;
+        list = new ArrayList<Recipe>();
     }
 
-    // TODO: Iteration 2
     public void delete(Recipe recipe) {
-        this.getChildren().remove(recipe);
+        list.remove(recipe);
     }
-    
 
-    // reload the CSV and regenerate the recipe to recipelist
-    public void loadCSV() throws CsvValidationException {
+    public int size() {
+        return this.list.size();
+    }
+
+    public void add(Recipe recipe) {
+        list.add(recipe);
+    }
+
+    public Recipe get(int index) {
+        return list.get(index);
+    }
+
+        // reload the CSV and regenerate the recipe to recipelist
+    public void loadCSV(RecipeListBody recipeList) throws CsvValidationException {
         try {
             // Create a CSV reader and specify the file to read
             CSVReader reader = new CSVReader(new FileReader("RecipeList.csv"));
@@ -44,16 +45,16 @@ public class RecipeList extends VBox {
             // Read the CSV file and process each row
             while (reader.peek() != null) {
                 String[] row = reader.readNext();
-                Recipe recipe = new Recipe();
-                recipe.setTitle(row[0]);
-                recipe.setIngredients(row[1]);
-                recipe.setInstructions(row[2]);
+                Recipe recipe = new Recipe(row[0], row[1], row[2]);
 
-                recipe.getRecipeTitle().setText(row[0]);
-                recipe.getRecipeBody().setText(row[1] + "\n" + row[2]);
-                recipe.getRecipeTitleButton().setText(row[0]);
-                this.getChildren().add(recipe);
-                RecipeDescriptionScreen screen = new RecipeDescriptionScreen(recipe, row[0], row[1], row[2],primaryStage, mainScene, this);
+                // recipe.getRecipeTitle().setText(row[0]);
+                // recipe.getRecipeBody().setText(row[1] + "\n" + row[2]);
+                // recipe.getRecipeTitleButton().setText(row[0]);
+                list.add(recipe);
+
+                recipeList.load(recipe);
+                // recipeList.incNum();
+                // RecipeDescriptionScreen screen = new RecipeDescriptionScreen(recipe, row[0], row[1], row[2],primaryStage, mainScene, this);
             }
 
             // Close the CSV reader
@@ -64,7 +65,7 @@ public class RecipeList extends VBox {
     }
 
     // Save to a CSV file whenever "close" is clicked
-    public void toCSV(Recipe toDelete) {
+    public void toCSV() {
         try {
             // Create a CSV writer and specify the file to write to
             CSVWriter writer = new CSVWriter(new FileWriter("RecipeList.csv"));
@@ -72,11 +73,8 @@ public class RecipeList extends VBox {
             // Write data to the CSV file
             String[] header = { "Title", "Ingredients", "Instructions"};
             writer.writeNext(header);
-            for (int i = 0; i < this.getChildren().size(); i++) {
-                Recipe recipe = (Recipe) this.getChildren().get(i);
-                if (recipe == toDelete){
-                    continue;
-                }
+            for (int i = 0; i < this.list.size(); i++) {
+                Recipe recipe = (Recipe) this.list.get(i);
                 String[] data = {recipe.getTitle(), recipe.getIngredients(), recipe.getInstructions()};
                 writer.writeNext(data);
             }
@@ -87,27 +85,18 @@ public class RecipeList extends VBox {
         }
     }
 
-    public void setStage(Stage stage) {
-        this.primaryStage = stage;
-    }
+    // public void incNum() {
+    //     this.numRecipe++;
+    // }
 
-    public void setScene(Scene scene) {
-        this.mainScene = scene;
-    }
+    // public void decNum() {
+    //     if (this.getNum() == 0) {
+    //         throw new IllegalArgumentException("No Recipe in the list.");
+    //     }
+    //     this.numRecipe--;
+    // }
 
-
-    public void incNum() {
-        this.numRecipe++;
-    }
-
-    public void decNum() {
-        if (this.getNum() == 0) {
-            throw new IllegalArgumentException("No Recipe in the list.");
-        }
-        this.numRecipe--;
-    }
-
-    public int getNum() {
-        return this.numRecipe;
-    }
+    // public int getNum() {
+    //     return this.numRecipe;
+    // }
 }

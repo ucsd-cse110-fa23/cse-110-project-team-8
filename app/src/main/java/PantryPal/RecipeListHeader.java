@@ -22,9 +22,9 @@ import javafx.scene.text.*;
 import java.io.*;
 import java.util.*;
 
-public class Header extends HBox {
+public class RecipeListHeader extends HBox {
 
-    public Header() {
+    public RecipeListHeader() {
         // this.setPrefSize(500, 60); // Size of the header
         // this.setStyle("-fx-background-color: #F0F8FF;");
 

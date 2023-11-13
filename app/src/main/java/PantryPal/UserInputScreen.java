@@ -23,7 +23,7 @@ public class UserInputScreen {
     private Button stopRecButton;
     private Button goBack;
 
-    public UserInputScreen(RecipeList recipeList, Stage primaryStage, Scene mainScene, Generate generate) {
+    public UserInputScreen(RecipeListBody recipeList, Stage primaryStage, Scene mainScene, Generate generate) {
         this.primaryStage = primaryStage;
         this.mainScene = mainScene;
 
