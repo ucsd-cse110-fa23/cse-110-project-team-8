@@ -9,19 +9,18 @@ import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvValidationException;
 
-import javafx.scene.control.Button;
-
 public class RecipeList {
-    // private int numRecipe;
+    private int numRecipe;
     private ArrayList<Recipe> list;
 
     public RecipeList(){
-        // this.numRecipe = 0;
+        this.numRecipe = 0;
         list = new ArrayList<Recipe>();
     }
 
     public void delete(Recipe recipe) {
         list.remove(recipe);
+        this.numRecipe--;
     }
 
     public int size() {
@@ -30,6 +29,7 @@ public class RecipeList {
 
     public void add(Recipe recipe) {
         list.add(recipe);
+        this.numRecipe++;
     }
 
     public Recipe get(int index) {
@@ -46,15 +46,9 @@ public class RecipeList {
             while (reader.peek() != null) {
                 String[] row = reader.readNext();
                 Recipe recipe = new Recipe(row[0], row[1], row[2]);
-
-                // recipe.getRecipeTitle().setText(row[0]);
-                // recipe.getRecipeBody().setText(row[1] + "\n" + row[2]);
-                // recipe.getRecipeTitleButton().setText(row[0]);
                 list.add(recipe);
 
                 recipeList.load(recipe);
-                // recipeList.incNum();
-                // RecipeDescriptionScreen screen = new RecipeDescriptionScreen(recipe, row[0], row[1], row[2],primaryStage, mainScene, this);
             }
 
             // Close the CSV reader
@@ -64,11 +58,32 @@ public class RecipeList {
         }
     }
 
-    // Save to a CSV file whenever "close" is clicked
-    public void toCSV() {
+    // reload the CSV and regenerate the recipe to recipelist FOR TESTING
+    public void loadCSV(String filename) throws CsvValidationException {
+        try {
+            // Create a CSV reader and specify the file to read
+            CSVReader reader = new CSVReader(new FileReader(filename));
+            reader.readNext();
+            // Read the CSV file and process each row
+            while (reader.peek() != null) {
+                String[] row = reader.readNext();
+                Recipe recipe = new Recipe(row[0], row[1], row[2]);
+
+                list.add(recipe);
+            }
+
+            // Close the CSV reader
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+        // Save to a CSV file whenever "close" is clicked
+    public void toCSV(String filename) {
         try {
             // Create a CSV writer and specify the file to write to
-            CSVWriter writer = new CSVWriter(new FileWriter("RecipeList.csv"));
+            CSVWriter writer = new CSVWriter(new FileWriter(filename));
 
             // Write data to the CSV file
             String[] header = { "Title", "Ingredients", "Instructions"};
@@ -85,18 +100,18 @@ public class RecipeList {
         }
     }
 
-    // public void incNum() {
-    //     this.numRecipe++;
-    // }
+    public void incNum() {
+        this.numRecipe++;
+    }
 
-    // public void decNum() {
-    //     if (this.getNum() == 0) {
-    //         throw new IllegalArgumentException("No Recipe in the list.");
-    //     }
-    //     this.numRecipe--;
-    // }
+    public void decNum() {
+        if (this.getNum() == 0) {
+            throw new IllegalArgumentException("No Recipe in the list.");
+        }
+        this.numRecipe--;
+    }
 
-    // public int getNum() {
-    //     return this.numRecipe;
-    // }
+    public int getNum() {
+        return this.numRecipe;
+    }
 }

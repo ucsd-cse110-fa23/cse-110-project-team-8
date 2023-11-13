@@ -122,7 +122,9 @@ public class UserInputScreen {
     }
 
 
+    // HELPER METHODS ------------------------------------------------------------------------------------------------------
 
+    //Gets the title of a freshly generated recipe
     public String getTitle(String recipeGenerated) {
         System.out.println(recipeGenerated);
         String output = "";
@@ -151,6 +153,7 @@ public class UserInputScreen {
         return output;
     }
 
+    //Gets the ingredients of a freshly generated recipe
     public String getIngredient(String recipeGenerated) {
         String output = "";
         String[] words = recipeGenerated.split("\\s+");
@@ -170,6 +173,7 @@ public class UserInputScreen {
         return output;
     }
 
+    //Gets the instructions of a freshly generated recipe
     public String getInstructions(String recipeGenerated) {
         String output = "";
         String[] words = recipeGenerated.split("\\s+");

@@ -3,14 +3,10 @@ package PantryPal;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
-import javafx.scene.text.TextAlignment;
+
 import javafx.stage.Stage;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -57,7 +53,6 @@ public class RecipeDescriptionScreen {
         titleBox.setStyle("-fx-border-color: #FFFFFF; -fx-border-width:  0 0 2 0;");
         titleBox.setAlignment(Pos.CENTER);
   
-
         Text ingredientsLabel = new Text("Ingredients: ");  //ingredients title
         ingredientsLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 20; -fx-fill: #ecf0f1;");
 
@@ -80,7 +75,6 @@ public class RecipeDescriptionScreen {
         instructionsArea.setWrapText(true);
         instructionsArea.setEditable(false);
 
-        // newRoot.getChildren().add(titleText);
         newRoot.getChildren().add(titleBox);
         newRoot.getChildren().add(ingredientsLabel);
         newRoot.getChildren().add(ingredientsArea); // add the textbox to the new root
@@ -96,8 +90,6 @@ public class RecipeDescriptionScreen {
         String defaultButtonStyle = "-fx-font-style: italic; -fx-background-color: #FFFFFF; " + 
                                     "-fx-font-weight: bold; -fx-font: 15 Arial; -fx-text-fill: #000000;" +
                                     " -fx-pref-width: 170; -fx-pref-height: 40;";
-
-       
 
     // CANCEL BUTTON -------------------------------------------------------------------------------------------- 
         cancel = new Button("Cancel");
@@ -140,14 +132,14 @@ public class RecipeDescriptionScreen {
             hRoot.getChildren().add(goBack);
             hRoot.getChildren().add(editButton);;
 
+            // if previously saved or not
             if (savedHit == false){
                 hRoot.getChildren().add(save);
             } if (savedHit == true){
                 hRoot.getChildren().add(deleteButton);
-                //TODO update the CSV
                 recipe.getRecipe().setIngredients(ingredientsArea.getText());
                 recipe.getRecipe().setInstructions(instructionsArea.getText());
-                recipeList.getArray().toCSV();
+                recipeList.getArray().toCSV("RecipeList.csv");
             }
 
             // REMOVE: CANCEL, DONE
@@ -161,7 +153,6 @@ public class RecipeDescriptionScreen {
             System.out.println("Done Button Clicked");
         });
         
-        
     // GO BACK BUTTON --------------------------------------------------------------------------------------------
         goBack = new Button("Go Back"); 
         goBack.setStyle(defaultButtonStyle);
@@ -171,7 +162,6 @@ public class RecipeDescriptionScreen {
             System.out.println("Go Back on third(recipe) scene pressed");
         }); 
         hRoot.getChildren().add(goBack); 
-
 
     // EDIT BUTTON --------------------------------------------------------------------------------------------
         editButton = new Button("Edit");
@@ -195,13 +185,11 @@ public class RecipeDescriptionScreen {
                 hRoot.getChildren().remove(deleteButton);
             }
     
-
             System.out.println("Edit Button Clicked");
         }); 
         hRoot.getChildren().add(editButton);
 
-
-        // SAVE BUTTON --------------------------------------------------------------------------------------------
+    // SAVE BUTTON --------------------------------------------------------------------------------------------
         if (savedHit == false) {
             save = new Button("Save");
             save.setStyle(defaultButtonStyle);
@@ -214,13 +202,10 @@ public class RecipeDescriptionScreen {
                 recipe.getRecipe().setInstructions(instructionsArea.getText());
 
                 savedHit = true;
-                // recipe.getRecipeTitle().setText(recipeGenerated);
-                // recipe.getRecipeBody().setText(recipeGenerated);
                 recipe.setDescription(scene);
                 recipeList.getChildren().add(recipe);
                 recipeList.getArray().add(recipeOB);
-                // recipeList.incNum();
-                recipeList.getArray().toCSV();
+                recipeList.getArray().toCSV("RecipeList.csv");
                 Button titleButton = recipe.getRecipeTitleButton();
                 titleButton.setOnAction(e1 -> {
                     primaryStage.setScene(recipe.getDescription());
@@ -234,9 +219,7 @@ public class RecipeDescriptionScreen {
             hRoot.getChildren().add(save);
         }
 
-
-
-// DELETE BUTTON --------------------------------------------------------------------------------------------
+    // DELETE BUTTON --------------------------------------------------------------------------------------------
         deleteButton = new Button("Delete");
         deleteButton.setStyle(defaultButtonStyle);
 
@@ -249,30 +232,27 @@ public class RecipeDescriptionScreen {
             hRoot.getChildren().remove(editButton);
             hRoot.getChildren().remove(goBack);
 
-            //recipeList.getChildren().remove(recipe);
             System.out.println("OG Delete Button Clicked");
         });
         if (savedHit) {
             hRoot.getChildren().add(deleteButton);
         }
 
-        // CONFIRM DELETE BUTTON --------------------------------------------------------------------------------------------
+    // CONFIRM DELETE BUTTON --------------------------------------------------------------------------------------------
         confirmDelete = new Button("Confirm Delete");
         confirmDelete.setStyle(defaultButtonStyle);
 
         confirmDelete.setOnAction(e -> {
 
-            //TODO: delete from csv
             recipeList.delete(recipe);
             recipeList.getArray().delete(recipe.getRecipe());
-            recipeList.getArray().toCSV();
-            //recipeList.toCSV(recipe);
-            //recipeList.delete(recipe);
+            recipeList.getArray().toCSV("RecipeList.csv");
             switchToMainScene();
 
             System.out.println( "Confirm Delete Button Clicked");
         });
-        // CANCEL DELETE BUTTON --------------------------------------------------------------------------------------------
+        
+    // CANCEL DELETE BUTTON --------------------------------------------------------------------------------------------
         cancelDelete = new Button("Cancel Delete");
         cancelDelete.setStyle(defaultButtonStyle);
 

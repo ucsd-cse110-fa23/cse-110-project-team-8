@@ -20,8 +20,8 @@ public class RecipeListScreen extends BorderPane {
     private UserInputScreen userInputScreen;
 
     public RecipeListScreen(Stage primaryStage) throws CsvValidationException {
-        this.primaryStage = primaryStage;
-        this.mainScene = this.getScene();
+        this.primaryStage = primaryStage;   // Store the stage
+        this.mainScene = this.getScene();   // Store the main scene
         generate = new Generate();
         header = new RecipeListHeader();
         footer = new RecipeListFooter();
@@ -43,6 +43,7 @@ public class RecipeListScreen extends BorderPane {
         recipeList.getArray().loadCSV(recipeList);
     }
 
+    // add listeners to the buttons
     public void addListeners() {
         addButton.setOnAction(e -> {
             userInputScreen = new UserInputScreen(recipeList, primaryStage, this.mainScene, this.generate);

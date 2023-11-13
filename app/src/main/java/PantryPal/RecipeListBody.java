@@ -1,15 +1,7 @@
 package PantryPal;
 
-import java.io.*;
-import java.util.*;
-import com.opencsv.CSVReader;
-import com.opencsv.CSVWriter;
-import com.opencsv.exceptions.CsvValidationException;
-
-import javafx.application.Application;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
@@ -25,20 +17,24 @@ public class RecipeListBody extends VBox {
         this.setStyle("-fx-background-color: #EAEAEA;");
     }
 
+    //Within the body of the main screen, the recipe list is displayed and loaded here
     public void load(Recipe recipe){
         RecipeTitleButton recipe1 = new RecipeTitleButton(recipe);
         recipe1.getRecipe().setTitle(recipe.getTitle());
         recipe1.getRecipe().setIngredients(recipe.getIngredients());
         recipe1.getRecipe().setInstructions(recipe.getInstructions());
         recipe1.setDescription(mainScene);
-        // Button titleButton = recipe1.getRecipeTitleButton();
-        // titleButton.setOnAction(e1 -> {
-        //     primaryStage.setScene(recipe1.getDescription());
-        // });
+ 
         this.getChildren().add(recipe1);
-        RecipeDescriptionScreen screen = new RecipeDescriptionScreen(recipe1, recipe.getTitle(), recipe.getIngredients(), recipe.getInstructions(),primaryStage, mainScene, this);
+        RecipeDescriptionScreen screen = new RecipeDescriptionScreen(recipe1, 
+                                                                     recipe.getTitle(), 
+                                                                     recipe.getIngredients(), 
+                                                                     recipe.getInstructions(),
+                                                                     primaryStage, mainScene, 
+                                                                     this);
     }
 
+    //Deletes the recipe from the recipe list
     public void delete(Node recipe) {
         this.getChildren().remove(recipe);
     }

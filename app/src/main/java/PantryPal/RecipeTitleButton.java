@@ -2,7 +2,7 @@ package PantryPal;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.*;
+import javafx.scene.layout.HBox;
 
 public class RecipeTitleButton extends HBox {
     private Button titleButton;
@@ -19,10 +19,11 @@ public class RecipeTitleButton extends HBox {
         ingredient = recipe.getIngredients();
         instructions = recipe.getInstructions();
         titleButton.setPrefSize(800, 50); // sets size of button
-        titleButton.setStyle("-fx-background-color: #ffffff; -fx-border-width: 0;"); // sets style of button
+        titleButton.setStyle(" -fx-font-size: 18; -fx-background-color: #ffffff; -fx-border-width: 0;"); // sets style of button
         this.getChildren().add(titleButton);
     }
 
+    // getters and setters
     public Recipe getRecipe() {
         return this.recipe;
     }

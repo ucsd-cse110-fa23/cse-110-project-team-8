@@ -1,3 +1,4 @@
+
 package VoiceInput;
 
 import org.json.JSONArray;
@@ -10,6 +11,8 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
+//Borrowed from CSE 110 Lab 4 
+//https://docs.google.com/document/d/1SvT4yFlK7UthOz139vH6BciSiTEQojHBl_RaP0TiWH0/edit#heading=h.1jpl89njwrif
 public class ChatGPT {
     private static final String API_ENDPOINT = "https://api.openai.com/v1/completions";
     private static final String API_KEY = "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";

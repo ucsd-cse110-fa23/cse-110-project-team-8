@@ -4,13 +4,6 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-// probably will need to remove these
-// import javafx.stage.FileChooser;
-// import javafx.stage.WindowEvent;
-// import javafx.stage.FileChooser.ExtensionFilter;
-// import java.lang.ModuleLayer.Controller;
-// import PantryPal.RecipeListFooter;
-
 public class App extends Application {
 
     public RecipeListScreen root;
@@ -29,7 +22,6 @@ public class App extends Application {
         root.setMainScene(primaryStage.getScene());
         root.rebuild();
         
-
         // Make window non-resizable
         primaryStage.setResizable(false);
 

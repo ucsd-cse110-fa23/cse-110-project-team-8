@@ -3,6 +3,8 @@ package VoiceInput;
 import java.io.*;
 import javax.sound.sampled.*;
 
+//Borrowed from CSE 110 Lab 4 
+//https://docs.google.com/document/d/1SvT4yFlK7UthOz139vH6BciSiTEQojHBl_RaP0TiWH0/edit#heading=h.1jpl89njwrif
 public class AudioRecorder {
     public AudioFormat audioFormat;
     public TargetDataLine targetDataLine;
