@@ -9,7 +9,7 @@ import PantryPal.*;
 import java.io.FileReader;
 import com.opencsv.exceptions.CsvValidationException;
 
-public class VoiceInputTest {
+public class PantryPalTests {
     private RecipeList recipeList;
     
 
