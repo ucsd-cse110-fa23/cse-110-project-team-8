@@ -22,7 +22,7 @@ dependencies {
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
     implementation 'org.json:json:20180813'
     implementation group: 'com.opencsv', name: 'opencsv', version: '5.8'
-
+    implementation 'org.mongodb:mongodb-driver-sync:4.11.0'
 }
 
 test {
