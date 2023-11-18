@@ -5,7 +5,7 @@ public class Recipe {
     private String ingredient;
     private String instructions;
 
-    public Recipe(String title, String ingredient, String instructions){
+    public Recipe(String title, String ingredient, String instructions) {
         this.titleString = title;
         this.ingredient = ingredient;
         this.instructions = instructions;

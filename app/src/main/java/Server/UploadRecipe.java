@@ -18,8 +18,8 @@ import java.io.IOException;
 public class UploadRecipe {
 
     public static void main(String[] args) {
-        String filePath = "recipes.csv";
-        String uri = "mongodb+srv://henryfzh:Henry%40heng2002@myfirstcluster.pwk6osr.mongodb.net/?retryWrites=true&w=majority";
+        String filePath = "RecipeList.csv";
+        String uri = "";
         BufferedReader reader = null;
         try {
             // Create a BufferedReader to read the file
