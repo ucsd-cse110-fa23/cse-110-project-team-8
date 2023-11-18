@@ -21,34 +21,36 @@ public class Server {
   private static final int SERVER_PORT = 8100;
   private static final String SERVER_HOSTNAME = "localhost";
 
+
   public static void main(String[] args) throws IOException {
     // create a thread pool to handle requests
     ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(10);
 
     // create a mongoDB to store data
     String uri = "mongodb+srv://kaz006:golf1122@cse110lab6.vmgxl2s.mongodb.net/?retryWrites=true&w=majority";
-    try (MongoClient mongoClient = MongoClients.create(uri)) {
 
-
-        MongoDatabase RecipeListDB = mongoClient.getDatabase("Recipe_List");
-        //MongoCollection<Document> recipeCollection = RecipeListDB.getCollection("Recipe");
-    }
+    MongoClient mongoClient = MongoClients.create(uri);
+    MongoDatabase RecipeListDB = mongoClient.getDatabase("Recipe_List");
+    MongoCollection<Document> recipeCollection = RecipeListDB.getCollection("Recipe");
+      // MongoCollection<Document> recipeCollection =
+      // RecipeListDB.getCollection("Recipe");
+    
 
     // create a server
     HttpServer server = HttpServer.create(
         new InetSocketAddress(SERVER_HOSTNAME, SERVER_PORT),
         0);
 
-      //create the context
-      server.createContext("/", new RequestHandler(data));
-      //server.createContext("/name", new MyHandler(data));
+    // create the context
+    server.createContext("/", new RequestHandler(recipeCollection));
+    // server.createContext("/name", new MyHandler(data));
 
-      //set the executor
-      server.setExecutor(threadPoolExecutor);
+    // set the executor
+    server.setExecutor(threadPoolExecutor);
 
-       //start the server
-      server.start();
+    // start the server
+    server.start();
 
-      System.out.println("Server started on port " + SERVER_PORT);
+    System.out.println("Server started on port " + SERVER_PORT);
   }
 }

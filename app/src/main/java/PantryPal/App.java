@@ -11,7 +11,8 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        // Setting the Layout of the Window- Should contain a Header, Footer and the ContactList
+        // Setting the Layout of the Window- Should contain a Header, Footer and the
+        // ContactList
         root = new RecipeListScreen(primaryStage);
 
         // Set the title of the app
@@ -21,7 +22,7 @@ public class App extends Application {
         primaryStage.setScene(new Scene(root, 800, 800));
         root.setMainScene(primaryStage.getScene());
         root.rebuild();
-        
+
         // Make window non-resizable
         primaryStage.setResizable(false);
 
