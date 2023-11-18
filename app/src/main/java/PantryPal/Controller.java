@@ -11,23 +11,13 @@ import com.opencsv.exceptions.CsvValidationException;
 import javafx.event.ActionEvent;
 
 public class Controller {
-    private RecipeDescriptionScreen recipeDescriptionScreen;
     private Model model;
 
-    public Controller(RecipeDescriptionScreen recipeDescriptionScreen, Model model) throws Exception {
-        this.recipeDescriptionScreen = recipeDescriptionScreen;
+    public Controller(Model model) throws Exception {
         this.model = model;
-
-        this.recipeDescriptionScreen.setPostButtonAction(event -> {
-            try {
-                handlePostButton(event);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
     }
 
-    private void handlePostButton(ActionEvent event) throws Exception {
+    void handleSaveButton() throws Exception {
         try {
             // Create a CSV reader and specify the file to read
             CSVReader reader = new CSVReader(new FileReader("RecipeList.csv"));
@@ -39,9 +29,8 @@ public class Controller {
                 String title = row[0];
                 String ingredients = row[1];
                 String instructions = row[2];
-                String response = model.performRequest("POST", title, ingredients, instructions);
+                String response = model.performRequest("POST", title, ingredients, instructions, "1");
             }
-
             // Close the CSV reader
             reader.close();
         } catch (IOException e) {

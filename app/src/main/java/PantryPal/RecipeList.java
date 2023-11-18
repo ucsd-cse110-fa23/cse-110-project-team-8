@@ -13,7 +13,7 @@ public class RecipeList {
     private int numRecipe;
     private ArrayList<Recipe> list;
 
-    public RecipeList(){
+    public RecipeList() {
         this.numRecipe = 0;
         list = new ArrayList<Recipe>();
     }
@@ -36,8 +36,8 @@ public class RecipeList {
         return list.get(index);
     }
 
-        // reload the CSV and regenerate the recipe to recipelist
-    public void loadCSV(RecipeListBody recipeList) throws CsvValidationException {
+    // reload the CSV and regenerate the recipe to recipelist
+    public void loadCSV(RecipeListBody recipeList, Controller controller) throws Exception {
         try {
             // Create a CSV reader and specify the file to read
             CSVReader reader = new CSVReader(new FileReader("RecipeList.csv"));
@@ -48,7 +48,7 @@ public class RecipeList {
                 Recipe recipe = new Recipe(row[0], row[1], row[2]);
                 list.add(recipe);
 
-                recipeList.load(recipe);
+                recipeList.load(recipe, controller);
             }
 
             // Close the CSV reader
@@ -79,18 +79,18 @@ public class RecipeList {
         }
     }
 
-        // Save to a CSV file whenever "close" is clicked
+    // Save to a CSV file whenever "close" is clicked
     public void toCSV(String filename) {
         try {
             // Create a CSV writer and specify the file to write to
             CSVWriter writer = new CSVWriter(new FileWriter(filename));
 
             // Write data to the CSV file
-            String[] header = { "Title", "Ingredients", "Instructions"};
+            String[] header = { "Title", "Ingredients", "Instructions" };
             writer.writeNext(header);
             for (int i = 0; i < this.list.size(); i++) {
                 Recipe recipe = (Recipe) this.list.get(i);
-                String[] data = {recipe.getTitle(), recipe.getIngredients(), recipe.getInstructions()};
+                String[] data = { recipe.getTitle(), recipe.getIngredients(), recipe.getInstructions() };
                 writer.writeNext(data);
             }
             // Close the CSV writer

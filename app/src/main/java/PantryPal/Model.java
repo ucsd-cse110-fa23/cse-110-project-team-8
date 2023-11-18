@@ -10,13 +10,14 @@ import java.net.URI;
 public class Model {
     private static final String GET_ALL = "GET_ALL";
 
-    public String performRequest(String method, String recipeTitle, String ingredients, String instructions) {
+    public String performRequest(String method, String recipeTitle, String ingredients, String instructions,
+            String query) {
         // Implement your HTTP request logic here and return the response
 
         try {
             String urlString = "http://localhost:8100/";
-            if (recipeTitle != null) {
-                urlString += "?=" + recipeTitle;
+            if (query != null) {
+                urlString += "?=" + query;
             }
             URL url = new URI(urlString).toURL();
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();

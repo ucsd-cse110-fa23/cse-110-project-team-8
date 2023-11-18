@@ -65,10 +65,9 @@ public class RequestHandler implements HttpHandler {
         String recipeTitle = recipe.get(0);
         String ingredients = recipe.get(1);
         String instructions = recipe.get(2);
-        if (recipeTitle.equals("") && ingredients.equals("") && instructions.equals("")){
+        if (recipeTitle.equals("") && ingredients.equals("") && instructions.equals("")) {
             response = readAllRecipe(recipeCollection);
-        }
-        else{
+        } else {
             response = readOneRecipe(recipeCollection, recipeTitle);
         }
         return response;
@@ -126,7 +125,7 @@ public class RequestHandler implements HttpHandler {
     private static void insertOneRecipe(MongoCollection<Document> recipeCollection, String recipeTitle,
             String ingredients, String instructions) {
         recipeCollection.insertOne(generateNewRecipe(recipeTitle, ingredients, instructions));
-        System.out.println("One recipe inserted for studentId 10000.");
+        System.out.println(recipeTitle + " inserted.");
     }
 
     private static Document generateNewRecipe(String recipeTitle, String ingredients, String instructions) {
@@ -159,16 +158,18 @@ public class RequestHandler implements HttpHandler {
 
     private static String readOneRecipe(MongoCollection<Document> recipeCollection, String recipeTitle) {
         Document recipe = recipeCollection.find(eq("Title", recipeTitle)).first();
-        String recipe_details = recipe.get("Title") + "," + recipe.get("Instructions") + "," + recipe.get("Ingredients");
-        
+        String recipe_details = recipe.get("Title") + "," + recipe.get("Instructions") + ","
+                + recipe.get("Ingredients");
+
         System.out.println(recipe_details);
         return recipe_details;
     }
 
-     private static String readAllRecipe(MongoCollection<Document> recipeCollection) {
+    private static String readAllRecipe(MongoCollection<Document> recipeCollection) {
         String recipe_details = "";
-        for (Document recipe : recipeCollection.find()){
-            recipe_details += recipe.get("Title") + "," + recipe.get("Instructions") + "," + recipe.get("Ingredients") + "\n";
+        for (Document recipe : recipeCollection.find()) {
+            recipe_details += recipe.get("Title") + "," + recipe.get("Instructions") + "," + recipe.get("Ingredients")
+                    + "\n";
         }
         System.out.println(recipe_details);
         return recipe_details;

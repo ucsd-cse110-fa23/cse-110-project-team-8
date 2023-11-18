@@ -22,50 +22,55 @@ public class UserInputScreen {
     private Button startRecButton;
     private Button stopRecButton;
     private Button goBack;
+    private Controller controller;
 
-    public UserInputScreen(RecipeListBody recipeList, Stage primaryStage, Scene mainScene, Generate generate) {
+    public UserInputScreen(RecipeListBody recipeList, Stage primaryStage, Scene mainScene, Generate generate,
+            Controller controller) {
         this.primaryStage = primaryStage;
         this.mainScene = mainScene;
+        this.controller = controller;
 
         firstInput = true;
 
         VBox newRoot = new VBox(); // Create a new root for the new scene
         newRoot.setStyle("-fx-background-color: #BF2C34;"); // Ashy white background color
 
-        Text text1 = new Text(" \n\n\n\n\n To create a new recipe please state your meal type. \n\n (Breakfast, Lunch, Dinner) \n\n\n\n");
-        Text text3 = new Text("Press'Start Recording' then say your meal type. \n\n Press 'Stop Recording' when you are done speaking. ");
-        
+        Text text1 = new Text(
+                " \n\n\n\n\n To create a new recipe please state your meal type. \n\n (Breakfast, Lunch, Dinner) \n\n\n\n");
+        Text text3 = new Text(
+                "Press'Start Recording' then say your meal type. \n\n Press 'Stop Recording' when you are done speaking. ");
+
         TextFlow recipeInstructions = new TextFlow(text1, text3); // adding all lines of text into one big text
         recipeInstructions.setPrefSize(200, 600);
-        //recipeInstructions.setStyle("-fx-font-style: italic; ");
-        recipeInstructions.setStyle("-fx-font-style: italic; -fx-background-color: #FFFFFF; " + 
-        "-fx-font-weight: bold; -fx-font: 25 Arial; -fx-text-fill: #000000;");
+        // recipeInstructions.setStyle("-fx-font-style: italic; ");
+        recipeInstructions.setStyle("-fx-font-style: italic; -fx-background-color: #FFFFFF; " +
+                "-fx-font-weight: bold; -fx-font: 25 Arial; -fx-text-fill: #000000;");
         recipeInstructions.setTextAlignment(TextAlignment.CENTER); // aligning text to the center
         newRoot.getChildren().add(recipeInstructions); // add the textbox to the new root
 
-         String defaultButtonStyle = "-fx-font-style: italic; -fx-background-color: #FFFFFF; " + 
-                                    "-fx-font-weight: bold; -fx-font: 15 Arial; -fx-text-fill: #000000;" +
-                                    " -fx-pref-width: 170; -fx-pref-height: 40;";
+        String defaultButtonStyle = "-fx-font-style: italic; -fx-background-color: #FFFFFF; " +
+                "-fx-font-weight: bold; -fx-font: 15 Arial; -fx-text-fill: #000000;" +
+                " -fx-pref-width: 170; -fx-pref-height: 40;";
 
-
-                                    
         HBox footer = new HBox();
         newRoot.getChildren().add(footer);
         footer.setPrefSize(500, 100); // Increased height for a larger button
         footer.setStyle("-fx-background-color: #BF2C34;");
         footer.setSpacing(15);
 
-    // START RECORDING ------------------------------------------------------------------------------------------------------
+        // START RECORDING
+        // ------------------------------------------------------------------------------------------------------
         startRecButton = new Button("Start Recording"); // Create a new button
         startRecButton.setStyle(defaultButtonStyle);
         startRecButton.setOnAction(e -> {
             generate.startRecording();
             System.out.println("Start Recording on Meal scene pressed");
         });
-        //newRoot.getChildren().add(startRecButton); // Add the new button to the new root
+        // newRoot.getChildren().add(startRecButton); // Add the new button to the new
+        // root
 
-    
-    // STOP RECORDING ------------------------------------------------------------------------------------------------------    
+        // STOP RECORDING
+        // ------------------------------------------------------------------------------------------------------
         stopRecButton = new Button("Stop Recording"); // Create a new button
         stopRecButton.setStyle(defaultButtonStyle);
 
@@ -80,8 +85,8 @@ public class UserInputScreen {
                 }
                 text1.setText("\n\n\n\n Please state your ingredients. \n\n");
                 text3.setText("(Example: 'salt, pepper, eggs, and bacon!') \n\n\n\n" +
-                              "Press 'Start Recording' then say your ingredients. \n\n" + 
-                              "Press 'Stop Recording' when you are done speaking. ");
+                        "Press 'Start Recording' then say your ingredients. \n\n" +
+                        "Press 'Stop Recording' when you are done speaking. ");
                 firstInput = false;
             } else {
                 this.ingredients = generate.getUserInput(); // Get the user input
@@ -93,14 +98,21 @@ public class UserInputScreen {
                 String processedIngredients = this.getIngredient(recipeGenerated);
                 String processedInstructions = this.getInstructions(recipeGenerated);
 
-                RecipeDescriptionScreen generatedRecipeScreen = new RecipeDescriptionScreen(null, processedTitle, processedIngredients, processedInstructions,
-                        primaryStage, mainScene,recipeList);
-                generatedRecipeScreen.switchToThisScene();
+                RecipeDescriptionScreen generatedRecipeScreen;
+                try {
+                    generatedRecipeScreen = new RecipeDescriptionScreen(null, processedTitle,
+                            processedIngredients, processedInstructions,
+                            primaryStage, mainScene, recipeList, this.controller);
+                    generatedRecipeScreen.switchToThisScene();
+                } catch (Exception e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
             }
         });
-        
-    
-    // GO BACK ------------------------------------------------------------------------------------------------------    
+
+        // GO BACK
+        // ------------------------------------------------------------------------------------------------------
         goBack = new Button("Go Back"); // Create a GO BACK button
         goBack.setStyle(defaultButtonStyle);
         goBack.setOnAction(e -> {
@@ -113,7 +125,6 @@ public class UserInputScreen {
         footer.getChildren().add(stopRecButton); // Add the new button to the new root
         footer.setAlignment(Pos.CENTER);
 
-
         newRoot.setSpacing(10); // Set the spacing between the children of newRoot
 
         newRoot.setAlignment(Pos.CENTER); // Set the alignment of the children of newRoot
@@ -121,10 +132,10 @@ public class UserInputScreen {
         this.scene = new Scene(newRoot, 800, 800); // Create a new scene
     }
 
+    // HELPER METHODS
+    // ------------------------------------------------------------------------------------------------------
 
-    // HELPER METHODS ------------------------------------------------------------------------------------------------------
-
-    //Gets the title of a freshly generated recipe
+    // Gets the title of a freshly generated recipe
     public String getTitle(String recipeGenerated) {
         System.out.println(recipeGenerated);
         String output = "";
@@ -134,7 +145,7 @@ public class UserInputScreen {
         while (i < words.length - 1) {
             System.out.println(words[i]);
             i++;
-            
+
         }
 
         int index = 0;
@@ -153,12 +164,12 @@ public class UserInputScreen {
         return output;
     }
 
-    //Gets the ingredients of a freshly generated recipe
+    // Gets the ingredients of a freshly generated recipe
     public String getIngredient(String recipeGenerated) {
         String output = "";
         String[] words = recipeGenerated.split("\\s+");
         int index = 0;
-        
+
         while (index < words.length) {
             if (words[index].equals("Ingredients:")) {
                 break;
@@ -173,7 +184,7 @@ public class UserInputScreen {
         return output;
     }
 
-    //Gets the instructions of a freshly generated recipe
+    // Gets the instructions of a freshly generated recipe
     public String getInstructions(String recipeGenerated) {
         String output = "";
         String[] words = recipeGenerated.split("\\s+");
@@ -191,8 +202,6 @@ public class UserInputScreen {
         }
         return output;
     }
-
-
 
     public Scene getScene() {
         return this.scene;

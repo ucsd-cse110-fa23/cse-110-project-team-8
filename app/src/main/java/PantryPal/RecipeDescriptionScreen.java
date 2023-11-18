@@ -33,7 +33,7 @@ public class RecipeDescriptionScreen {
 
     // Use for rebuild the recipes when reopen the app
     public RecipeDescriptionScreen(RecipeTitleButton recipe1, String title, String ingredients, String instructions,
-            Stage primaryStage, Scene mainScene, RecipeListBody recipeList) {
+            Stage primaryStage, Scene mainScene, RecipeListBody recipeList, Controller controller) throws Exception {
 
         if (recipe1 == null) {
             savedHit = false;
@@ -222,7 +222,12 @@ public class RecipeDescriptionScreen {
 
                 hRoot.getChildren().remove(save);
                 hRoot.getChildren().add(deleteButton);
-
+                try {
+                    controller.handleSaveButton();
+                } catch (Exception e2) {
+                    // TODO Auto-generated catch block
+                    e2.printStackTrace();
+                }
                 switchToMainScene();
             });
             hRoot.getChildren().add(save);
@@ -330,9 +335,5 @@ public class RecipeDescriptionScreen {
 
     public Scene getMainScene() {
         return this.mainScene;
-    }
-
-    public void setPostButtonAction(EventHandler<ActionEvent> eventHandler) {
-        save.setOnAction(eventHandler);
     }
 }
