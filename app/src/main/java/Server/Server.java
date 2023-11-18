@@ -20,9 +20,9 @@ public class Server {
   // initialize server port and hostname
   private static final int SERVER_PORT = 8100;
   private static final String SERVER_HOSTNAME = "localhost";
+  private HttpServer server;
 
-
-  public static void main(String[] args) throws IOException {
+  public void activateServer() throws IOException {
     // create a thread pool to handle requests
     ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(10);
 
@@ -32,15 +32,14 @@ public class Server {
     MongoClient mongoClient = MongoClients.create(uri);
     MongoDatabase RecipeListDB = mongoClient.getDatabase("Recipe_List");
     MongoCollection<Document> recipeCollection = RecipeListDB.getCollection("Recipe");
-      // MongoCollection<Document> recipeCollection =
-      // RecipeListDB.getCollection("Recipe");
-    
+    // MongoCollection<Document> recipeCollection =
+    // RecipeListDB.getCollection("Recipe");
 
     // create a server
     HttpServer server = HttpServer.create(
         new InetSocketAddress(SERVER_HOSTNAME, SERVER_PORT),
         0);
-
+    this.server = server;
     // create the context
     server.createContext("/", new RequestHandler(recipeCollection));
     // server.createContext("/name", new MyHandler(data));
@@ -52,5 +51,9 @@ public class Server {
     server.start();
 
     System.out.println("Server started on port " + SERVER_PORT);
+  }
+
+  public void deactivateServer() throws IOException{
+    server.stop(0);
   }
 }

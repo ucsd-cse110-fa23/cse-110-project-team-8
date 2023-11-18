@@ -19,13 +19,13 @@ public class RecipeListScreen extends BorderPane {
     private Generate generate;
     private UserInputScreen userInputScreen;
 
-    public RecipeListScreen(Stage primaryStage) throws CsvValidationException {
-        this.primaryStage = primaryStage;   // Store the stage
-        this.mainScene = this.getScene();   // Store the main scene
+    public RecipeListScreen(Stage primaryStage, ScreenManager screenManager) throws CsvValidationException {
+        this.primaryStage = primaryStage; // Store the stage
+        this.mainScene = this.getScene(); // Store the main scene
         generate = new Generate();
         header = new RecipeListHeader();
         footer = new RecipeListFooter();
-        RecipeList recipeListArray =  new RecipeList();
+        RecipeList recipeListArray = new RecipeList();
         recipeList = new RecipeListBody(recipeListArray);
         ScrollPane scrollPane = new ScrollPane(recipeList);
         scrollPane.setFitToWidth(true);
@@ -33,7 +33,12 @@ public class RecipeListScreen extends BorderPane {
         this.setCenter(scrollPane);
         this.setBottom(footer);
         addButton = footer.getAddButton();
-        addListeners();
+        addButton.setOnAction(e -> {
+            userInputScreen = new UserInputScreen(recipeList, primaryStage, this.mainScene, this.generate,
+                    screenManager);
+            userInputScreen.switchToThisScene();
+        });
+        // addListeners();
     }
 
     // rebuild the recipelist
@@ -45,10 +50,8 @@ public class RecipeListScreen extends BorderPane {
 
     // add listeners to the buttons
     public void addListeners() {
-        addButton.setOnAction(e -> {
-            userInputScreen = new UserInputScreen(recipeList, primaryStage, this.mainScene, this.generate);
-            userInputScreen.switchToThisScene();
-        }); // Set the action on the button
+
+        // Set the action on the button
     }
 
     public Generate getGenerate() {

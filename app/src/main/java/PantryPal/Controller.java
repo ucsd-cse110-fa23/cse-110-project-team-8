@@ -9,43 +9,36 @@ import java.util.ArrayList;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
 import javafx.event.ActionEvent;
+import javafx.scene.control.Button;
 
 public class Controller {
-    private RecipeDescriptionScreen recipeDescriptionScreen;
+    private ScreenManager screenManager;
     private Model model;
 
-    public Controller(RecipeDescriptionScreen recipeDescriptionScreen, Model model) throws Exception {
-        this.recipeDescriptionScreen = recipeDescriptionScreen;
+    public Controller(ScreenManager screenManager, Model model) throws Exception {
+        this.screenManager = screenManager;
         this.model = model;
+        if (screenManager.getRecipeDescriptionScreen() != null) {
+            this.screenManager.getRecipeDescriptionScreen().setSaveButtonAction(event -> {
+                try {
+                    handlePOST(event);
 
-        this.recipeDescriptionScreen.setPostButtonAction(event -> {
-            try {
-                handlePostButton(event);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+        }
+
     }
 
-    private void handlePostButton(ActionEvent event) throws Exception {
-        try {
-            // Create a CSV reader and specify the file to read
-            CSVReader reader = new CSVReader(new FileReader("RecipeList.csv"));
-            reader.readNext();
-            // Read the CSV file and process each row
-            while (reader.peek() != null) {
-                String[] row = reader.readNext();
-                Recipe recipe = new Recipe(row[0], row[1], row[2]);
-                String title = row[0];
-                String ingredients = row[1];
-                String instructions = row[2];
-                String response = model.performRequest("POST", title, ingredients, instructions);
-            }
+    private void handlePOST(ActionEvent event) throws Exception {
+        RecipeDescriptionScreen rd = this.screenManager.getRecipeDescriptionScreen();
+        rd.handleSaveButton();
+        String title = rd.getTitle();
+        String ingredients = rd.getIngredients();
+        String instructions = rd.getInstructions();
 
-            // Close the CSV reader
-            reader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        String response = model.performRequest("POST", title, ingredients, instructions);
+        screenManager.showAlert("Response", response);
     }
 }
