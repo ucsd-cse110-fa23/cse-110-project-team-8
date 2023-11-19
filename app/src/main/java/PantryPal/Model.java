@@ -10,15 +10,17 @@ import java.net.URI;
 public class Model {
     private static final String GET_ALL = "GET_ALL";
 
-    public String performRequest(String method, String recipeTitle, String ingredients, String instructions,
-            String query) {
+    public String performRequest(String method, String recipeTitle, String ingredients, String instructions) {
         // Implement your HTTP request logic here and return the response
 
         try {
             String urlString = "http://localhost:8100/";
-            if (query != null) {
-                urlString += "?=" + query;
+            if (recipeTitle != null && !recipeTitle.equals(" ")) {
+                urlString += "?=" + recipeTitle;
+            } else if (recipeTitle.equals(" ")) {
+                urlString += "?=" + "defaultLoad";
             }
+
             URL url = new URI(urlString).toURL();
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod(method);
@@ -26,12 +28,13 @@ public class Model {
 
             if (method.equals("POST") || method.equals("PUT")) {
                 OutputStreamWriter out = new OutputStreamWriter(conn.getOutputStream());
-                out.write(recipeTitle + "," + ingredients + "," + instructions);
+                out.write(recipeTitle + ";" + ingredients + ";" + instructions);
                 out.flush();
                 out.close();
             }
             // request for GET all recipes
-            if (method.equals("GET") && recipeTitle.equals("") && ingredients.equals("") && instructions.equals("")) {
+            if (method.equals("GET") && recipeTitle.equals(" ") && ingredients.equals(" ")
+                    && instructions.equals(" ")) {
                 OutputStreamWriter out = new OutputStreamWriter(conn.getOutputStream());
                 out.write(GET_ALL);
                 out.flush();

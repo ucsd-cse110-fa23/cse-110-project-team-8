@@ -36,6 +36,21 @@ public class RecipeList {
         return list.get(index);
     }
 
+    // load the dataBase
+    public void loadDB(RecipeListBody recipeList, Controller controller) throws Exception {
+        System.out.println("3483y489y38");
+        String response = controller.handleGetAll();
+        System.out.println("response: " + response);
+        String[] recipes = response.split("\n");
+        for (String recipe : recipes) {
+            String[] data = recipe.split(";");
+            System.out.println("data: " + data[0]);
+            Recipe newRecipe = new Recipe(data[0], data[1], data[2]);
+            list.add(newRecipe);
+            recipeList.load(newRecipe, controller);
+        }
+    }
+
     // reload the CSV and regenerate the recipe to recipelist
     public void loadCSV(RecipeListBody recipeList, Controller controller) throws Exception {
         try {

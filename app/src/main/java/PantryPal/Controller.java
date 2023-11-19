@@ -17,7 +17,7 @@ public class Controller {
         this.model = model;
     }
 
-    void handleSaveButton() throws Exception {
+    public void handleSave() throws Exception {
         try {
             // Create a CSV reader and specify the file to read
             CSVReader reader = new CSVReader(new FileReader("RecipeList.csv"));
@@ -29,12 +29,18 @@ public class Controller {
                 String title = row[0];
                 String ingredients = row[1];
                 String instructions = row[2];
-                String response = model.performRequest("POST", title, ingredients, instructions, "1");
+                String response = model.performRequest("POST", title, ingredients, instructions);
             }
             // Close the CSV reader
             reader.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public String handleGetAll() {
+        String response = model.performRequest("GET", " ", " ", " ");
+        System.out.println(response);
+        return response;
     }
 }

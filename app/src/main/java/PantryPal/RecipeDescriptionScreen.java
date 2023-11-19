@@ -223,7 +223,7 @@ public class RecipeDescriptionScreen {
                 hRoot.getChildren().remove(save);
                 hRoot.getChildren().add(deleteButton);
                 try {
-                    controller.handleSaveButton();
+                    controller.handleSave();
                 } catch (Exception e2) {
                     // TODO Auto-generated catch block
                     e2.printStackTrace();

@@ -42,7 +42,7 @@ public class RecipeListScreen extends BorderPane {
     public void rebuild() throws Exception {
         recipeList.setStage(this.primaryStage);
         recipeList.setScene(this.mainScene);
-        recipeList.getArray().loadCSV(recipeList, this.controller);
+        recipeList.getArray().loadDB(recipeList, this.controller);
     }
 
     // add listeners to the buttons
