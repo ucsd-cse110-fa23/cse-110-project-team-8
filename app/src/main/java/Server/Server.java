@@ -21,11 +21,12 @@ public class Server {
   private static final int SERVER_PORT = 8100;
   private static final String SERVER_HOSTNAME = "localhost";
   private HttpServer server;
+  private ThreadPoolExecutor threadPoolExecutor;
 
   public void activateServer() throws IOException {
     // create a thread pool to handle requests
     ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(10);
-
+    this.threadPoolExecutor = threadPoolExecutor;
     // create a mongoDB to store data
     String uri = "mongodb+srv://kaz006:golf1122@cse110lab6.vmgxl2s.mongodb.net/?retryWrites=true&w=majority";
 
@@ -54,6 +55,7 @@ public class Server {
   }
 
   public void deactivateServer() throws IOException {
-    server.stop(0);
+      server.stop(0);
+      threadPoolExecutor.shutdownNow();
   }
 }

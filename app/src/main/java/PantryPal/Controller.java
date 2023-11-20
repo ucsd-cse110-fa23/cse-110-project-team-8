@@ -40,7 +40,6 @@ public class Controller {
 
     public String handleGetAll() {
         String response = model.performRequest("GET", " ", " ", " ");
-        System.out.println(response);
         return response;
     }
 }

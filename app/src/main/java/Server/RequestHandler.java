@@ -24,7 +24,6 @@ import java.util.*;
 
 public class RequestHandler implements HttpHandler {
     private MongoCollection<Document> recipeCollection;
-    private static final String GET_ALL = "GET_ALL";
 
     public RequestHandler(MongoCollection<Document> recipeCollection) {
         this.recipeCollection = recipeCollection;
@@ -33,6 +32,7 @@ public class RequestHandler implements HttpHandler {
     public void handle(HttpExchange httpExchange) throws IOException {
         String response = "Request Received";
         String method = httpExchange.getRequestMethod();
+        System.out.println("method returned from httpExchange: " + method);
         try {
             if (method.equals("GET")) {
                 response = handleGet(httpExchange);
@@ -53,25 +53,13 @@ public class RequestHandler implements HttpHandler {
         // Sending back response to the client
         httpExchange.sendResponseHeaders(200, response.length());
         OutputStream outStream = httpExchange.getResponseBody();
+        System.out.println("response in handler: " + response);
         outStream.write(response.getBytes());
         outStream.close();
     }
 
     private String handleGet(HttpExchange httpExchange) throws IOException {
-        String response = "Invalid GET request";
-        InputStream inStream = httpExchange.getRequestBody();
-        Scanner scanner = new Scanner(inStream);
-        String getData = scanner.nextLine();
-        if (getData.equals(GET_ALL)) {
-            response = readAllRecipe(recipeCollection);
-        } else {
-            List<String> recipe = Arrays.asList(getData.split(";"));
-            String recipeTitle = recipe.get(0);
-            // String ingredients = recipe.get(1);
-            // String instructions = recipe.get(2);
-            response = readOneRecipe(recipeCollection, recipeTitle);
-        }
-
+        String response = readAllRecipe(recipeCollection);
         return response;
     }
 
@@ -80,17 +68,16 @@ public class RequestHandler implements HttpHandler {
         InputStream inStream = httpExchange.getRequestBody();
         Scanner scanner = new Scanner(inStream);
         String postData = scanner.nextLine();
-        if (!postData.equals(GET_ALL)) {
-            List<String> recipe = Arrays.asList(postData.split(";"));
-            String recipeTitle = recipe.get(0);
-            String ingredients = recipe.get(1);
-            String instructions = recipe.get(2);
+        List<String> recipe = Arrays.asList(postData.split(";"));
+        String recipeTitle = recipe.get(0);
+        String ingredients = recipe.get(1);
+        String instructions = recipe.get(2);
 
-            insertOneRecipe(recipeCollection, recipeTitle, ingredients, instructions);
+        insertOneRecipe(recipeCollection, recipeTitle, ingredients, instructions);
 
-            response = "Posted recipe {" + recipeTitle + "}";
-            System.out.println(response);
-        }
+        response = "Posted recipe {" + recipeTitle + "}";
+        System.out.println(response);
+
         scanner.close();
 
         return response;
@@ -172,12 +159,20 @@ public class RequestHandler implements HttpHandler {
 
     private static String readAllRecipe(MongoCollection<Document> recipeCollection) {
         String recipe_details = "";
+        int cnt = 0;
+        List<Document> studentList = recipeCollection.find().into(new ArrayList<>());
+        System.out.println("length of list" + studentList.size());
         for (Document recipe : recipeCollection.find()) {
-            recipe_details += recipe.get("Title") + ";" + recipe.get("Ingredients") + ";" + recipe.get("Instructions")
-                    + "\n";
+            recipe_details += recipe.get("Title") + ";" + recipe.get("Ingredients") + ";"
+                    + recipe.get("Instructions")
+                    + ":";
+            cnt++;
+            if (cnt == 16) {
+                break;
+            }
         }
+
         System.out.println(recipe_details);
         return recipe_details;
     }
-
 }

@@ -38,10 +38,9 @@ public class RecipeList {
 
     // load the dataBase
     public void loadDB(RecipeListBody recipeList, Controller controller) throws Exception {
-        System.out.println("3483y489y38");
         String response = controller.handleGetAll();
         System.out.println("response: " + response);
-        String[] recipes = response.split("\n");
+        String[] recipes = response.split(":");
         for (String recipe : recipes) {
             String[] data = recipe.split(";");
             System.out.println("data: " + data[0]);
