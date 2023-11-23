@@ -23,14 +23,16 @@ public class Controller {
             CSVReader reader = new CSVReader(new FileReader("RecipeList.csv"));
             reader.readNext();
             // Read the CSV file and process each row
-            while (reader.peek() != null) {
-                String[] row = reader.readNext();
-                Recipe recipe = new Recipe(row[0], row[1], row[2]);
-                String title = row[0];
-                String ingredients = row[1];
-                String instructions = row[2];
-                String response = model.performRequest("POST", title, ingredients, instructions);
+            String[] line;
+            String[] lastline = {};
+            while ((line = reader.readNext()) != null) {
+                lastline = line;
             }
+            Recipe recipe = new Recipe(lastline[0], lastline[1], lastline[2]);
+            String title = lastline[0];
+            String ingredients = lastline[1];
+            String instructions = lastline[2];
+            String response = model.performRequest("POST", title, ingredients, instructions);
             // Close the CSV reader
             reader.close();
         } catch (IOException e) {
@@ -39,7 +41,7 @@ public class Controller {
     }
 
     public String handleGetAll() {
-        String response = model.performRequest("GET", " ", " ", " ");
+        String response = model.performRequest("GET", null, null, null);
         return response;
     }
 }
