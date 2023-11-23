@@ -73,7 +73,12 @@ public class Server {
   }
 
   public void deactivateServer() throws IOException {
-      server.stop(0);
-      threadPoolExecutor.shutdownNow();
+    server.stop(0);
+    threadPoolExecutor.shutdownNow();
   }
+
+  public MongoClient getMongo(){
+    return this.mongoClient;
+  }
+
 }

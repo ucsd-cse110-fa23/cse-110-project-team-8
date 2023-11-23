@@ -147,6 +147,12 @@ public class RecipeDescriptionScreen {
                 recipe.getRecipe().setIngredients(ingredientsArea.getText());
                 recipe.getRecipe().setInstructions(instructionsArea.getText());
                 recipeList.getArray().toCSV("RecipeList.csv");
+                // try {
+                //     controller.handleSave();
+                // } catch (Exception e2) {
+                //     // TODO Auto-generated catch block
+                //     e2.printStackTrace();
+                // }
             }
 
             // REMOVE: CANCEL, DONE

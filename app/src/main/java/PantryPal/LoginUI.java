@@ -11,6 +11,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
+import java.util.ArrayList;
+
 import Server.*;
 
 
@@ -87,8 +90,27 @@ public class LoginUI extends BorderPane{
 
         createAccount.setOnAction(e -> {
             try {
+                
+                if (!(username.getText()).equals("") && !(password.getText()).equals("")){
+                    var databaseNames = server.getMongo().listDatabaseNames().into(new ArrayList<>());
 
-                server.createAccountInDB(username.getText(),password.getText());
+                    if (databaseNames.contains((username.getText()))){
+                        System.out.println("account already exists");
+
+                    } else {
+                        server.createAccountInDB(username.getText(),password.getText());
+                        RecipeListScreen homeScreen = new RecipeListScreen(primaryStage, controller);
+                        homeScreen.setMainScene(homeScreen.getRecipeListScene()); //Saves the main screen of RLS to save when "go back" is pressed
+                        // homeScreen.rebuild(); 
+                        homeScreen.switchToThisScene(); //Switches to the main screen of RLS
+                        primaryStage.setScene(homeScreen.getRecipeListScene());
+                        System.out.println("account created");
+
+                    }
+                } else {
+                    System.out.println("empty password or username");
+                }
+
 
                 // User actions: they input their username and password and press create account
                 // check if account exists in data base
@@ -97,14 +119,6 @@ public class LoginUI extends BorderPane{
                 // case 2 is does exist in db
                     // we tell them account already exists
                 
-
-
-                    
-                RecipeListScreen homeScreen = new RecipeListScreen(primaryStage, controller);
-                homeScreen.setMainScene(homeScreen.getRecipeListScene()); //Saves the main screen of RLS to save when "go back" is pressed
-                // homeScreen.rebuild(); 
-                homeScreen.switchToThisScene(); //Switches to the main screen of RLS
-                primaryStage.setScene(homeScreen.getRecipeListScene());
             } catch (Exception e1) {
                 e1.printStackTrace();
             }

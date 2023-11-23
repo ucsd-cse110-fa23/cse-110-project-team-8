@@ -20,9 +20,11 @@ public class Model {
 
         try {
             String urlString = "http://localhost:8100/";
-            if (recipeTitle != null && !recipeTitle.equals(" ")) {
-                urlString += "?=" + recipeTitle;
-            } else if (recipeTitle.equals(" ")) {
+            if (recipeTitle != null) {
+                urlString += "?=" + recipeTitle.replace(" ", "");
+
+                System.out.println("this is recipetitle: " + "GarlicBroccoli");
+            } else {
                 urlString += "?=" + "defaultLoad";
             }
 
