@@ -7,6 +7,8 @@ import javafx.stage.Stage;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
+import Server.*;
+
 
 public class RecipeListScreen extends BorderPane {
     private RecipeListHeader header;
@@ -20,11 +22,13 @@ public class RecipeListScreen extends BorderPane {
     private UserInputScreen userInputScreen;
     private Controller controller;
     private Scene scene;
+    private Server server;
 
-    public RecipeListScreen(Stage primaryStage, Controller controller) throws Exception {
+    public RecipeListScreen(Stage primaryStage, Controller controller, Server server) throws Exception {
         this.controller = controller;
         this.primaryStage = primaryStage; // Store the stage
         this.mainScene = this.getScene(); // Store the main scene
+        this.server = server;
         generate = new Generate();
         header = new RecipeListHeader();
         footer = new RecipeListFooter();
@@ -51,7 +55,7 @@ public class RecipeListScreen extends BorderPane {
     public void addListeners() throws Exception {
         addButton.setOnAction(e -> {
             userInputScreen = new UserInputScreen(recipeList, primaryStage, this.mainScene, this.generate,
-                    this.controller);
+                    this.controller, this.server);
             userInputScreen.switchToThisScene();
         }); // Set the action on the button
     }

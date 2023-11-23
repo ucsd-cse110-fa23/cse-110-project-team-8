@@ -23,6 +23,7 @@ public class Server {
   private HttpServer server;
   private ThreadPoolExecutor threadPoolExecutor;
   private MongoClient mongoClient;
+  private MongoDatabase usernameDB;
 
   public void activateServer() throws IOException {
     // create a thread pool to handle requests
@@ -60,7 +61,7 @@ public class Server {
   }
 
   public void createAccountInDB(String username, String password){
-    MongoDatabase usernameDB = mongoClient.getDatabase(username);
+    usernameDB = mongoClient.getDatabase(username);
     MongoCollection<Document> UserInfoCollection = usernameDB.getCollection("UserInfoCollection");
 
     Document UserCredentialsDoc = new Document("username", username)
@@ -81,4 +82,7 @@ public class Server {
     return this.mongoClient;
   }
 
+    public MongoDatabase getMongoDB(){
+    return this.usernameDB;
+  }
 }

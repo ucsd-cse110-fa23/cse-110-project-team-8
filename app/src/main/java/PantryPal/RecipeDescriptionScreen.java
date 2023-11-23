@@ -13,6 +13,11 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 
+import org.bson.Document;
+
+import Server.*;
+
+
 public class RecipeDescriptionScreen {
     private Scene scene;
     private Stage primaryStage;
@@ -30,10 +35,12 @@ public class RecipeDescriptionScreen {
     private Button confirmDelete;
     private Button cancelDelete;
     private RecipeTitleButton recipe;
+    private Server server;
+    
 
     // Use for rebuild the recipes when reopen the app
     public RecipeDescriptionScreen(RecipeTitleButton recipe1, String title, String ingredients, String instructions,
-            Stage primaryStage, Scene mainScene, RecipeListBody recipeList, Controller controller) throws Exception {
+            Stage primaryStage, Scene mainScene, RecipeListBody recipeList, Controller controller, Server server) throws Exception {
 
         if (recipe1 == null) {
             savedHit = false;
@@ -43,6 +50,7 @@ public class RecipeDescriptionScreen {
         this.primaryStage = primaryStage;
         this.mainScene = mainScene;
         this.recipe = recipe1;
+        this.server = server;
 
         VBox newRoot = new VBox(); // Create a new root for the new scene
         newRoot.setStyle("-fx-background-color: #BF2C34;");
@@ -147,12 +155,13 @@ public class RecipeDescriptionScreen {
                 recipe.getRecipe().setIngredients(ingredientsArea.getText());
                 recipe.getRecipe().setInstructions(instructionsArea.getText());
                 recipeList.getArray().toCSV("RecipeList.csv");
-                // try {
-                //     controller.handleSave();
-                // } catch (Exception e2) {
-                //     // TODO Auto-generated catch block
-                //     e2.printStackTrace();
-                // }
+                try {
+                    server.getMongoDB().getCollection("Recipe").deleteMany(new Document());
+                    controller.handleSave();
+                } catch (Exception e2) {
+                    // TODO Auto-generated catch block
+                    e2.printStackTrace();
+                }
             }
 
             // REMOVE: CANCEL, DONE
@@ -229,6 +238,7 @@ public class RecipeDescriptionScreen {
                 hRoot.getChildren().remove(save);
                 hRoot.getChildren().add(deleteButton);
                 try {
+                    server.getMongoDB().getCollection("Recipe").deleteMany(new Document());
                     controller.handleSave();
                 } catch (Exception e2) {
                     // TODO Auto-generated catch block
@@ -269,6 +279,13 @@ public class RecipeDescriptionScreen {
             recipeList.delete(recipe);
             recipeList.getArray().delete(recipe.getRecipe());
             recipeList.getArray().toCSV("RecipeList.csv");
+            try {
+                server.getMongoDB().getCollection("Recipe").deleteMany(new Document());
+                controller.handleSave();
+            } catch (Exception e2) {
+                // TODO Auto-generated catch block
+                e2.printStackTrace();
+            }
             switchToMainScene();
 
             System.out.println("Confirm Delete Button Clicked");

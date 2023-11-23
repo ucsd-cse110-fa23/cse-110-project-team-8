@@ -32,7 +32,7 @@ public class RecipeListBody extends VBox {
                 recipe.getIngredients(),
                 recipe.getInstructions(),
                 primaryStage, mainScene,
-                this, controller);
+                this, controller, null);
     }
 
     // Deletes the recipe from the recipe list

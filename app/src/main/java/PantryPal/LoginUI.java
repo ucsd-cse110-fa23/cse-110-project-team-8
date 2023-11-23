@@ -76,7 +76,7 @@ public class LoginUI extends BorderPane{
         loginButton.setOnAction(e -> {
             try {
                 server.loadAccount();
-                RecipeListScreen homeScreen = new RecipeListScreen(primaryStage, controller);
+                RecipeListScreen homeScreen = new RecipeListScreen(primaryStage, controller, server);
                 
                 homeScreen.setMainScene(homeScreen.getRecipeListScene()); //Saves the main screen of RLS to save when "go back" is pressed
                 homeScreen.rebuild(); 
@@ -99,7 +99,7 @@ public class LoginUI extends BorderPane{
 
                     } else {
                         server.createAccountInDB(username.getText(),password.getText());
-                        RecipeListScreen homeScreen = new RecipeListScreen(primaryStage, controller);
+                        RecipeListScreen homeScreen = new RecipeListScreen(primaryStage, controller, server);
                         homeScreen.setMainScene(homeScreen.getRecipeListScene()); //Saves the main screen of RLS to save when "go back" is pressed
                         // homeScreen.rebuild(); 
                         homeScreen.switchToThisScene(); //Switches to the main screen of RLS

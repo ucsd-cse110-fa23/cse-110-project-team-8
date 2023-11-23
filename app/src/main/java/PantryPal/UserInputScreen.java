@@ -9,6 +9,8 @@ import javafx.scene.text.TextFlow;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.geometry.Pos;
+import Server.*;
+
 
 public class UserInputScreen {
     private Scene scene;
@@ -23,12 +25,14 @@ public class UserInputScreen {
     private Button stopRecButton;
     private Button goBack;
     private Controller controller;
+    private Server server;
 
     public UserInputScreen(RecipeListBody recipeList, Stage primaryStage, Scene mainScene, Generate generate,
-            Controller controller) {
+            Controller controller, Server server) {
         this.primaryStage = primaryStage;
         this.mainScene = mainScene;
         this.controller = controller;
+        this.server = server;
 
         firstInput = true;
 
@@ -102,7 +106,7 @@ public class UserInputScreen {
                 try {
                     generatedRecipeScreen = new RecipeDescriptionScreen(null, processedTitle,
                             processedIngredients, processedInstructions,
-                            primaryStage, mainScene, recipeList, this.controller);
+                            primaryStage, mainScene, recipeList, this.controller, this.server);
                     generatedRecipeScreen.switchToThisScene();
                 } catch (Exception e1) {
                     // TODO Auto-generated catch block
