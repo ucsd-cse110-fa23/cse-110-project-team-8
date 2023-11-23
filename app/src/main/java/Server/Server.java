@@ -48,18 +48,25 @@ public class Server {
     System.out.println("Server started on port " + SERVER_PORT);
   }
 
-  public void loadAccount(){
-    MongoDatabase RecipeListDB = mongoClient.getDatabase("Recipe_List");
-    MongoCollection<Document> recipeCollection = RecipeListDB.getCollection("Recipe");
-    // MongoCollection<Document> recipeCollection =
-    // RecipeListDB.getCollection("Recipe");
+  public void loadAccount(String username, String password){
+    usernameDB = mongoClient.getDatabase(username);
 
-    // create the context
-    server.createContext("/", new RequestHandler(recipeCollection));
-    // server.createContext("/name", new MyHandler(data));
+    MongoCollection<Document> UserInfoCollection = usernameDB.getCollection("UserInfoCollection");
 
+    Document passDB = UserInfoCollection.find(new Document("password", password)).first();
+
+    if(passDB != null){
+      MongoCollection<Document> recipeCollection = usernameDB.getCollection("Recipe");
+
+      // create the context
+      server.createContext("/", new RequestHandler(recipeCollection));
+      // server.createContext("/name", new MyHandler(data));
+    }
+    else {
+      System.out.println("Wrong password, try again");
+    }
   }
-
+  
   public void createAccountInDB(String username, String password){
     usernameDB = mongoClient.getDatabase(username);
     MongoCollection<Document> UserInfoCollection = usernameDB.getCollection("UserInfoCollection");

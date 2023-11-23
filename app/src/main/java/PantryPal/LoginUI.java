@@ -72,16 +72,29 @@ public class LoginUI extends BorderPane{
             autoLogin
         );
         mainVBox.setAlignment(Pos.CENTER);
-
+        
+        
         loginButton.setOnAction(e -> {
             try {
-                server.loadAccount();
-                RecipeListScreen homeScreen = new RecipeListScreen(primaryStage, controller, server);
-                
-                homeScreen.setMainScene(homeScreen.getRecipeListScene()); //Saves the main screen of RLS to save when "go back" is pressed
-                homeScreen.rebuild(); 
-                homeScreen.switchToThisScene(); //Switches to the main screen of RLS
-                primaryStage.setScene(homeScreen.getRecipeListScene());
+                if (!(username.getText()).equals("") && !(password.getText()).equals("")){
+                    var databaseNames = server.getMongo().listDatabaseNames().into(new ArrayList<>());
+                    if (databaseNames.contains((username.getText()))){
+                        System.out.println("Logging in with username: " + username.getText() + " and password: " + password.getText());
+
+                        server.loadAccount(username.getText(), password.getText());
+                        RecipeListScreen homeScreen = new RecipeListScreen(primaryStage, controller, server);
+                        
+                        homeScreen.setMainScene(homeScreen.getRecipeListScene()); //Saves the main screen of RLS to save when "go back" is pressed
+                        homeScreen.rebuild();
+                        homeScreen.switchToThisScene(); //Switches to the main screen of RLS
+                        primaryStage.setScene(homeScreen.getRecipeListScene());
+                    } else {
+                        System.out.println("Account does not exist");
+                    }
+                } else {
+                    System.out.println("empty password or username");
+                }
+
             } catch (Exception e1) {
                 e1.printStackTrace();
             }
@@ -93,7 +106,6 @@ public class LoginUI extends BorderPane{
                 
                 if (!(username.getText()).equals("") && !(password.getText()).equals("")){
                     var databaseNames = server.getMongo().listDatabaseNames().into(new ArrayList<>());
-
                     if (databaseNames.contains((username.getText()))){
                         System.out.println("account already exists");
 
