@@ -19,6 +19,7 @@ public class RecipeListScreen extends BorderPane {
     private Generate generate;
     private UserInputScreen userInputScreen;
     private Controller controller;
+    private Scene scene;
 
     public RecipeListScreen(Stage primaryStage, Controller controller) throws Exception {
         this.controller = controller;
@@ -36,6 +37,7 @@ public class RecipeListScreen extends BorderPane {
         this.setBottom(footer);
         addButton = footer.getAddButton();
         addListeners();
+        this.scene = new Scene(this);
     }
 
     // rebuild the recipelist
@@ -66,4 +68,10 @@ public class RecipeListScreen extends BorderPane {
         return this.recipeList;
     }
 
+    public void switchToThisScene() {
+        primaryStage.setScene(this.getScene());
+    }
+    public Scene getRecipeListScene(){
+        return this.scene;
+    }
 }
