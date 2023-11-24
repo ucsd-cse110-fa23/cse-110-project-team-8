@@ -160,8 +160,10 @@ public class RequestHandler implements HttpHandler {
     private static String readAllRecipe(MongoCollection<Document> recipeCollection) {
         String recipe_details = "";
         int cnt = 0;
+        //TODO why is line 164-165 here?
         List<Document> studentList = recipeCollection.find().into(new ArrayList<>());
-        System.out.println("length of list" + studentList.size());
+        //System.out.println("length of list" + studentList.size());
+       
         for (Document recipe : recipeCollection.find()) {
             recipe_details += recipe.get("Title") + ";" + recipe.get("Ingredients") + ";"
                     + recipe.get("Instructions")
@@ -172,7 +174,7 @@ public class RequestHandler implements HttpHandler {
             }
         }
 
-        System.out.println(recipe_details);
+        System.out.println("Recipe Details from readAllRecipe(): \n" + recipe_details);
         return recipe_details;
     }
 }

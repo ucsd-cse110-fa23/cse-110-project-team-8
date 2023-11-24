@@ -55,9 +55,11 @@ public class Server {
 
     MongoCollection<Document> UserInfoCollection = usernameDB.getCollection("UserInfoCollection");
 
-    Document passDB = UserInfoCollection.find(new Document("password", password)).first();
+    Document theUser = UserInfoCollection.find(new Document("username", username)).first();
+    System.out.println("theUser: " + theUser);
+    if(password.equals(theUser.get("password"))){ //password is the entered password and theUser.get("password") is the password in the database
+      System.out.println("theUser password: " + theUser.get("password"));
 
-    if(passDB != null){
       MongoCollection<Document> recipeCollection = usernameDB.getCollection("Recipe");
 
       // if (serverCreated == false) {

@@ -40,6 +40,9 @@ public class RecipeList {
     public void loadDB(RecipeListBody recipeList, Controller controller) throws Exception {
         String response = controller.handleGetAll();
         System.out.println("response: " + response);
+        System.out.println("HELLO from LOADDB");
+        if (response!=null){
+            
         String[] recipes = response.split(":");
         for (String recipe : recipes) {
             String[] data = recipe.split(";");
@@ -48,6 +51,7 @@ public class RecipeList {
             list.add(newRecipe);
             recipeList.load(newRecipe, controller);
         }
+    }
     }
 
     // reload the CSV and regenerate the recipe to recipelist
