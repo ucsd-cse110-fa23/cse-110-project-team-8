@@ -1,5 +1,7 @@
 package PantryPal;
 
+import java.io.IOException;
+
 import com.opencsv.exceptions.CsvValidationException;
 
 import javafx.scene.Scene;
@@ -16,8 +18,10 @@ public class RecipeListScreen extends BorderPane {
     private RecipeListBody recipeList;
 
     private Button addButton;
+    private Button logout;
     private Stage primaryStage;
     private Scene mainScene; // Field to store the main scene
+    private Scene logoutScene;
     private Generate generate;
     private UserInputScreen userInputScreen;
     private Controller controller;
@@ -40,6 +44,7 @@ public class RecipeListScreen extends BorderPane {
         this.setCenter(scrollPane);
         this.setBottom(footer);
         addButton = footer.getAddButton();
+        logout = footer.getLogoutButton();
         addListeners();
         this.scene = new Scene(this);
     }
@@ -57,6 +62,19 @@ public class RecipeListScreen extends BorderPane {
             userInputScreen = new UserInputScreen(recipeList, primaryStage, this.mainScene, this.generate,
                     this.controller, this.server);
             userInputScreen.switchToThisScene();
+        }); // Set the action on the button
+
+        logout.setOnAction(e -> {
+            primaryStage.setScene(logoutScene);
+            this.getChildren().clear();
+            try {
+                server.deactivateServer();
+                server.activateServer();
+            } catch (IOException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
+            System.out.println("logout pressed");
         }); // Set the action on the button
     }
 
@@ -77,5 +95,8 @@ public class RecipeListScreen extends BorderPane {
     }
     public Scene getRecipeListScene(){
         return this.scene;
+    }
+    public void setLogoutScene(Scene scene){
+        this.logoutScene = scene;
     }
 }

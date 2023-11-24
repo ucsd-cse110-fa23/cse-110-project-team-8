@@ -81,13 +81,17 @@ public class LoginUI extends BorderPane{
                     if (databaseNames.contains((username.getText()))){
                         System.out.println("Logging in with username: " + username.getText() + " and password: " + password.getText());
 
-                        server.loadAccount(username.getText(), password.getText());
-                        RecipeListScreen homeScreen = new RecipeListScreen(primaryStage, controller, server);
-                        
-                        homeScreen.setMainScene(homeScreen.getRecipeListScene()); //Saves the main screen of RLS to save when "go back" is pressed
-                        homeScreen.rebuild();
-                        homeScreen.switchToThisScene(); //Switches to the main screen of RLS
-                        primaryStage.setScene(homeScreen.getRecipeListScene());
+                        if (server.loadAccount(username.getText(), password.getText())) {
+                            RecipeListScreen homeScreen = new RecipeListScreen(primaryStage, controller, server);
+                            homeScreen.setLogoutScene(this.scene);
+                            homeScreen.setMainScene(homeScreen.getRecipeListScene()); //Saves the main screen of RLS to save when "go back" is pressed
+                            homeScreen.rebuild();
+                            homeScreen.switchToThisScene(); //Switches to the main screen of RLS
+                            this.password.clear();
+                            this.username.clear();
+                            primaryStage.setScene(homeScreen.getRecipeListScene());
+
+                        }
                     } else {
                         System.out.println("Account does not exist");
                     }

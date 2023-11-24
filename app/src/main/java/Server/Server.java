@@ -24,9 +24,11 @@ public class Server {
   private ThreadPoolExecutor threadPoolExecutor;
   private MongoClient mongoClient;
   private MongoDatabase usernameDB;
+  // private boolean serverCreated;
 
   public void activateServer() throws IOException {
     // create a thread pool to handle requests
+    // this.serverCreated = false;
     ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(10);
     this.threadPoolExecutor = threadPoolExecutor;
     // create a mongoDB to store data
@@ -48,7 +50,7 @@ public class Server {
     System.out.println("Server started on port " + SERVER_PORT);
   }
 
-  public void loadAccount(String username, String password){
+  public boolean loadAccount(String username, String password){
     usernameDB = mongoClient.getDatabase(username);
 
     MongoCollection<Document> UserInfoCollection = usernameDB.getCollection("UserInfoCollection");
@@ -58,15 +60,26 @@ public class Server {
     if(passDB != null){
       MongoCollection<Document> recipeCollection = usernameDB.getCollection("Recipe");
 
-      // create the context
-      server.createContext("/", new RequestHandler(recipeCollection));
-      // server.createContext("/name", new MyHandler(data));
+      // if (serverCreated == false) {
+        // create the context
+        server.createContext("/", new RequestHandler(recipeCollection));
+      //   serverCreated = true;
+      //   // server.createContext("/name", new MyHandler(data));
+      // } else {
+      //   // create the context
+      //   server.createContext("/", new RequestHandler(recipeCollection));
+      //   serverCreated = true;
+      //   // server.createContext("/name", new MyHandler(data));
+      // }
+      
+      return true;
     }
     else {
       System.out.println("Wrong password, try again");
+      return false;
     }
   }
-  
+
   public void createAccountInDB(String username, String password){
     usernameDB = mongoClient.getDatabase(username);
     MongoCollection<Document> UserInfoCollection = usernameDB.getCollection("UserInfoCollection");

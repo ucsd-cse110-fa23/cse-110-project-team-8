@@ -7,6 +7,7 @@ import javafx.scene.layout.*;
 public class RecipeListFooter extends HBox {
 
     private Button addButton;
+    private Button logout;
 
     //Sets the footer for the recipe list and its style
     public RecipeListFooter() {
@@ -20,10 +21,18 @@ public class RecipeListFooter extends HBox {
         addButton = new Button("New Recipe");
         this.getChildren().add(addButton);
         addButton.setStyle(defaultButtonStyle);
+        logout = new Button("Logout");
+        this.getChildren().add(logout);
+        logout.setStyle(defaultButtonStyle);
         this.setAlignment(Pos.CENTER);
     }
 
     public Button getAddButton() {
         return this.addButton;
     }
+
+    public Button getLogoutButton() {
+        return this.logout;
+    }
+
 }
