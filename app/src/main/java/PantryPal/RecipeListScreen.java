@@ -37,7 +37,7 @@ public class RecipeListScreen extends BorderPane {
         header = new RecipeListHeader();
         footer = new RecipeListFooter();
         RecipeList recipeListArray = new RecipeList();
-        recipeList = new RecipeListBody(recipeListArray);
+        recipeList = new RecipeListBody(recipeListArray, server);
         ScrollPane scrollPane = new ScrollPane(recipeList);
         scrollPane.setFitToWidth(true);
         this.setTop(header);

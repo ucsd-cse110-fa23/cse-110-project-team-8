@@ -280,6 +280,7 @@ public class RecipeDescriptionScreen {
             recipeList.getArray().delete(recipe.getRecipe());
             recipeList.getArray().toCSV("RecipeList.csv");
             try {
+               // System.out.println("Server Name: "+server.getMongoDB());
                 server.getMongoDB().getCollection("Recipe").deleteMany(new Document());
                 controller.handleSave();
             } catch (Exception e2) {
