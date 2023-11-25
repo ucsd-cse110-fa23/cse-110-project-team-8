@@ -118,10 +118,11 @@ public class LoginUI extends BorderPane{
 
                     } else {
                         if(autologin == true){
-                                AutoLogin.createFile(username.getText(), password.getText());
-                            }
+                            AutoLogin.createFile(username.getText(), password.getText());
+                        }
                         server.createAccountInDB(username.getText(),password.getText());
                         RecipeListScreen homeScreen = new RecipeListScreen(primaryStage, controller, server);
+                        homeScreen.setLogoutScene(this.scene);
                         homeScreen.setMainScene(homeScreen.getRecipeListScene()); //Saves the main screen of RLS to save when "go back" is pressed
                         // homeScreen.rebuild(); 
                         homeScreen.switchToThisScene(); //Switches to the main screen of RLS
