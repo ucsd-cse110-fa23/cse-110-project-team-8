@@ -43,6 +43,7 @@ public class Server {
         0);
     this.server = server;
 
+    server.createContext("/", new RequestHandler(mongoClient));
     // set the executor
     server.setExecutor(threadPoolExecutor);
 
