@@ -66,7 +66,8 @@ public class RecipeListScreen extends BorderPane {
 
         logout.setOnAction(e -> {
             primaryStage.setScene(logoutScene);
-            this.getChildren().clear();
+            AutoLogin.clearFile();
+            // this.getChildren().clear();
             try {
                 server.deactivateServer();
                 server.activateServer();

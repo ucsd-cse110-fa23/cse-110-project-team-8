@@ -14,6 +14,8 @@ import java.net.InetSocketAddress;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.*;
+import java.util.ArrayList;
+
 
 public class Server {
 
@@ -93,6 +95,16 @@ public class Server {
 
     MongoCollection<Document> recipeCollection = usernameDB.getCollection("Recipe");
     server.createContext("/", new RequestHandler(recipeCollection));
+  }
+
+  public boolean acountExist(String username){
+    var databaseNames = this.mongoClient.listDatabaseNames().into(new ArrayList<>());
+    if (databaseNames.contains((username))){
+      return true;
+    }
+    else {
+      return false;
+    }
   }
 
   public void deactivateServer() throws IOException {

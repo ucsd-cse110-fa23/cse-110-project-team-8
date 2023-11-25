@@ -37,6 +37,12 @@ public class App extends Application {
         primaryStage.setResizable(true);
 
         // Show the app
+        if (AutoLogin.autoLoginEnabled("AutoLogin.txt")){
+            root.autoLoginTrue();
+            root.setUsername(AutoLogin.autoLoginUsername("AutoLogin.txt"));
+            root.setPassword(AutoLogin.autoLoginPassword("AutoLogin.txt"));
+            root.getLoginButton().fire();
+        }
         primaryStage.show();
 
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {

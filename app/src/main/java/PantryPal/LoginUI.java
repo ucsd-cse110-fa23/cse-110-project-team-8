@@ -28,6 +28,7 @@ public class LoginUI extends BorderPane{
     private Scene mainScene;
     private Scene scene;
     private Server server;
+    private boolean autologin;
 
 
     public LoginUI(Stage primaryStage , Controller controller, Server server) throws Exception{   
@@ -35,6 +36,7 @@ public class LoginUI extends BorderPane{
         this.controller = controller;
         this.mainScene = this.getScene();
         this.server = server;
+        this.autologin = false;
         VBox mainVBox = new VBox();
 
         //Add the Username field
@@ -77,11 +79,13 @@ public class LoginUI extends BorderPane{
         loginButton.setOnAction(e -> {
             try {
                 if (!(username.getText()).equals("") && !(password.getText()).equals("")){
-                    var databaseNames = server.getMongo().listDatabaseNames().into(new ArrayList<>());
-                    if (databaseNames.contains((username.getText()))){
+                    if (server.acountExist(username.getText())){
                         System.out.println("Logging in with username: " + username.getText() + " and password: " + password.getText());
 
                         if (server.loadAccount(username.getText(), password.getText())) {
+                            if(autologin == true){
+                                AutoLogin.createFile(username.getText(), password.getText());
+                            }
                             RecipeListScreen homeScreen = new RecipeListScreen(primaryStage, controller, server);
                             homeScreen.setLogoutScene(this.scene);
                             homeScreen.setMainScene(homeScreen.getRecipeListScene()); //Saves the main screen of RLS to save when "go back" is pressed
@@ -109,11 +113,13 @@ public class LoginUI extends BorderPane{
             try {
                 
                 if (!(username.getText()).equals("") && !(password.getText()).equals("")){
-                    var databaseNames = server.getMongo().listDatabaseNames().into(new ArrayList<>());
-                    if (databaseNames.contains((username.getText()))){
+                    if (server.acountExist(username.getText())){
                         System.out.println("account already exists");
 
                     } else {
+                        if(autologin == true){
+                                AutoLogin.createFile(username.getText(), password.getText());
+                            }
                         server.createAccountInDB(username.getText(),password.getText());
                         RecipeListScreen homeScreen = new RecipeListScreen(primaryStage, controller, server);
                         homeScreen.setMainScene(homeScreen.getRecipeListScene()); //Saves the main screen of RLS to save when "go back" is pressed
@@ -142,7 +148,11 @@ public class LoginUI extends BorderPane{
         });
 
         autoLogin.setOnAction(e -> {
-
+            if (autologin == true){
+                autologin = false;
+            } else {
+                autologin = true;
+            }
             System.out.println("AutoLogin pressed on initial screen");
         });
 
@@ -158,8 +168,24 @@ public class LoginUI extends BorderPane{
         return this.password;
     }
 
+    public void setUsername(String username){
+        this.username.setText(username);
+    }
+
+    public void setPassword(String password){
+        this.password.setText(password);
+    }
+
     public Scene getLoginScene(){
         return this.scene;
+    }
+
+    public void autoLoginTrue() {
+        this.autologin = true;
+    }
+
+    public Button getLoginButton(){
+        return this.loginButton;
     }
 
 }
