@@ -12,6 +12,8 @@ import javafx.event.ActionEvent;
 
 public class Controller {
     private Model model;
+    private static final String CREATE_ACCOUNT = "createAccount";
+    private static final String LOGIN = "Login";
 
     public Controller(Model model) throws Exception {
         this.model = model;
@@ -29,7 +31,8 @@ public class Controller {
                 String title = row[0];
                 String ingredients = row[1];
                 String instructions = row[2];
-                String response = model.performRequest("POST", title, ingredients, instructions);
+                String response = model.performRequest("POST", null, null, title, ingredients, instructions,
+                        null);
             }
             // Close the CSV reader
             reader.close();
@@ -38,8 +41,28 @@ public class Controller {
         }
     }
 
+    public String createAccount(String username, String password) {
+        String response = model.performRequest("POST", username, password, null, null, null, this.CREATE_ACCOUNT);
+        return response;
+    }
+
+    public String login(String username, String password) {
+        String response = model.performRequest("GET", username, password, null, null, null, this.LOGIN);
+        return response;
+    }
+
     public String handleGetAll() {
-        String response = model.performRequest("GET", null, null, null);
+        String response = model.performRequest("GET", null, null, null, null, null, null);
+        return response;
+    }
+
+    public String handlePut(String title, String ingredients, String instructions) {
+        String response = model.performRequest("PUT", null, null, title, ingredients, instructions, null);
+        return response;
+    }
+
+    public String handleDelete(String title) {
+        String response = model.performRequest("DELETE", null, null, title, null, null, null);
         return response;
     }
 }

@@ -17,7 +17,6 @@ import org.bson.Document;
 
 import Server.*;
 
-
 public class RecipeDescriptionScreen {
     private Scene scene;
     private Stage primaryStage;
@@ -36,11 +35,11 @@ public class RecipeDescriptionScreen {
     private Button cancelDelete;
     private RecipeTitleButton recipe;
     private Server server;
-    
 
     // Use for rebuild the recipes when reopen the app
     public RecipeDescriptionScreen(RecipeTitleButton recipe1, String title, String ingredients, String instructions,
-            Stage primaryStage, Scene mainScene, RecipeListBody recipeList, Controller controller, Server server) throws Exception {
+            Stage primaryStage, Scene mainScene, RecipeListBody recipeList, Controller controller, Server server)
+            throws Exception {
 
         if (recipe1 == null) {
             savedHit = false;
@@ -156,10 +155,8 @@ public class RecipeDescriptionScreen {
                 recipe.getRecipe().setInstructions(instructionsArea.getText());
                 recipeList.getArray().toCSV("RecipeList.csv");
                 try {
-                    server.getMongoDB().getCollection("Recipe").deleteMany(new Document());
-                    controller.handleSave();
+                    controller.handlePut(title, ingredients, instructions);
                 } catch (Exception e2) {
-                    // TODO Auto-generated catch block
                     e2.printStackTrace();
                 }
             }
@@ -238,10 +235,8 @@ public class RecipeDescriptionScreen {
                 hRoot.getChildren().remove(save);
                 hRoot.getChildren().add(deleteButton);
                 try {
-                    server.getMongoDB().getCollection("Recipe").deleteMany(new Document());
                     controller.handleSave();
                 } catch (Exception e2) {
-                    // TODO Auto-generated catch block
                     e2.printStackTrace();
                 }
                 switchToMainScene();
@@ -280,11 +275,9 @@ public class RecipeDescriptionScreen {
             recipeList.getArray().delete(recipe.getRecipe());
             recipeList.getArray().toCSV("RecipeList.csv");
             try {
-               // System.out.println("Server Name: "+server.getMongoDB());
-                server.getMongoDB().getCollection("Recipe").deleteMany(new Document());
-                controller.handleSave();
+                // System.out.println("Server Name: "+server.getMongoDB());
+                controller.handleDelete(title);
             } catch (Exception e2) {
-                // TODO Auto-generated catch block
                 e2.printStackTrace();
             }
             switchToMainScene();

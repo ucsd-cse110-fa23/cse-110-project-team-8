@@ -15,15 +15,16 @@ import java.util.*;
 public class Model {
     public static final int timeoutInMillis = 10000;
 
-    public String performRequest(String method, String recipeTitle, String ingredients, String instructions) {
+    public String performRequest(String method, String username, String password, String recipeTitle,
+            String ingredients, String instructions, String action) { // action can only be either "createAccount" or
+                                                                      // "Login"
         // Implement your HTTP request logic here and return the response
 
         try {
             String urlString = "http://localhost:8100/";
             if (recipeTitle != null) {
-                urlString += "?=" + recipeTitle.replace(" ", "");
+                urlString += "?=" + recipeTitle.replace(" ", "%20");
 
-                System.out.println("this is recipetitle: " + "GarlicBroccoli");
             } else {
                 urlString += "?=" + "defaultLoad";
             }
@@ -41,7 +42,13 @@ public class Model {
 
             if (method.equals("POST") || method.equals("PUT")) {
                 OutputStreamWriter out = new OutputStreamWriter(conn.getOutputStream());
-                out.write(recipeTitle + ";" + ingredients + ";" + instructions);
+                out.write(username + ";" + password + ";" + recipeTitle + ";" + ingredients + ";" + instructions + ";"
+                        + action);
+                out.flush();
+                out.close();
+            } else if (method.equals("DELETE")) {
+                OutputStreamWriter out = new OutputStreamWriter(conn.getOutputStream());
+                out.write(recipeTitle);
                 out.flush();
                 out.close();
             }

@@ -23,10 +23,14 @@ import java.net.*;
 import java.util.*;
 
 public class RequestHandler implements HttpHandler {
+    private MongoClient mongoClient;
+    private MongoDatabase userDB;
     private MongoCollection<Document> recipeCollection;
+    private static final String CREATE_ACCOUNT = "createAccount";
+    private static final String LOGIN = "Login";
 
-    public RequestHandler(MongoCollection<Document> recipeCollection) {
-        this.recipeCollection = recipeCollection;
+    public RequestHandler(MongoClient mongoClient) {
+        this.mongoClient = mongoClient;
     }
 
     public void handle(HttpExchange httpExchange) throws IOException {
@@ -59,7 +63,7 @@ public class RequestHandler implements HttpHandler {
     }
 
     private String handleGet(HttpExchange httpExchange) throws IOException {
-        String response = readAllRecipe(recipeCollection);
+        String response = readAllRecipe(mongoClient.getDatabase(userDB.toString()).getCollection("Recipe"));
         return response;
     }
 
@@ -69,17 +73,21 @@ public class RequestHandler implements HttpHandler {
         Scanner scanner = new Scanner(inStream);
         String postData = scanner.nextLine();
         List<String> recipe = Arrays.asList(postData.split(";"));
-        String recipeTitle = recipe.get(0);
-        String ingredients = recipe.get(1);
-        String instructions = recipe.get(2);
+        String username = recipe.get(0);
+        String password = recipe.get(1);
+        String recipeTitle = recipe.get(2);
+        String ingredients = recipe.get(3);
+        String instructions = recipe.get(4);
+        String action = recipe.get(5);
 
-        insertOneRecipe(recipeCollection, recipeTitle, ingredients, instructions);
-
-        response = "Posted recipe {" + recipeTitle + "}";
+        if (recipeTitle == null && ingredients == null && instructions == null) { // the POST request is a login/create
+            response = this.loadAccount(username, password, action); // acoount reques
+        } else { // the POST request is a create recipe request
+            insertOneRecipe(recipeCollection, recipeTitle, ingredients, instructions);
+            response = "Posted recipe {" + recipeTitle + "}";
+        }
         System.out.println(response);
-
         scanner.close();
-
         return response;
     }
 
@@ -102,15 +110,13 @@ public class RequestHandler implements HttpHandler {
     }
 
     private String handleDelete(HttpExchange httpExchange) throws IOException {
-        String response = "Invalid DELETE request";
-        URI uri = httpExchange.getRequestURI();
-        String query = uri.getRawQuery();
-        if (query != null) {
-            String recipeTitle = query.substring(query.indexOf("=") + 1);
-            deleteOneRecipe(recipeCollection, recipeTitle);
-            response = "Deleted entry {" + recipeTitle + "}";
-            System.out.println(response);
-        }
+        String response = "";
+        InputStream inStream = httpExchange.getRequestBody();
+        Scanner scanner = new Scanner(inStream);
+        String recipeTitle = scanner.nextLine();
+        response = deleteOneRecipe(recipeCollection, recipeTitle);
+        scanner.close();
+
         return response;
     }
 
@@ -141,11 +147,12 @@ public class RequestHandler implements HttpHandler {
         System.out.println(updateResult2);
     }
 
-    private static void deleteOneRecipe(MongoCollection<Document> recipeCollection, String recipeTitle) {
+    private static String deleteOneRecipe(MongoCollection<Document> recipeCollection, String recipeTitle) {
         Bson filter = eq("Title", recipeTitle);
         DeleteResult result = recipeCollection.deleteOne(filter);
         System.out.println(result);
         System.out.println(recipeCollection.countDocuments() + " after deletion");
+        return result.toString();
     }
 
     private static String readOneRecipe(MongoCollection<Document> recipeCollection, String recipeTitle) {
@@ -160,10 +167,10 @@ public class RequestHandler implements HttpHandler {
     private static String readAllRecipe(MongoCollection<Document> recipeCollection) {
         String recipe_details = "";
         int cnt = 0;
-        //TODO why is line 164-165 here?
+        // TODO why is line 164-165 here?
         List<Document> studentList = recipeCollection.find().into(new ArrayList<>());
-        //System.out.println("length of list" + studentList.size());
-       
+        // System.out.println("length of list" + studentList.size());
+
         for (Document recipe : recipeCollection.find()) {
             recipe_details += recipe.get("Title") + ";" + recipe.get("Ingredients") + ";"
                     + recipe.get("Instructions")
@@ -177,4 +184,42 @@ public class RequestHandler implements HttpHandler {
         System.out.println("Recipe Details from readAllRecipe(): \n" + recipe_details);
         return recipe_details;
     }
+
+    // handles username and password
+    private String loadAccount(String username, String password, String action) {
+        String response = "";
+        // account exists
+        if (action.equals(LOGIN)) {
+            if (mongoClient.getDatabase(username) != null) {
+                this.userDB = mongoClient.getDatabase(username);
+                MongoCollection<Document> UserInfoCollection = userDB.getCollection("UserInfoCollection");
+                Document theUser = UserInfoCollection.find(new Document("username", username)).first();
+                if (password == theUser.get("password")) {
+                    response = "Login Successfully";
+                    this.recipeCollection = userDB.getCollection("Recipe");
+                } else {
+                    response = "Incorrect Password";
+                }
+            } else {
+                response = "Username not found";
+            }
+        }
+
+        // account does not exist: create a new DB
+        else if (action.equals(CREATE_ACCOUNT)) {
+            if (mongoClient.getDatabase(username) != null) {
+                response = "Username already exists";
+            } else {
+                MongoCollection<Document> UserInfoCollection = userDB.getCollection("UserInfoCollection");
+                Document UserCredentialsDoc = new Document("username", username)
+                        .append("password", password);
+                UserInfoCollection.insertOne(UserCredentialsDoc);
+                MongoCollection<Document> recipeCollection = userDB.getCollection("Recipe");
+                this.recipeCollection = recipeCollection;
+            }
+
+        }
+        return response;
+    }
+
 }
