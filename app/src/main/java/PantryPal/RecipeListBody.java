@@ -13,11 +13,9 @@ public class RecipeListBody extends VBox {
     private Stage primaryStage;
     private Scene mainScene;
     private RecipeList recipeListArray;
-    private Server server;
 
-    public RecipeListBody(RecipeList recipeListArray, Server server) {
+    public RecipeListBody(RecipeList recipeListArray) {
         this.recipeListArray = recipeListArray;
-        this.server = server;
         this.setSpacing(10);
         this.setPrefSize(800, 800);
         this.setStyle("-fx-background-color: #EAEAEA;");
@@ -38,7 +36,7 @@ public class RecipeListBody extends VBox {
                 recipe.getIngredients(),
                 recipe.getInstructions(),
                 primaryStage, mainScene,
-                this, controller, server);
+                this, controller);
     }
 
     // Deletes the recipe from the recipe list

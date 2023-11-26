@@ -25,14 +25,12 @@ public class UserInputScreen {
     private Button stopRecButton;
     private Button goBack;
     private Controller controller;
-    private Server server;
 
     public UserInputScreen(RecipeListBody recipeList, Stage primaryStage, Scene mainScene, Generate generate,
-            Controller controller, Server server) {
+            Controller controller) {
         this.primaryStage = primaryStage;
         this.mainScene = mainScene;
         this.controller = controller;
-        this.server = server;
 
         firstInput = true;
 
@@ -106,7 +104,7 @@ public class UserInputScreen {
                 try {
                     generatedRecipeScreen = new RecipeDescriptionScreen(null, processedTitle,
                             processedIngredients, processedInstructions,
-                            primaryStage, mainScene, recipeList, this.controller, this.server);
+                            primaryStage, mainScene, recipeList, this.controller);
                     generatedRecipeScreen.switchToThisScene();
                 } catch (Exception e1) {
                     // TODO Auto-generated catch block

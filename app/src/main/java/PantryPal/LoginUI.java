@@ -26,15 +26,15 @@ public class LoginUI extends BorderPane {
     private Controller controller;
     private Scene mainScene;
     private Scene scene;
-    private Server server;
     private boolean autologin;
+    private Server server;
 
     public LoginUI(Stage primaryStage, Controller controller, Server server) throws Exception {
         this.primaryStage = primaryStage;
         this.controller = controller;
         this.mainScene = this.getScene();
-        this.server = server;
         this.autologin = false;
+        this.server = server;
         VBox mainVBox = new VBox();
 
         // Add the Username field
@@ -75,27 +75,25 @@ public class LoginUI extends BorderPane {
         loginButton.setOnAction(e -> {
             try {
                 if (!(username.getText()).equals("") && !(password.getText()).equals("")) {
-                    if (server.acountExist(username.getText())) {
+                    if ((controller.login(username.getText(), password.getText())).equals("Login Successfully")) {
                         System.out.println("Logging in with username: " + username.getText() + " and password: "
                                 + password.getText());
+                                
 
-                        if (server.loadAccount(username.getText(), password.getText())) {
-                            if (autologin == true) {
-                                AutoLogin.createFile(username.getText(), password.getText());
-                            }
-                            RecipeListScreen homeScreen = new RecipeListScreen(primaryStage, controller, server);
-                            homeScreen.setLogoutScene(this.scene);
-                            homeScreen.setMainScene(homeScreen.getRecipeListScene()); // Saves the main screen of RLS to
-                                                                                      // save when "go back" is pressed
-                            homeScreen.rebuild();
-                            homeScreen.switchToThisScene(); // Switches to the main screen of RLS
-                            this.password.clear();
-                            this.username.clear();
-                            primaryStage.setScene(homeScreen.getRecipeListScene());
-
+                        if (autologin == true) {
+                            AutoLogin.createFile(username.getText(), password.getText());
                         }
+                        RecipeListScreen homeScreen = new RecipeListScreen(primaryStage, controller, server);
+                        homeScreen.setLogoutScene(this.scene);
+                        homeScreen.setMainScene(homeScreen.getRecipeListScene()); // Saves the main screen of RLS to
+                                                                                    // save when "go back" is pressed
+                        homeScreen.rebuild();
+                        homeScreen.switchToThisScene(); // Switches to the main screen of RLS
+                        this.password.clear();
+                        this.username.clear();
+                        primaryStage.setScene(homeScreen.getRecipeListScene());
                     } else {
-                        System.out.println("Account does not exist");
+                        System.out.println("incorrect password or username doesn't exist");
                     }
                 } else {
                     System.out.println("empty password or username");
@@ -111,14 +109,14 @@ public class LoginUI extends BorderPane {
             try {
 
                 if (!(username.getText()).equals("") && !(password.getText()).equals("")) {
-                    if (server.acountExist(username.getText())) {
+                    if ((controller.createAccount(username.getText(), password.getText())).equals("Username already exists")) {
                         System.out.println("account already exists");
 
                     } else {
                         if (autologin == true) {
                             AutoLogin.createFile(username.getText(), password.getText());
                         }
-                        server.createAccountInDB(username.getText(), password.getText());
+                        controller.createAccount(username.getText(), password.getText());
                         RecipeListScreen homeScreen = new RecipeListScreen(primaryStage, controller, server);
                         homeScreen.setLogoutScene(this.scene);
                         homeScreen.setMainScene(homeScreen.getRecipeListScene()); // Saves the main screen of RLS to

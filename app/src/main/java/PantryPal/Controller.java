@@ -47,7 +47,7 @@ public class Controller {
     }
 
     public String login(String username, String password) {
-        String response = model.performRequest("POST", username, password, null, null, null, this.LOGIN);
+        String response = model.performRequest("POST", username, password, " ", " ", " ", this.LOGIN);
         return response;
     }
 

@@ -37,7 +37,7 @@ public class RecipeListScreen extends BorderPane {
         header = new RecipeListHeader();
         footer = new RecipeListFooter();
         RecipeList recipeListArray = new RecipeList();
-        recipeList = new RecipeListBody(recipeListArray, server);
+        recipeList = new RecipeListBody(recipeListArray);
         ScrollPane scrollPane = new ScrollPane(recipeList);
         scrollPane.setFitToWidth(true);
         this.setTop(header);
@@ -60,7 +60,7 @@ public class RecipeListScreen extends BorderPane {
     public void addListeners() throws Exception {
         addButton.setOnAction(e -> {
             userInputScreen = new UserInputScreen(recipeList, primaryStage, this.mainScene, this.generate,
-                    this.controller, this.server);
+                    this.controller);
             userInputScreen.switchToThisScene();
         }); // Set the action on the button
 

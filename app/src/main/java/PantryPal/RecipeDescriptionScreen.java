@@ -34,11 +34,10 @@ public class RecipeDescriptionScreen {
     private Button confirmDelete;
     private Button cancelDelete;
     private RecipeTitleButton recipe;
-    private Server server;
 
     // Use for rebuild the recipes when reopen the app
     public RecipeDescriptionScreen(RecipeTitleButton recipe1, String title, String ingredients, String instructions,
-            Stage primaryStage, Scene mainScene, RecipeListBody recipeList, Controller controller, Server server)
+            Stage primaryStage, Scene mainScene, RecipeListBody recipeList, Controller controller)
             throws Exception {
 
         if (recipe1 == null) {
@@ -49,7 +48,6 @@ public class RecipeDescriptionScreen {
         this.primaryStage = primaryStage;
         this.mainScene = mainScene;
         this.recipe = recipe1;
-        this.server = server;
 
         VBox newRoot = new VBox(); // Create a new root for the new scene
         newRoot.setStyle("-fx-background-color: #BF2C34;");

@@ -63,7 +63,7 @@ public class RequestHandler implements HttpHandler {
     }
 
     private String handleGet(HttpExchange httpExchange) throws IOException {
-        String response = readAllRecipe(mongoClient.getDatabase(userDB.toString()).getCollection("Recipe"));
+        String response = readAllRecipe((userDB.getCollection("Recipe")));
         return response;
     }
 
@@ -80,8 +80,13 @@ public class RequestHandler implements HttpHandler {
         String instructions = recipe.get(4);
         String action = recipe.get(5);
 
-        if (recipeTitle == null && ingredients == null && instructions == null) { // the POST request is a login/create
+        System.out.println(recipeTitle);
+        System.out.println(ingredients);
+        System.out.println(instructions);
+
+        if (recipeTitle.equals(" ") && ingredients.equals(" ") && instructions.equals(" ")) { // the POST request is a login/create
             response = this.loadAccount(username, password, action); // acoount reques
+            System.out.println("if statement");
         } else { // the POST request is a create recipe request
             insertOneRecipe(recipeCollection, recipeTitle, ingredients, instructions);
             response = "Posted recipe {" + recipeTitle + "}";
@@ -194,7 +199,7 @@ public class RequestHandler implements HttpHandler {
                 this.userDB = mongoClient.getDatabase(username);
                 MongoCollection<Document> UserInfoCollection = userDB.getCollection("UserInfoCollection");
                 Document theUser = UserInfoCollection.find(new Document("username", username)).first();
-                if (password == theUser.get("password")) {
+                if (password.equals(theUser.get("password"))) {
                     response = "Login Successfully";
                     this.recipeCollection = userDB.getCollection("Recipe");
                 } else {
