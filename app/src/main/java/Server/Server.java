@@ -16,7 +16,6 @@ import java.util.Map;
 import java.util.concurrent.*;
 import java.util.ArrayList;
 
-
 public class Server {
 
   // initialize server port and hostname
@@ -25,7 +24,7 @@ public class Server {
   private HttpServer server;
   private ThreadPoolExecutor threadPoolExecutor;
   private MongoClient mongoClient;
-  private MongoDatabase usernameDB;
+
   // private boolean serverCreated;
 
   public void activateServer() throws IOException {
@@ -44,6 +43,7 @@ public class Server {
         0);
     this.server = server;
 
+    server.createContext("/", new RequestHandler(mongoClient));
     // set the executor
     server.setExecutor(threadPoolExecutor);
 
@@ -52,71 +52,12 @@ public class Server {
     System.out.println("Server started on port " + SERVER_PORT);
   }
 
-  public boolean loadAccount(String username, String password){
-    usernameDB = mongoClient.getDatabase(username);
-
-    MongoCollection<Document> UserInfoCollection = usernameDB.getCollection("UserInfoCollection");
-
-    Document theUser = UserInfoCollection.find(new Document("username", username)).first();
-    System.out.println("theUser: " + theUser);
-    if(password.equals(theUser.get("password"))){ //password is the entered password and theUser.get("password") is the password in the database
-      System.out.println("theUser password: " + theUser.get("password"));
-
-      MongoCollection<Document> recipeCollection = usernameDB.getCollection("Recipe");
-
-      // if (serverCreated == false) {
-        // create the context
-        server.createContext("/", new RequestHandler(recipeCollection));
-      //   serverCreated = true;
-      //   // server.createContext("/name", new MyHandler(data));
-      // } else {
-      //   // create the context
-      //   server.createContext("/", new RequestHandler(recipeCollection));
-      //   serverCreated = true;
-      //   // server.createContext("/name", new MyHandler(data));
-      // }
-      
-      return true;  
-    }
-    else {
-      System.out.println("Wrong password, try again");
-      return false;
-    }
-  }
-
-  public void createAccountInDB(String username, String password){
-    usernameDB = mongoClient.getDatabase(username);
-    MongoCollection<Document> UserInfoCollection = usernameDB.getCollection("UserInfoCollection");
-
-    Document UserCredentialsDoc = new Document("username", username)
-    .append("password", password);
-
-    UserInfoCollection.insertOne(UserCredentialsDoc);
-
-    MongoCollection<Document> recipeCollection = usernameDB.getCollection("Recipe");
-    server.createContext("/", new RequestHandler(recipeCollection));
-  }
-
-  public boolean acountExist(String username){
-    var databaseNames = this.mongoClient.listDatabaseNames().into(new ArrayList<>());
-    if (databaseNames.contains((username))){
-      return true;
-    }
-    else {
-      return false;
-    }
-  }
-
   public void deactivateServer() throws IOException {
     server.stop(0);
     threadPoolExecutor.shutdownNow();
   }
 
-  public MongoClient getMongo(){
+  public MongoClient getMongoClient(){
     return this.mongoClient;
-  }
-
-    public MongoDatabase getMongoDB(){
-    return this.usernameDB;
   }
 }

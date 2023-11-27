@@ -21,10 +21,18 @@ import com.opencsv.exceptions.CsvValidationException;
 public class CreateAccountTests {
     private Server server;
 
+    private Controller controller;
+    private Model model;
+    private RequestHandler requestHandler;
+
     @BeforeEach
-    void setUp() throws IOException {
+    void setUp() throws Exception {
         server = new Server();
         server.activateServer();
+        requestHandler = new RequestHandler(server.getMongoClient());
+        model = new Model();
+        controller = new Controller(model);
+
     }
 
     @AfterEach
@@ -32,27 +40,46 @@ public class CreateAccountTests {
         server.deactivateServer();
     }
 
+
+    // US1 BDD1
     // Test creating an account of new username
     @Test
     void createNewAccount() {
-        server.createAccountInDB("CreateAccountTest", "1234");
-        // MongoClient client = server.getMongo();
-        // MongoClient client2 = new MongoClient(server, 8100);
-        MongoDatabase user = server.getMongoDB();
+        controller.createAccount("CreateAccountTest", "1234");
+        requestHandler.loadAccount("CreateAccountTest", "1234", "Login");
+        MongoDatabase user = requestHandler.getDatabase();
+        var databaseNames = server.getMongoClient().listDatabaseNames().into(new ArrayList<>());
+        MongoDatabase database = server.getMongoClient().getDatabase("CreateAccountTest");
 
-        var databaseNames = server.getMongo().listDatabaseNames().into(new ArrayList<>());
-        MongoDatabase database = server.getMongo().getDatabase("CreateAccountTest");
         System.out.println(database.getName());
         assertEquals(databaseNames.contains("CreateAccountTest"), true);
         //database.drop();
+
 
         user.drop();
 
     }
 
+
+    // US1 BDD2
     // Test creating an account of already existing username
     @Test
     void createExistingAccount() {
-        // server.createAccountInDB("CreateAccountTest", "1234");
+        controller.createAccount("CreateAccountTest", "1234");
+        requestHandler.loadAccount("CreateAccountTest", "1234", "Login");
+        boolean createdAgain;
+        MongoDatabase user = requestHandler.getDatabase();
+
+        if(requestHandler.databaseFound(server.getMongoClient(),"CreateAccountTest")) {
+            createdAgain = false;
+        } else {
+            createdAgain = true;
+        }
+
+        assertEquals(createdAgain, false);
+
+        user.drop();
+
+
     }
 }

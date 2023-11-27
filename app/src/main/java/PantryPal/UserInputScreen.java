@@ -25,14 +25,12 @@ public class UserInputScreen {
     private Button stopRecButton;
     private Button goBack;
     private Controller controller;
-    private Server server;
 
     public UserInputScreen(RecipeListBody recipeList, Stage primaryStage, Scene mainScene, Generate generate,
-            Controller controller, Server server) {
+            Controller controller) {
         this.primaryStage = primaryStage;
         this.mainScene = mainScene;
         this.controller = controller;
-        this.server = server;
 
         firstInput = true;
 
@@ -80,18 +78,32 @@ public class UserInputScreen {
 
         stopRecButton.setOnAction(e -> {
             generate.stopRecording();
-            if (firstInput == true) {
+            if (firstInput) {
                 String userInput = generate.getUserInput();
-                if (userInput != null) { // Check if userInput is not null
-                    this.mealType = userInput;
-                    System.out.println("Stop Recording on meal scene pressed");
-                    System.out.println(this.mealType);
+                System.out.println(userInput);
+                if (userInput != null) {
+                    if (isValidMealType(userInput)) {
+                        this.mealType = userInput;
+                        System.out.println("Stop Recording on meal scene pressed");
+                        System.out.println(this.mealType);
+        
+                        text1.setText("\n\n\n\n Please state your ingredients. \n\n");
+                        text3.setText("(Example: 'salt, pepper, eggs, and bacon!') \n\n\n\n" +
+                                "Press 'Start Recording' then say your ingredients. \n\n" +
+                                "Press 'Stop Recording' when you are done speaking. ");
+                        firstInput = false;
+                    } else {
+                        // Meal type is not valid, prompt the user to repeat
+                        text1.setText("\n\n\n\n Please state a valid meal type. \n\n" +
+                                "(Breakfast, Lunch, Dinner)\n\n");
+                        text3.setText("Press 'Start Recording' then say your meal type. \n\n" +
+                                "Press 'Stop Recording' when you are done speaking.");
+                        text1.setText("\n\n\n\n Your meal type was not of the type.  \n\n (Breakfast, Lunch, Dinner) \n\n");
+                        text3.setText("Please try again. \n\n\n\n" +
+                                "Press 'Start Recording' then say your meal type. \n\n" +
+                                "Press 'Stop Recording' when you are done speaking. ");
+                    }
                 }
-                text1.setText("\n\n\n\n Please state your ingredients. \n\n");
-                text3.setText("(Example: 'salt, pepper, eggs, and bacon!') \n\n\n\n" +
-                        "Press 'Start Recording' then say your ingredients. \n\n" +
-                        "Press 'Stop Recording' when you are done speaking. ");
-                firstInput = false;
             } else {
                 this.ingredients = generate.getUserInput(); // Get the user input
                 System.out.println("Stop Recording on Ingredients scene pressed");
@@ -106,7 +118,7 @@ public class UserInputScreen {
                 try {
                     generatedRecipeScreen = new RecipeDescriptionScreen(null, processedTitle,
                             processedIngredients, processedInstructions,
-                            primaryStage, mainScene, recipeList, this.controller, this.server);
+                            primaryStage, mainScene, recipeList, this.controller);
                     generatedRecipeScreen.switchToThisScene();
                 } catch (Exception e1) {
                     // TODO Auto-generated catch block
@@ -205,6 +217,17 @@ public class UserInputScreen {
             index++;
         }
         return output;
+    }
+
+    // Helper method to check if the meal type is valid
+    private boolean isValidMealType(String mealType) {
+        return mealType.equalsIgnoreCase("Breakfast") ||
+               mealType.equalsIgnoreCase("Lunch") ||
+               mealType.equalsIgnoreCase("Dinner") ||
+               mealType.equalsIgnoreCase("Breakfast.") ||
+               mealType.equalsIgnoreCase("Lunch.") ||
+               mealType.equalsIgnoreCase("Dinner.")
+               ;
     }
 
     public Scene getScene() {

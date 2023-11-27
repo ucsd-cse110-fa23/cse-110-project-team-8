@@ -32,6 +32,7 @@ public class LoginFunctionalityTests {
         Testfile.delete();
     }
 
+
     // US2 BDD1
     // Test login with autologin disabled
     @Test

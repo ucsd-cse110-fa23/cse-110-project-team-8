@@ -18,7 +18,7 @@ public class RecipeTitleButton extends HBox {
         titleString = recipe.getTitle();
         ingredient = recipe.getIngredients();
         instructions = recipe.getInstructions();
-        titleButton.setPrefSize(800, 50); // sets size of button
+        titleButton.setPrefSize(10000, 50); // sets size of button
         titleButton.setStyle(" -fx-font-size: 18; -fx-background-color: #ffffff; -fx-border-width: 0;"); // sets style of button
         this.getChildren().add(titleButton);
     }
