@@ -3,6 +3,7 @@ package Server;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.InsertManyOptions;
 import com.mongodb.client.result.DeleteResult;
@@ -84,7 +85,8 @@ public class RequestHandler implements HttpHandler {
         System.out.println(ingredients);
         System.out.println(instructions);
 
-        if (recipeTitle.equals(" ") && ingredients.equals(" ") && instructions.equals(" ")) { // the POST request is a login/create
+        if (recipeTitle.equals(" ") && ingredients.equals(" ") && instructions.equals(" ")) { // the POST request is a
+                                                                                              // login/create
             response = this.loadAccount(username, password, action); // acoount reques
             System.out.println("if statement");
         } else { // the POST request is a create recipe request
@@ -195,7 +197,7 @@ public class RequestHandler implements HttpHandler {
         String response = "";
         // account exists
         if (action.equals(LOGIN)) {
-            if (mongoClient.getDatabase(username) != null) {
+            if (databaseFound(mongoClient, username) == true) {
                 this.userDB = mongoClient.getDatabase(username);
                 MongoCollection<Document> UserInfoCollection = userDB.getCollection("UserInfoCollection");
                 Document theUser = UserInfoCollection.find(new Document("username", username)).first();
@@ -212,19 +214,33 @@ public class RequestHandler implements HttpHandler {
 
         // account does not exist: create a new DB
         else if (action.equals(CREATE_ACCOUNT)) {
-            if (mongoClient.getDatabase(username) != null) {
+            if (databaseFound(mongoClient, username) == true) {
+                System.out.println(username);
+                System.out.println(mongoClient.getDatabase(username));
                 response = "Username already exists";
             } else {
+                MongoDatabase database = mongoClient.getDatabase(username);
+                this.userDB = database;
                 MongoCollection<Document> UserInfoCollection = userDB.getCollection("UserInfoCollection");
                 Document UserCredentialsDoc = new Document("username", username)
                         .append("password", password);
                 UserInfoCollection.insertOne(UserCredentialsDoc);
-                MongoCollection<Document> recipeCollection = userDB.getCollection("Recipe");
-                this.recipeCollection = recipeCollection;
+                userDB.createCollection("Recipe");
+                this.recipeCollection = userDB.getCollection("Recipe");
             }
 
         }
         return response;
+    }
+
+    public static Boolean databaseFound(MongoClient mongoClient, String databaseName) {
+        MongoCursor<String> dbsCursor = mongoClient.listDatabaseNames().iterator();
+        while (dbsCursor.hasNext()) {
+            if (dbsCursor.next().equals(databaseName)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

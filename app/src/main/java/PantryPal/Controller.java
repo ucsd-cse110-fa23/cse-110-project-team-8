@@ -42,7 +42,7 @@ public class Controller {
     }
 
     public String createAccount(String username, String password) {
-        String response = model.performRequest("POST", username, password, null, null, null, this.CREATE_ACCOUNT);
+        String response = model.performRequest("POST", username, password, " ", " ", " ", this.CREATE_ACCOUNT);
         return response;
     }
 
