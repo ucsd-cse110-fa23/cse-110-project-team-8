@@ -22,11 +22,13 @@ public class CreateAccountTests {
     private Server server;
     private Controller controller;
     private Model model;
+    private RequestHandler requestHandler;
 
     @BeforeEach
     void setUp() throws Exception {
         server = new Server();
         server.activateServer();
+        requestHandler = new RequestHandler(server.getMongoClient());
         model = new Model();
         controller = new Controller(model);
     }
@@ -40,15 +42,15 @@ public class CreateAccountTests {
     // Test creating an account of new username
     @Test
     void createNewAccount() {
-        // controller.createAccount("CreateAccountTest", "1234");
-        // MongoDatabase user = controller.loadAccount();
+        controller.createAccount("CreateAccountTest", "1234");
+        requestHandler.loadAccount("CreateAccountTest", "1234", "Login");
+        MongoDatabase user = requestHandler.getDatabase();
+        var databaseNames = server.getMongoClient().listDatabaseNames().into(new ArrayList<>());
+        MongoDatabase database = server.getMongoClient().getDatabase("CreateAccountTest");
+        System.out.println(database.getName());
+        assertEquals(databaseNames.contains("CreateAccountTest"), true);
 
-        // var databaseNames = server.getMongo().listDatabaseNames().into(new ArrayList<>());
-        // MongoDatabase database = server.getMongo().getDatabase("CreateAccountTest");
-        // System.out.println(database.getName());
-        // assertEquals(databaseNames.contains("CreateAccountTest"), true);
-
-        // user.drop();
+        user.drop();
 
     }
 
@@ -56,18 +58,19 @@ public class CreateAccountTests {
     // Test creating an account of already existing username
     @Test
     void createExistingAccount() {
-        // server.createAccountInDB("CreateAccountTest", "1234");
-        // boolean createdAgain;
-        // MongoDatabase user = server.getMongoDB();
+        controller.createAccount("CreateAccountTest", "1234");
+        requestHandler.loadAccount("CreateAccountTest", "1234", "Login");
+        boolean createdAgain;
+        MongoDatabase user = requestHandler.getDatabase();
 
-        // if(server.acountExist("CreateAccountTest")) {
-        //     createdAgain = false;
-        // } else {
-        //     createdAgain = true;
-        // }
+        if(requestHandler.databaseFound(server.getMongoClient(),"CreateAccountTest")) {
+            createdAgain = false;
+        } else {
+            createdAgain = true;
+        }
 
-        // assertEquals(createdAgain, false);
+        assertEquals(createdAgain, false);
 
-        // user.drop();
+        user.drop();
     }
 }

@@ -193,7 +193,7 @@ public class RequestHandler implements HttpHandler {
     }
 
     // handles username and password
-    private String loadAccount(String username, String password, String action) {
+    public String loadAccount(String username, String password, String action) {
         String response = "";
         // account exists
         if (action.equals(LOGIN)) {
@@ -242,6 +242,10 @@ public class RequestHandler implements HttpHandler {
             }
         }
         return false;
+    }
+
+    public MongoDatabase getDatabase(){
+        return this.userDB;
     }
 
 }

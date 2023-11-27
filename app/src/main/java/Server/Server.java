@@ -56,4 +56,8 @@ public class Server {
     server.stop(0);
     threadPoolExecutor.shutdownNow();
   }
+
+  public MongoClient getMongoClient(){
+    return this.mongoClient;
+  }
 }
