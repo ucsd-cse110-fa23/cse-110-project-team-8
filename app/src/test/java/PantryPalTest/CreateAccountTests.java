@@ -20,11 +20,15 @@ import com.opencsv.exceptions.CsvValidationException;
 
 public class CreateAccountTests {
     private Server server;
+    private Controller controller;
+    private Model model;
 
     @BeforeEach
-    void setUp() throws IOException {
+    void setUp() throws Exception {
         server = new Server();
         server.activateServer();
+        model = new Model();
+        controller = new Controller(model);
     }
 
     @AfterEach
@@ -36,8 +40,8 @@ public class CreateAccountTests {
     // Test creating an account of new username
     @Test
     void createNewAccount() {
-        // server.createAccountInDB("CreateAccountTest", "1234");
-        // MongoDatabase user = server.getMongoDB();
+        // controller.createAccount("CreateAccountTest", "1234");
+        // MongoDatabase user = controller.loadAccount();
 
         // var databaseNames = server.getMongo().listDatabaseNames().into(new ArrayList<>());
         // MongoDatabase database = server.getMongo().getDatabase("CreateAccountTest");
