@@ -9,6 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -27,14 +28,13 @@ public class LoginUI extends BorderPane {
     private Scene mainScene;
     private Scene scene;
     private boolean autologin;
-    private Server server;
+    private Text serverStatus;
 
-    public LoginUI(Stage primaryStage, Controller controller, Server server) throws Exception {
+    public LoginUI(Stage primaryStage, Controller controller) throws Exception {
         this.primaryStage = primaryStage;
         this.controller = controller;
         this.mainScene = this.getScene();
         this.autologin = false;
-        this.server = server;
         VBox mainVBox = new VBox();
 
         // Add the Username field
@@ -65,11 +65,15 @@ public class LoginUI extends BorderPane {
         autoLogin.setAlignment(Pos.CENTER);
         // Sets the scene
 
+        serverStatus = new Text();
+        serverStatus.setFill(Color.RED);
+
         mainVBox.getChildren().addAll(
                 usernameHbox,
                 passwordHbox,
                 loginCreateButtonHbox,
-                autoLogin);
+                autoLogin,
+                serverStatus);
         mainVBox.setAlignment(Pos.CENTER);
 
         loginButton.setOnAction(e -> {
@@ -83,7 +87,7 @@ public class LoginUI extends BorderPane {
                         if (autologin == true) {
                             AutoLogin.createFile(username.getText(), password.getText());
                         }
-                        RecipeListScreen homeScreen = new RecipeListScreen(primaryStage, controller, server);
+                        RecipeListScreen homeScreen = new RecipeListScreen(primaryStage, controller);
                         homeScreen.setLogoutScene(this.scene);
                         homeScreen.setMainScene(homeScreen.getRecipeListScene()); // Saves the main screen of RLS to
                                                                                     // save when "go back" is pressed
@@ -117,7 +121,7 @@ public class LoginUI extends BorderPane {
                             AutoLogin.createFile(username.getText(), password.getText());
                         }
                         controller.createAccount(username.getText(), password.getText());
-                        RecipeListScreen homeScreen = new RecipeListScreen(primaryStage, controller, server);
+                        RecipeListScreen homeScreen = new RecipeListScreen(primaryStage, controller);
                         homeScreen.setLogoutScene(this.scene);
                         homeScreen.setMainScene(homeScreen.getRecipeListScene()); // Saves the main screen of RLS to
                                                                                   // save when "go back" is pressed

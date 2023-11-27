@@ -26,7 +26,7 @@ public class App extends Application {
         Model model = new Model();
         Controller controller = new Controller(model);
         
-        root = new LoginUI(primaryStage, controller, server);
+        root = new LoginUI(primaryStage, controller);
 
         // Set the title of the app
         primaryStage.setTitle("Pantry Pal");
