@@ -50,8 +50,10 @@ public class CreateAccountTests {
         MongoDatabase user = requestHandler.getDatabase();
         var databaseNames = server.getMongoClient().listDatabaseNames().into(new ArrayList<>());
         MongoDatabase database = server.getMongoClient().getDatabase("CreateAccountTest");
+
         System.out.println(database.getName());
         assertEquals(databaseNames.contains("CreateAccountTest"), true);
+        //database.drop();
 
 
         user.drop();
@@ -77,6 +79,7 @@ public class CreateAccountTests {
         assertEquals(createdAgain, false);
 
         user.drop();
+
 
     }
 }

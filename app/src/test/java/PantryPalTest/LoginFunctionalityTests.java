@@ -26,6 +26,11 @@ public class LoginFunctionalityTests {
     void setUp() throws IOException {
         Testfile = new File("TestFile.txt");
     }
+       
+    @AfterEach
+    void closeDown() throws IOException {
+        Testfile.delete();
+    }
 
     @AfterEach
     void closeDown() throws IOException {
