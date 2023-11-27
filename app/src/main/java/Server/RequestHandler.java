@@ -103,9 +103,9 @@ public class RequestHandler implements HttpHandler {
         Scanner scanner = new Scanner(inStream);
         String putData = scanner.nextLine();
         List<String> recipe = Arrays.asList(putData.split(";"));
-        String recipeTitle = recipe.get(0);
-        String ingredients = recipe.get(1);
-        String instructions = recipe.get(2);
+        String recipeTitle = recipe.get(2);
+        String ingredients = recipe.get(3);
+        String instructions = recipe.get(4);
 
         updateOneRecipe(recipeCollection, recipeTitle, ingredients, instructions);
 

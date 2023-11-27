@@ -141,7 +141,6 @@ public class RecipeDescriptionScreen {
             // ADD: GOBACK, EDIT, DELETE
             hRoot.getChildren().add(goBack);
             hRoot.getChildren().add(editButton);
-            ;
 
             // if previously saved or not
             if (savedHit == false) {
@@ -152,8 +151,9 @@ public class RecipeDescriptionScreen {
                 recipe.getRecipe().setIngredients(ingredientsArea.getText());
                 recipe.getRecipe().setInstructions(instructionsArea.getText());
                 recipeList.getArray().toCSV("RecipeList.csv");
+
                 try {
-                    controller.handleDelete(title);
+                    controller.handlePut(title, ingredientsArea.getText(), instructionsArea.getText());
                 } catch (Exception e2) {
                     e2.printStackTrace();
                 }
