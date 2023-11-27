@@ -32,10 +32,6 @@ public class LoginFunctionalityTests {
         Testfile.delete();
     }
 
-    @AfterEach
-    void closeDown() throws IOException {
-        Testfile.delete();
-    }
 
     // US2 BDD1
     // Test login with autologin disabled
