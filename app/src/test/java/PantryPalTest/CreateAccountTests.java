@@ -1,0 +1,58 @@
+package PantryPalTest;
+
+import org.junit.jupiter.api.Test;
+
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoDatabase;
+import com.opencsv.CSVReader;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import java.io.IOException;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import PantryPal.*;
+import Server.*;
+import java.util.ArrayList;
+
+
+import java.io.FileReader;
+import com.opencsv.exceptions.CsvValidationException;
+
+public class CreateAccountTests {
+    private Server server;
+
+    @BeforeEach
+    void setUp() throws IOException {
+        server = new Server();
+        server.activateServer();
+    }
+
+    @AfterEach
+    void closeDown() throws IOException{
+        server.deactivateServer();
+    }
+
+    // Test creating an account of new username
+    @Test
+    void createNewAccount() {
+        server.createAccountInDB("CreateAccountTest", "1234");
+        // MongoClient client = server.getMongo();
+        // MongoClient client2 = new MongoClient(server, 8100);
+        MongoDatabase user = server.getMongoDB();
+
+        var databaseNames = server.getMongo().listDatabaseNames().into(new ArrayList<>());
+        MongoDatabase database = server.getMongo().getDatabase("CreateAccountTest");
+        System.out.println(database.getName());
+        assertEquals(databaseNames.contains("CreateAccountTest"), true);
+        //database.drop();
+
+        user.drop();
+
+    }
+
+    // Test creating an account of already existing username
+    @Test
+    void createExistingAccount() {
+        // server.createAccountInDB("CreateAccountTest", "1234");
+    }
+}

@@ -51,7 +51,7 @@ public class Generate {
                 "the preferred meal type I tell you. You have to use the ingredients I give you in your " +
                 "recipe, you cannot remove any, however you can add a few extra ingredients but not too " +
                 "many. Remember to keep the recipe simple. For your output I only want you to display: a " +
-                "recipe title labelled 'Title:', the ingredients labelled 'Ingredients:', " +
+                "recipe title labelled 'Title:' but don't add any special characters in the title, the ingredients labelled 'Ingredients:', " +
                 "the instructions labelled 'Instructions:' . Do not add any extra text.";
 
         String userInput = " My preffered meal type is " + mealType + " and my ingredients are " + ingredients;

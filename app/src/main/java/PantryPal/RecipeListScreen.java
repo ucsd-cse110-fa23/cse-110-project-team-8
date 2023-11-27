@@ -7,6 +7,8 @@ import javafx.stage.Stage;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
+import Server.*;
+
 
 public class RecipeListScreen extends BorderPane {
     private RecipeListHeader header;
@@ -18,14 +20,19 @@ public class RecipeListScreen extends BorderPane {
     private Scene mainScene; // Field to store the main scene
     private Generate generate;
     private UserInputScreen userInputScreen;
+    private Controller controller;
+    private Scene scene;
+    private Server server;
 
-    public RecipeListScreen(Stage primaryStage) throws CsvValidationException {
-        this.primaryStage = primaryStage;   // Store the stage
-        this.mainScene = this.getScene();   // Store the main scene
+    public RecipeListScreen(Stage primaryStage, Controller controller, Server server) throws Exception {
+        this.controller = controller;
+        this.primaryStage = primaryStage; // Store the stage
+        this.mainScene = this.getScene(); // Store the main scene
+        this.server = server;
         generate = new Generate();
         header = new RecipeListHeader();
         footer = new RecipeListFooter();
-        RecipeList recipeListArray =  new RecipeList();
+        RecipeList recipeListArray = new RecipeList();
         recipeList = new RecipeListBody(recipeListArray);
         ScrollPane scrollPane = new ScrollPane(recipeList);
         scrollPane.setFitToWidth(true);
@@ -34,19 +41,21 @@ public class RecipeListScreen extends BorderPane {
         this.setBottom(footer);
         addButton = footer.getAddButton();
         addListeners();
+        this.scene = new Scene(this);
     }
 
     // rebuild the recipelist
-    public void rebuild() throws CsvValidationException {
+    public void rebuild() throws Exception {
         recipeList.setStage(this.primaryStage);
         recipeList.setScene(this.mainScene);
-        recipeList.getArray().loadCSV(recipeList);
+        recipeList.getArray().loadDB(recipeList, this.controller);
     }
 
     // add listeners to the buttons
-    public void addListeners() {
+    public void addListeners() throws Exception {
         addButton.setOnAction(e -> {
-            userInputScreen = new UserInputScreen(recipeList, primaryStage, this.mainScene, this.generate);
+            userInputScreen = new UserInputScreen(recipeList, primaryStage, this.mainScene, this.generate,
+                    this.controller, this.server);
             userInputScreen.switchToThisScene();
         }); // Set the action on the button
     }
@@ -63,4 +72,10 @@ public class RecipeListScreen extends BorderPane {
         return this.recipeList;
     }
 
+    public void switchToThisScene() {
+        primaryStage.setScene(this.getScene());
+    }
+    public Scene getRecipeListScene(){
+        return this.scene;
+    }
 }
