@@ -26,6 +26,11 @@ public class LoginFunctionalityTests {
     void setUp() throws IOException {
         Testfile = new File("TestFile.txt");
     }
+       
+    @AfterEach
+    void closeDown() throws IOException {
+        Testfile.delete();
+    }
 
     // US2 BDD1
     // Test login with autologin disabled
