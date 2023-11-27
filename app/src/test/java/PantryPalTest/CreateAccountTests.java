@@ -20,6 +20,7 @@ import com.opencsv.exceptions.CsvValidationException;
 
 public class CreateAccountTests {
     private Server server;
+
     private Controller controller;
     private Model model;
     private RequestHandler requestHandler;
@@ -31,12 +32,14 @@ public class CreateAccountTests {
         requestHandler = new RequestHandler(server.getMongoClient());
         model = new Model();
         controller = new Controller(model);
+
     }
 
     @AfterEach
     void closeDown() throws IOException{
         server.deactivateServer();
     }
+
 
     // US1 BDD1
     // Test creating an account of new username
@@ -50,9 +53,11 @@ public class CreateAccountTests {
         System.out.println(database.getName());
         assertEquals(databaseNames.contains("CreateAccountTest"), true);
 
+
         user.drop();
 
     }
+
 
     // US1 BDD2
     // Test creating an account of already existing username
@@ -72,5 +77,6 @@ public class CreateAccountTests {
         assertEquals(createdAgain, false);
 
         user.drop();
+
     }
 }
