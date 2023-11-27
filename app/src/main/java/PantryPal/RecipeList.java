@@ -28,7 +28,8 @@ public class RecipeList {
     }
 
     public void add(Recipe recipe) {
-        list.add(recipe);
+        // Insert the recipe at the beginning of the list
+        list.add(0, recipe);
         this.numRecipe++;
     }
 
@@ -36,22 +37,41 @@ public class RecipeList {
         return list.get(index);
     }
 
+    // // load the dataBase
+    // public void loadDB(RecipeListBody recipeList, Controller controller) throws Exception {
+    //     String response = controller.handleGetAll();
+    //     System.out.println("response: " + response);
+    //     System.out.println("HELLO from LOADDB");
+    //     if (response!=null){
+            
+    //     String[] recipes = response.split(":");
+    //     for (String recipe : recipes) {
+    //         String[] data = recipe.split(";");
+    //         System.out.println("data: " + data[0]);
+    //         Recipe newRecipe = new Recipe(data[0], data[1], data[2]);
+    //         list.add(newRecipe);
+    //         recipeList.load(newRecipe, controller);
+    //     }
+    // }
+    // }
+
     // load the dataBase
     public void loadDB(RecipeListBody recipeList, Controller controller) throws Exception {
         String response = controller.handleGetAll();
         System.out.println("response: " + response);
         System.out.println("HELLO from LOADDB");
-        if (response!=null){
-            
-        String[] recipes = response.split(":");
-        for (String recipe : recipes) {
-            String[] data = recipe.split(";");
-            System.out.println("data: " + data[0]);
-            Recipe newRecipe = new Recipe(data[0], data[1], data[2]);
-            list.add(newRecipe);
-            recipeList.load(newRecipe, controller);
+        if (response != null) {
+            String[] recipes = response.split(":");
+        
+            // Start adding recipes from the end of the array to the beginning
+            for (int i = recipes.length - 1; i >= 0; i--) {
+                String[] data = recipes[i].split(";");
+                System.out.println("data: " + data[0]);
+                Recipe newRecipe = new Recipe(data[0], data[1], data[2]);
+                list.add(newRecipe);
+                recipeList.load(newRecipe, controller);
+            }
         }
-    }
     }
 
     // reload the CSV and regenerate the recipe to recipelist
@@ -60,6 +80,7 @@ public class RecipeList {
             // Create a CSV reader and specify the file to read
             CSVReader reader = new CSVReader(new FileReader("RecipeList.csv"));
             reader.readNext();
+
             // Read the CSV file and process each row
             while (reader.peek() != null) {
                 String[] row = reader.readNext();
@@ -75,6 +96,30 @@ public class RecipeList {
             e.printStackTrace();
         }
     }
+
+    // // reload the CSV and regenerate the recipe to recipelist
+    // public void loadCSV(RecipeListBody recipeList, Controller controller) throws Exception {
+    //     try {
+    //         // Create a CSV reader and specify the file to read
+    //         CSVReader reader = new CSVReader(new FileReader("RecipeList.csv"));
+    //         reader.readNext(); // Skip the header row
+
+    //         // Read the CSV file and process each row in reverse order
+    //         int index = this.size(); // Start with the last index in the list
+    //         while (reader.peek() != null) {
+    //             String[] row = reader.readNext();
+    //             Recipe recipe = new Recipe(row[0], row[1], row[2]);
+    //             list.add(index, recipe);
+
+    //             recipeList.load(recipe, controller);
+    //         }
+
+    //         // Close the CSV reader
+    //         reader.close();
+    //     } catch (IOException e) {
+    //         e.printStackTrace();
+    //     }
+    // }
 
     // reload the CSV and regenerate the recipe to recipelist FOR TESTING
     public void loadCSV(String filename) throws CsvValidationException {

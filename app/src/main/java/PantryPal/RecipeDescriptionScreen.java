@@ -222,7 +222,8 @@ public class RecipeDescriptionScreen {
 
                 savedHit = true;
                 recipe.setDescription(scene);
-                recipeList.getChildren().add(recipe);
+                //recipeList.getChildren().add(recipe);
+                recipeList.getChildren().add(0,recipe);
                 recipeList.getArray().add(recipeOB);
                 recipeList.getArray().toCSV("RecipeList.csv");
                 Button titleButton = recipe.getRecipeTitleButton();
