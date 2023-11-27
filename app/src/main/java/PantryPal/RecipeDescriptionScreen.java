@@ -153,7 +153,7 @@ public class RecipeDescriptionScreen {
                 recipe.getRecipe().setInstructions(instructionsArea.getText());
                 recipeList.getArray().toCSV("RecipeList.csv");
                 try {
-                    controller.handlePut(title, ingredients, instructions);
+                    controller.handleDelete(title);
                 } catch (Exception e2) {
                     e2.printStackTrace();
                 }

@@ -227,6 +227,7 @@ public class RequestHandler implements HttpHandler {
                 UserInfoCollection.insertOne(UserCredentialsDoc);
                 userDB.createCollection("Recipe");
                 this.recipeCollection = userDB.getCollection("Recipe");
+                response = "Account Creation Successful";
             }
 
         }
