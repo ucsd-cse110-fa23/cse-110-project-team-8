@@ -10,22 +10,33 @@ import javafx.stage.WindowEvent;
 import Server.*;
 import java.io.*;
 
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+
 public class App extends Application {
 
     public LoginUI root;
     // public RecipeListScreen root;
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
 
         // Setting the Layout of the Window- Should contain a Header, Footer and the
         // ContactList
-        Server server = new Server();
-        server.activateServer();
 
+        Server server = new Server();
+        try {
+            server.activateServer();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Server failed to start: " + e.getMessage(), "Server Start Error",
+                    JOptionPane.ERROR_MESSAGE);
+            throw new Exception("Server failed to start: " + e.getMessage());
+        }
         Model model = new Model();
         Controller controller = new Controller(model);
-        
+
         root = new LoginUI(primaryStage, controller);
 
         // Set the title of the app
@@ -33,12 +44,12 @@ public class App extends Application {
 
         // Create scene of mentioned size with the border pane
         primaryStage.setScene(root.getLoginScene());
-        // Make  resizable
+        // Make resizable
         primaryStage.setResizable(true);
 
         // Show the app
-        if (new File("AutoLogin.txt").exists()){
-            if (AutoLogin.autoLoginEnabled("AutoLogin.txt")){
+        if (new File("AutoLogin.txt").exists()) {
+            if (AutoLogin.autoLoginEnabled("AutoLogin.txt")) {
                 root.autoLoginTrue();
                 root.setUsername(AutoLogin.autoLoginUsername("AutoLogin.txt"));
                 root.setPassword(AutoLogin.autoLoginPassword("AutoLogin.txt"));
@@ -49,15 +60,14 @@ public class App extends Application {
 
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
-            public void handle(WindowEvent event){
+            public void handle(WindowEvent event) {
                 // Handle the close event
-                try{
+                try {
                     server.deactivateServer();
                     primaryStage.close();
-                }catch (IOException e){
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
-                
 
             }
         });
