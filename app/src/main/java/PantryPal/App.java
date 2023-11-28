@@ -26,19 +26,9 @@ public class App extends Application {
         // Setting the Layout of the Window- Should contain a Header, Footer and the
         // ContactList
 
-        Server server = new Server();
-        try {
-            server.activateServer();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Server failed to start: " + e.getMessage(), "Server Start Error",
-                    JOptionPane.ERROR_MESSAGE);
-            throw new Exception("Server failed to start: " + e.getMessage());
-        }
         Model model = new Model();
         Controller controller = new Controller(model);
-
         root = new LoginUI(primaryStage, controller);
-
         // Set the title of the app
         primaryStage.setTitle("Pantry Pal");
 
@@ -47,7 +37,6 @@ public class App extends Application {
         // Make resizable
         primaryStage.setResizable(true);
 
-        // Show the app
         if (new File("AutoLogin.txt").exists()) {
             if (AutoLogin.autoLoginEnabled("AutoLogin.txt")) {
                 root.autoLoginTrue();
@@ -56,7 +45,21 @@ public class App extends Application {
                 root.getLoginButton().fire();
             }
         }
+
+        // Show the app
         primaryStage.show();
+
+        Server server = new Server();
+        SwingUtilities.invokeLater(() -> {
+            try {
+                server.activateServer();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Server failed to start: " + e.getMessage(),
+                        "Server Start Error",
+                        JOptionPane.ERROR_MESSAGE);
+                System.exit(1);
+            }
+        });
 
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
@@ -71,6 +74,7 @@ public class App extends Application {
 
             }
         });
+
     }
 
     public static void main(String[] args) {
