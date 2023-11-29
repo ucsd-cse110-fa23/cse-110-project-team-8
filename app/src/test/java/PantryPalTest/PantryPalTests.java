@@ -94,9 +94,9 @@ public class PantryPalTests {
         recipeList.add(recipe1);
         recipeList.add(recipe2);
 
-        assertEquals(recipe0, recipeList.get(0));  
+        assertEquals(recipe0, recipeList.get(2));  
         assertEquals(recipe1, recipeList.get(1));   
-        assertEquals(recipe2, recipeList.get(2));        
+        assertEquals(recipe2, recipeList.get(0));        
     }
 
     //Test deleting all recipes from the recipe list
@@ -135,10 +135,10 @@ public class PantryPalTests {
     void testTitleLoadingCSV() throws IOException, CsvValidationException {
         recipeList.loadCSV("Test.csv");
         
-        assertEquals(true,recipeList.get(0).getTitle().equals("testTitle0"));
-        assertEquals(true,recipeList.get(1).getTitle().equals("testTitle1"));
-        assertEquals(true,recipeList.get(2).getTitle().equals("testTitle2"));
-        assertEquals(true,recipeList.get(3).getTitle().equals("testTitle3"));
+        assertEquals(true,recipeList.get(0).getTitle().equals("testTitle3"));
+        assertEquals(true,recipeList.get(1).getTitle().equals("testTitle2"));
+        assertEquals(true,recipeList.get(2).getTitle().equals("testTitle1"));
+        assertEquals(true,recipeList.get(3).getTitle().equals("testTitle0"));
     }
 
     //Test loading from csv and checking if the Ingredients is correct retrived by getIngredients()
@@ -146,10 +146,10 @@ public class PantryPalTests {
     void testIngredientsLoadingCSV() throws IOException, CsvValidationException {
         recipeList.loadCSV("Test.csv");
         
-        assertEquals(true,recipeList.get(0).getIngredients().equals("testIngredient0"));
-        assertEquals(true,recipeList.get(1).getIngredients().equals("testIngredient1"));
-        assertEquals(true,recipeList.get(2).getIngredients().equals("testIngredient2"));
-        assertEquals(true,recipeList.get(3).getIngredients().equals("testIngredient3"));
+        assertEquals(true,recipeList.get(0).getIngredients().equals("testIngredient3"));
+        assertEquals(true,recipeList.get(1).getIngredients().equals("testIngredient2"));
+        assertEquals(true,recipeList.get(2).getIngredients().equals("testIngredient1"));
+        assertEquals(true,recipeList.get(3).getIngredients().equals("testIngredient0"));
     }
 
     //Test loading from csv and checking if the Instructions are correct retrived by getInstructions()
@@ -157,10 +157,10 @@ public class PantryPalTests {
     void testInstructionsLoadingCSV() throws IOException, CsvValidationException {
         recipeList.loadCSV("Test.csv");
         
-        assertEquals(true,recipeList.get(0).getInstructions().equals("testTitle0"));
-        assertEquals(true,recipeList.get(1).getInstructions().equals("testTitle1"));
-        assertEquals(true,recipeList.get(2).getInstructions().equals("testTitle2"));
-        assertEquals(true,recipeList.get(3).getInstructions().equals("testTitle3"));
+        assertEquals(true,recipeList.get(0).getInstructions().equals("testTitle3"));
+        assertEquals(true,recipeList.get(1).getInstructions().equals("testTitle2"));
+        assertEquals(true,recipeList.get(2).getInstructions().equals("testTitle1"));
+        assertEquals(true,recipeList.get(3).getInstructions().equals("testTitle0"));
     }
 
 
@@ -179,9 +179,9 @@ public class PantryPalTests {
         recipeList.add(burger);
         /* Caitlin wants to see the first recipe description, if she clicks on Pizza, she should see
            the title of the "Pizza" recipe, ingredients, and instructions */
-        assertEquals(true,recipeList.get(0).getTitle().equals("Pizza"));
-        assertEquals(true,recipeList.get(0).getIngredients().equals("cheese,flour"));
-        assertEquals(true,recipeList.get(0).getInstructions().equals("put pizza in oven"));
+        assertEquals(true,recipeList.get(1).getTitle().equals("Pizza"));
+        assertEquals(true,recipeList.get(1).getIngredients().equals("cheese,flour"));
+        assertEquals(true,recipeList.get(1).getInstructions().equals("put pizza in oven"));
 
         /* Caitlin returns to the recipeList screen and sees her 2 new recipes */
         assertEquals(2, recipeList.size());
@@ -272,10 +272,10 @@ public class PantryPalTests {
         RecipeList recipeListOutput = new RecipeList();
         recipeListOutput.loadCSV("S3_BDD2_TEST.csv");
         
-        assertEquals(true,recipeListOutput.get(0).getTitle().equals("testTitle0"));
-        assertEquals(true,recipeListOutput.get(1).getTitle().equals("testTitle1"));
-        assertEquals(true,recipeListOutput.get(2).getTitle().equals("testTitle2"));
-        assertEquals(true,recipeListOutput.get(3).getTitle().equals("testTitle3"));
+        assertEquals(true,recipeListOutput.get(0).getTitle().equals("testTitle3"));
+        assertEquals(true,recipeListOutput.get(1).getTitle().equals("testTitle2"));
+        assertEquals(true,recipeListOutput.get(2).getTitle().equals("testTitle1"));
+        assertEquals(true,recipeListOutput.get(3).getTitle().equals("testTitle0"));
         
     }
 

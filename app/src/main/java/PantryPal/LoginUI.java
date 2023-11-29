@@ -120,7 +120,8 @@ public class LoginUI extends BorderPane {
                         System.out.println("account already exists");
 
                     } else {
-                        if (autologin == true) {
+
+                      if (autologin == true) {
                             AutoLogin.createFile(username.getText(), password.getText());
                         }
                         controller.createAccount(username.getText(), password.getText());
@@ -130,6 +131,7 @@ public class LoginUI extends BorderPane {
                                                                                   // save when "go back" is pressed
                         // homeScreen.rebuild();
                         homeScreen.switchToThisScene(); // Switches to the main screen of RLS
+
                         this.password.clear();
                         this.username.clear();
                         this.autoLogin.fire();
