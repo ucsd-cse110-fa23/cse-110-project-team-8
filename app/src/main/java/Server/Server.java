@@ -60,6 +60,10 @@ public class Server {
     System.out.println("Server started on port " + SERVER_PORT);
   }
 
+  public boolean isServerStarted() {
+    return this.server != null;
+  }
+
   public void deactivateServer() throws IOException {
     server.stop(0);
     threadPoolExecutor.shutdownNow();

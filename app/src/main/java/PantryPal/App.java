@@ -3,6 +3,8 @@ package PantryPal;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -39,16 +41,19 @@ public class App extends Application {
         // Show the app
         primaryStage.show();
         Server server = new Server();
-        SwingUtilities.invokeAndWait(() -> {
-            try {
-                server.activateServer();
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Server failed to start: " + e.getMessage(),
-                        "Server Start Error",
-                        JOptionPane.ERROR_MESSAGE);
-                System.exit(1);
-            }
-        });
+
+        try {
+            server.activateServer();
+        } catch (Exception e) {
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Server Start Error");
+            alert.setHeaderText(null);
+            alert.setContentText(e.getMessage());
+
+            // Show the pop-up window
+            alert.showAndWait();
+            System.exit(1);
+        }
 
         if (new File("AutoLogin.txt").exists()) {
             if (AutoLogin.autoLoginEnabled("AutoLogin.txt")) {
@@ -58,7 +63,6 @@ public class App extends Application {
                 root.getLoginButton().fire();
             }
         }
-
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent event) {
