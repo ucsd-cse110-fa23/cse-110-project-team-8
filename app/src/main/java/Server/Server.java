@@ -19,12 +19,12 @@ import java.util.ArrayList;
 public class Server {
 
   // initialize server port and hostname
-  private static final int SERVER_PORT = 8100;
+  private static int SERVER_PORT = 8100;
   private static final String SERVER_HOSTNAME = "localhost";
   public HttpServer server;
   private ThreadPoolExecutor threadPoolExecutor;
   private MongoClient mongoClient;
-
+  String uri = "mongodb+srv://kaz006:golf1122@cse110lab6.vmgxl2s.mongodb.net/?retryWrites=true&w=majority";
   // private boolean serverCreated;
 
   public void activateServer() throws IOException {
@@ -33,7 +33,6 @@ public class Server {
     ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(10);
     this.threadPoolExecutor = threadPoolExecutor;
     // create a mongoDB to store data
-    String uri = "mongodb+srv://kaz006:golf1122@cse110lab6.vmgxl2s.mongodb.net/?retryWrites=true&w=majority";
 
     try {
       this.mongoClient = MongoClients.create(uri);
@@ -60,8 +59,12 @@ public class Server {
     System.out.println("Server started on port " + SERVER_PORT);
   }
 
-  public boolean isServerStarted() {
-    return this.server != null;
+  public void setPort(int port) {
+    Server.SERVER_PORT = port;
+  }
+
+  public void setURI(String uri) {
+    this.uri = uri;
   }
 
   public void deactivateServer() throws IOException {
