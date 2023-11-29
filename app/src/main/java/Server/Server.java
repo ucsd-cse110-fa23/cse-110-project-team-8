@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class Server {
 
   // initialize server port and hostname
-  private static int SERVER_PORT = 8100;
+  private int SERVER_PORT = 8100;
   private static final String SERVER_HOSTNAME = "localhost";
   public HttpServer server;
   private ThreadPoolExecutor threadPoolExecutor;
@@ -60,7 +60,7 @@ public class Server {
   }
 
   public void setPort(int port) {
-    Server.SERVER_PORT = port;
+    this.SERVER_PORT = port;
   }
 
   public void setURI(String uri) {
