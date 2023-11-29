@@ -41,7 +41,6 @@ public class App extends Application {
         // Show the app
         primaryStage.show();
         Server server = new Server();
-
         try {
             server.activateServer();
         } catch (Exception e) {
