@@ -40,7 +40,7 @@ public class Model {
 
             // System.out.println("actual method"+ conn.getRequestMethod());
 
-            if (method.equals("POST") || method.equals("PUT")) {
+            if ((method.equals("POST") || method.equals("PUT"))) {
                 OutputStreamWriter out = new OutputStreamWriter(conn.getOutputStream());
                 out.write(username + ";" + password + ";" + recipeTitle + ";" + ingredients + ";" + instructions + ";"
                         + action);
@@ -52,14 +52,13 @@ public class Model {
                 out.flush();
                 out.close();
             }
-
+            String response = "";
             InputStream instream = conn.getInputStream();
             // Read the response data
             BufferedReader reader = new BufferedReader(new InputStreamReader(instream));
-            String response = reader.readLine();
+            response = reader.readLine();
             // Close the reader
-            reader.close();
-
+            // Close the reader
             // Print the response data
             System.out.println("Response Data: " + response);
 

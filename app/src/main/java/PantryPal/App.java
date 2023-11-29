@@ -36,21 +36,10 @@ public class App extends Application {
         primaryStage.setScene(root.getLoginScene());
         // Make resizable
         primaryStage.setResizable(true);
-
-        if (new File("AutoLogin.txt").exists()) {
-            if (AutoLogin.autoLoginEnabled("AutoLogin.txt")) {
-                root.autoLoginTrue();
-                root.setUsername(AutoLogin.autoLoginUsername("AutoLogin.txt"));
-                root.setPassword(AutoLogin.autoLoginPassword("AutoLogin.txt"));
-                root.getLoginButton().fire();
-            }
-        }
-
         // Show the app
         primaryStage.show();
-
         Server server = new Server();
-        SwingUtilities.invokeLater(() -> {
+        SwingUtilities.invokeAndWait(() -> {
             try {
                 server.activateServer();
             } catch (Exception e) {
@@ -60,6 +49,15 @@ public class App extends Application {
                 System.exit(1);
             }
         });
+
+        if (new File("AutoLogin.txt").exists()) {
+            if (AutoLogin.autoLoginEnabled("AutoLogin.txt")) {
+                root.autoLoginTrue();
+                root.setUsername(AutoLogin.autoLoginUsername("AutoLogin.txt"));
+                root.setPassword(AutoLogin.autoLoginPassword("AutoLogin.txt"));
+                root.getLoginButton().fire();
+            }
+        }
 
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
