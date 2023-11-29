@@ -28,9 +28,10 @@ public class App extends Application {
         // Setting the Layout of the Window- Should contain a Header, Footer and the
         // ContactList
 
+        Server server = new Server();
         Model model = new Model();
         Controller controller = new Controller(model);
-        root = new LoginUI(primaryStage, controller);
+        root = new LoginUI(primaryStage, controller, server);
         // Set the title of the app
         primaryStage.setTitle("Pantry Pal");
 
@@ -40,7 +41,6 @@ public class App extends Application {
         primaryStage.setResizable(true);
         // Show the app
         primaryStage.show();
-        Server server = new Server();
 
         try {
             server.activateServer();

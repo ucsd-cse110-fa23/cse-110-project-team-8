@@ -28,7 +28,7 @@ public class RecipeListScreen extends BorderPane {
     private Scene scene;
     private Server server;
 
-    public RecipeListScreen(Stage primaryStage, Controller controller) throws Exception {
+    public RecipeListScreen(Stage primaryStage, Controller controller, Server server) throws Exception {
         this.controller = controller;
         this.primaryStage = primaryStage; // Store the stage
         this.mainScene = this.getScene(); // Store the main scene
