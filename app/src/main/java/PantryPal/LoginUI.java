@@ -9,6 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -27,6 +28,7 @@ public class LoginUI extends BorderPane {
     private Scene mainScene;
     private Scene scene;
     private boolean autologin;
+    private Text serverStatus;
     private Server server;
 
     public LoginUI(Stage primaryStage, Controller controller, Server server) throws Exception {
@@ -65,11 +67,15 @@ public class LoginUI extends BorderPane {
         autoLogin.setAlignment(Pos.CENTER);
         // Sets the scene
 
+        serverStatus = new Text();
+        serverStatus.setFill(Color.RED);
+
         mainVBox.getChildren().addAll(
                 usernameHbox,
                 passwordHbox,
                 loginCreateButtonHbox,
-                autoLogin);
+                autoLogin,
+                serverStatus);
         mainVBox.setAlignment(Pos.CENTER);
 
         loginButton.setOnAction(e -> {
@@ -91,6 +97,7 @@ public class LoginUI extends BorderPane {
                         homeScreen.switchToThisScene(); // Switches to the main screen of RLS
                         this.password.clear();
                         this.username.clear();
+                        this.autoLogin.fire();
                         primaryStage.setScene(homeScreen.getRecipeListScene());
                     } else {
                         System.out.println("incorrect password or username doesn't exist");
@@ -125,6 +132,9 @@ public class LoginUI extends BorderPane {
                         // homeScreen.rebuild();
                         homeScreen.switchToThisScene(); // Switches to the main screen of RLS
 
+                        this.password.clear();
+                        this.username.clear();
+                        this.autoLogin.fire();
                         primaryStage.setScene(homeScreen.getRecipeListScene());
                         System.out.println("account created");
 

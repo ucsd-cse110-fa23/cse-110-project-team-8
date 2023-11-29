@@ -19,12 +19,12 @@ import java.util.ArrayList;
 public class Server {
 
   // initialize server port and hostname
-  private static final int SERVER_PORT = 8100;
+  private int SERVER_PORT = 8100;
   private static final String SERVER_HOSTNAME = "localhost";
-  private HttpServer server;
+  public HttpServer server;
   private ThreadPoolExecutor threadPoolExecutor;
   private MongoClient mongoClient;
-
+  String uri = "mongodb+srv://kaz006:golf1122@cse110lab6.vmgxl2s.mongodb.net/?retryWrites=true&w=majority";
   // private boolean serverCreated;
 
   public void activateServer() throws IOException {
@@ -33,9 +33,12 @@ public class Server {
     ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(10);
     this.threadPoolExecutor = threadPoolExecutor;
     // create a mongoDB to store data
-    String uri = "mongodb+srv://kaz006:golf1122@cse110lab6.vmgxl2s.mongodb.net/?retryWrites=true&w=majority";
 
-    this.mongoClient = MongoClients.create(uri);
+    try {
+      this.mongoClient = MongoClients.create(uri);
+    } catch (Exception e) {
+      throw new IOException("Fail to connect MongoDB");
+    }
 
     // create a server
     HttpServer server = HttpServer.create(
@@ -47,9 +50,21 @@ public class Server {
     // set the executor
     server.setExecutor(threadPoolExecutor);
 
+    if (server.getAddress().getPort() != SERVER_PORT) {
+      throw new IOException("Server port is already in use");
+    }
+
     // start the server
     server.start();
     System.out.println("Server started on port " + SERVER_PORT);
+  }
+
+  public void setPort(int port) {
+    this.SERVER_PORT = port;
+  }
+
+  public void setURI(String uri) {
+    this.uri = uri;
   }
 
   public void deactivateServer() throws IOException {
@@ -57,7 +72,7 @@ public class Server {
     threadPoolExecutor.shutdownNow();
   }
 
-  public MongoClient getMongoClient(){
+  public MongoClient getMongoClient() {
     return this.mongoClient;
   }
 }
