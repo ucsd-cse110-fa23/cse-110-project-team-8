@@ -98,8 +98,7 @@ public class RecipeDescriptionScreen {
         // make a hBox for the image and the recipe Ingredients to be side to side
         HBox imageingredientsRoot = new HBox();
         if (dishImage == true) { // this inserts the image into the recipe description
-            // DishImage.uploadImage(imageingredientsRoot, imageStage, "/Users/gus/CSE-110/cse-110-project-team-8/image.jpg");
-            DishImage.uploadImage(imageingredientsRoot, imageStage, "image.jpg");
+            DishImage.uploadImage(imageingredientsRoot, imageStage, "image.jpeg");
         
             imageingredientsRoot.getChildren().add(ingredientsRoot);
 
@@ -251,7 +250,6 @@ public class RecipeDescriptionScreen {
 
                 savedHit = true;
                 recipe.setDescription(scene);
-                //recipeList.getChildren().add(recipe);
                 recipeList.getChildren().add(0,recipe);
                 recipeList.getArray().add(recipeOB);
                 recipeList.getArray().toCSV("RecipeList.csv");

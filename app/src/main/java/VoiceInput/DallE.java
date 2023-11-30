@@ -76,7 +76,7 @@ public class DallE {
        InputStream in = new URI(generatedImageURL).toURL().openStream()
    )
    {
-       Files.copy(in, Paths.get("image.jpg"));
+       Files.copy(in, Paths.get("image.jpeg"));
    }
 
    return generatedImageURL;
