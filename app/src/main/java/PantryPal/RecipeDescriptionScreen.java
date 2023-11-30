@@ -3,6 +3,7 @@ package PantryPal;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -20,6 +21,7 @@ import Server.*;
 public class RecipeDescriptionScreen {
     private Scene scene;
     private Stage primaryStage;
+    public Stage imageStage;
     private Scene mainScene;
     private Button editButton;
     private Button goBack;
@@ -27,6 +29,8 @@ public class RecipeDescriptionScreen {
     private Button deleteButton;
     private Button done;
     private Button cancel;
+
+    private Boolean dishImage;
 
     private String ingredientsOG;
     private String instructionsOG;
@@ -39,6 +43,11 @@ public class RecipeDescriptionScreen {
     public RecipeDescriptionScreen(RecipeTitleButton recipe1, String title, String ingredients, String instructions,
             Stage primaryStage, Scene mainScene, RecipeListBody recipeList, Controller controller)
             throws Exception {
+
+        //Change this to TRUE when you want to create images
+        //Change this to FALSE when you dont want to create images
+        dishImage = true;
+        
 
         if (recipe1 == null) {
             savedHit = false;
@@ -59,20 +68,24 @@ public class RecipeDescriptionScreen {
         titleBox.setStyle("-fx-border-color: #FFFFFF; -fx-border-width:  0 0 2 0;");
         titleBox.setAlignment(Pos.CENTER);
 
+
+        // INGREDIENTS
         Text ingredientsLabel = new Text("Ingredients: "); // ingredients title
         ingredientsLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 20; -fx-fill: #ecf0f1;");
-
         TextArea ingredientsArea = new TextArea(ingredients); // ingredients text area
         ingredientsArea.setStyle("-fx-font-style: italic; -fx-background-color: #FFFFFF; " +
                 "-fx-font-weight: bold; -fx-font: 18 Arial; -fx-text-fill: #000000;");
-
         ingredientsOG = ingredients; // original ingredients
         ingredientsArea.setWrapText(true);
         ingredientsArea.setEditable(false);
+        // prepping ingredientsbox to be next to dish image
+        VBox ingredientsRoot = new VBox();
+        ingredientsRoot.getChildren().add(ingredientsLabel);
+        ingredientsRoot.getChildren().add(ingredientsArea);
 
+        // INSTRUCTIONS
         Text instructionsLabel = new Text("Instructions: "); // instructions title
         instructionsLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 20; -fx-fill: #ecf0f1;");
-
         TextArea instructionsArea = new TextArea(instructions); // instructions text area
         instructionsArea.setStyle("-fx-font-style: italic; -fx-background-color: #FFFFFF; " +
                 "-fx-font-weight: bold; -fx-font: 18 Arial; -fx-text-fill: #000000;");
@@ -81,9 +94,25 @@ public class RecipeDescriptionScreen {
         instructionsArea.setWrapText(true);
         instructionsArea.setEditable(false);
 
+
+        // make a hBox for the image and the recipe Ingredients to be side to side
+        HBox imageingredientsRoot = new HBox();
+        if (dishImage == true) { // this inserts the image into the recipe description
+            // DishImage.uploadImage(imageingredientsRoot, imageStage, "/Users/gus/CSE-110/cse-110-project-team-8/image.jpg");
+            DishImage.uploadImage(imageingredientsRoot, imageStage, "image.jpg");
+        
+            imageingredientsRoot.getChildren().add(ingredientsRoot);
+
+        } else { // this else just sets the area were the image would go to be an empty text box
+            TextArea imagetestarea = new TextArea("Images Test");
+            imageingredientsRoot.getChildren().add(imagetestarea);
+            imageingredientsRoot.getChildren().add(ingredientsRoot);
+
+        }
+
+
         newRoot.getChildren().add(titleBox);
-        newRoot.getChildren().add(ingredientsLabel);
-        newRoot.getChildren().add(ingredientsArea); // add the textbox to the new root
+        newRoot.getChildren().add(imageingredientsRoot);
         newRoot.getChildren().add(instructionsLabel);
         newRoot.getChildren().add(instructionsArea); // add the textbox to the new root
 
