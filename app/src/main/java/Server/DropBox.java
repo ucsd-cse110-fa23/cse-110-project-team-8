@@ -1,33 +1,38 @@
 package Server;
 
-import java.util.Scanner;
-import javax.swing.*;
 import java.io.*;
 import javax.imageio.ImageIO;
-import org.apache.pdfbox.pdmodel.graphics.image.LosslessFactory;
-import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
-import java.awt.image.BufferedImage;
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDPage;
-import org.apache.pdfbox.pdmodel.PDPageContentStream;
-import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
+
+import javafx.scene.text.Text;
 
 import com.dropbox.core.v2.DbxClientV2;
 import com.dropbox.core.v2.files.FileMetadata;
 import com.dropbox.core.v2.files.ListFolderResult;
 import com.dropbox.core.v2.files.Metadata;
 import com.dropbox.core.v2.users.FullAccount;
-
-import javafx.geometry.Pos;
+import com.itextpdf.io.image.ImageData;
+import com.itextpdf.io.image.ImageDataFactory;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.pdf.PdfWriter;
 
 import com.dropbox.core.*;
 
 public class DropBox {
-  private static final String ACCESS_TOKEN = "sl.Bq2IXpeHMCYfNSvEcOhrfgJc_TyixbKMgF62KrGF7OsFdElt6-jbBHLwdUfnjDqYyuFAimTggO3W363oh6HWKyfB18qbYH3fDkLfOGfS3pUDC_b00yRUv-DosxbBXSPYWmFsean-_9qCoddT2BJDPyw";
+  private static final String ACCESS_TOKEN = "sl.Bq6my5hbBAmG7KvVqFZW0X1XJhdcaSC-Mj5upLKRBnxPEzLWII1ya6n9Uk_YKCecED-4N5ubKcNdCjpLa8Ag1r4wobHIGn-xX1ncBIIujF8cn0O_d5J2Uw2whGid_MJOBOoEnxJsjq0iATPmt4iCvbw";
 
-  public static void main(String args[]) throws DbxException, FileNotFoundException, IOException {
+  public String DropBox(String title, String ingredients, String instructions)
+      throws DbxException, FileNotFoundException, IOException {
 
-    combinePDF();
+    String url = "";
+
+    combinePDF(title, ingredients, instructions);
 
     // Create Dropbox client
     DbxRequestConfig config1 = DbxRequestConfig.newBuilder("dropbox/java-tutorial").build();
@@ -36,78 +41,61 @@ public class DropBox {
     FullAccount account = client.users()
         .getCurrentAccount();
     System.out.println(account.getName().getDisplayName());
-    client.files().deleteV2("/combined.pdf");
-    try (InputStream in = new FileInputStream("combined.pdf")) {
-      FileMetadata metadata = client.files().uploadBuilder("/combined.pdf")
-          .uploadAndFinish(in);
-    }
+
     ListFolderResult result = client.files().listFolder("");
     while (true) {
       for (Metadata metadata : result.getEntries()) {
         System.out.println(metadata.getPathLower());
+        if (metadata.getName().equals(title + ".pdf")) {
+          client.files().deleteV2("/" + metadata.getName());
+        }
       }
-
       if (!result.getHasMore()) {
         break;
       }
-
       result = client.files().listFolderContinue(result.getCursor());
     }
+    try (InputStream in = new FileInputStream(title + ".pdf")) {
+      FileMetadata metadata = client.files().uploadBuilder("/" + title + ".pdf")
+          .uploadAndFinish(in);
+    }
     try {
-      String url = client.sharing().createSharedLinkWithSettings("/combined.pdf").getUrl();
+      url = client.sharing().createSharedLinkWithSettings("/" + title +
+          ".pdf").getUrl();
       System.out.println(url);
     } catch (Exception e) {
-    }
-
-  }
-
-  public static void combinePDF() {
-    String imagePath = "image.jpeg"; // Update the file extension based on your actual image type
-    String pdfFilePath = "combined.pdf";
-
-    try {
-      PDDocument document = new PDDocument();
-      PDPage page = new PDPage();
-      document.addPage(page);
-
-      PDPageContentStream contentStream = new PDPageContentStream(document, page);
-
-      // Add text to the PDF using a font that supports a wide range of characters
-      contentStream.setFont(PDType1Font.COURIER, 12);
-      contentStream.beginText();
-      contentStream.newLineAtOffset(100, 700);
-      contentStream.showText("textContent");
-      contentStream.endText();
-
-      // Add image to the PDF based on the file type
-      PDImageXObject imageXObject = createImageXObject(imagePath, document);
-      contentStream.drawImage(imageXObject, 100, 500, imageXObject.getWidth() / 2, imageXObject.getHeight() / 2);
-
-      contentStream.close();
-
-      // Save the combined PDF
-      document.save(pdfFilePath);
-      document.close();
-
-      System.out.println("PDF created successfully!");
-    } catch (IOException e) {
       e.printStackTrace();
     }
+    return url;
   }
 
-  private static PDImageXObject createImageXObject(String imagePath, PDDocument document) throws IOException {
-    File imageFile = new File(imagePath);
-    String fileExtension = imagePath.substring(imagePath.lastIndexOf(".") + 1).toLowerCase();
+  public static void combinePDF(String title, String ingredients, String instructions) {
 
-    switch (fileExtension) {
-      case "png":
-        BufferedImage bufferedImage = ImageIO.read(imageFile);
-        return LosslessFactory.createFromImage(document, bufferedImage);
-      case "jpg":
-      case "jpeg":
-        return PDImageXObject.createFromFileByExtension(imageFile, document);
-      default:
-        throw new IllegalArgumentException("Unsupported image type: " + fileExtension);
+    // Input JPG file and text
+    String jpgFilePath = "image.png";
+
+    // Output PDF file
+    String pdfFilePath = title + ".pdf";
+    Document document = new Document();
+    try {
+      PdfWriter.getInstance(document, new FileOutputStream(pdfFilePath));
+      document.open();
+      document.add(new Paragraph("Title: "));
+      document.add(new Paragraph(title));
+      document.add(new Paragraph("Ingredients: "));
+      document.add(new Paragraph(ingredients));
+      document.add(new Paragraph("Instructions: "));
+      document.add(new Paragraph(instructions));
+      Image image1 = Image.getInstance(jpgFilePath);
+
+      // Add the image to the Document
+      document.add(image1);
+      document.close();
+    } catch (Exception e) {
+      e.printStackTrace();
     }
+
+    System.out.println("PDF created successfully at: " + pdfFilePath);
   }
+
 }
