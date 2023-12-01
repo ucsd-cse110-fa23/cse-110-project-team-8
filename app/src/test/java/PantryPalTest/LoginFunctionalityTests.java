@@ -12,7 +12,9 @@ import org.junit.jupiter.api.BeforeEach;
 import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import PantryPal.*;
-// import Server.*;
+
+
+import Server.*;
 import java.util.ArrayList;
 
 
@@ -21,6 +23,7 @@ import com.opencsv.exceptions.CsvValidationException;
 
 public class LoginFunctionalityTests {
     File Testfile;
+
 
     @BeforeEach
     void setUp() throws IOException {
