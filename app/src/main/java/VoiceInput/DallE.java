@@ -9,6 +9,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -25,7 +26,7 @@ public class DallE {
     private static final String MODEL = "dall-e-2";
 
 
-    static public String chefDallE(String userInsructions) throws IOException, InterruptedException, URISyntaxException {
+    static public String chefDallE(String userInsructions, String recipeTitle) throws IOException, InterruptedException, URISyntaxException {
 
    //number of images you want to produce
    int n = 1;
@@ -72,11 +73,9 @@ public class DallE {
    System.out.println(generatedImageURL);
 
    // Download the Generated Image to Current Directory
-   try(
-       InputStream in = new URI(generatedImageURL).toURL().openStream()
-   )
-   {
-       Files.copy(in, Paths.get("image.jpeg"));
+   try (InputStream in = new URI(generatedImageURL).toURL().openStream()) {
+    //Files.copy(in, Paths.get("image.jpeg"));
+    Files.copy(in, Paths.get(recipeTitle + ".jpeg"), StandardCopyOption.REPLACE_EXISTING);
    }
 
    return generatedImageURL;

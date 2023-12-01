@@ -98,7 +98,7 @@ public class RecipeDescriptionScreen {
         // make a hBox for the image and the recipe Ingredients to be side to side
         HBox imageingredientsRoot = new HBox();
         if (dishImage == true) { // this inserts the image into the recipe description
-            DishImage.uploadImage(imageingredientsRoot, imageStage, "image.jpeg");
+            DishImage.uploadImage(imageingredientsRoot, imageStage, title + ".jpeg");
         
             imageingredientsRoot.getChildren().add(ingredientsRoot);
 
