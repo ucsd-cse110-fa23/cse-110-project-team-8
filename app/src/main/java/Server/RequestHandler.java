@@ -65,6 +65,7 @@ public class RequestHandler implements HttpHandler {
 
     private String handleGet(HttpExchange httpExchange) throws IOException {
         String response = readAllRecipe((userDB.getCollection("Recipe")));
+        //System.out.println("response from handleGet(): \n" + response);
         return response;
     }
 
@@ -175,10 +176,10 @@ public class RequestHandler implements HttpHandler {
         String recipe_details = "";
         int cnt = 0;
         // TODO why is line 164-165 here?
-        List<Document> studentList = recipeCollection.find().into(new ArrayList<>());
+        List<Document> recipeList = recipeCollection.find().into(new ArrayList<>());
         // System.out.println("length of list" + studentList.size());
 
-        for (Document recipe : recipeCollection.find()) {
+        for (Document recipe : recipeList) {
             recipe_details += recipe.get("Title") + ";" + recipe.get("Ingredients") + ";"
                     + recipe.get("Instructions")
                     + ":";
@@ -187,7 +188,6 @@ public class RequestHandler implements HttpHandler {
                 break;
             }
         }
-
         System.out.println("Recipe Details from readAllRecipe(): \n" + recipe_details);
         return recipe_details;
     }
