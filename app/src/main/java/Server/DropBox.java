@@ -26,7 +26,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 import com.dropbox.core.*;
 
 public class DropBox {
-  private static final String ACCESS_TOKEN = "sl.Bq6my5hbBAmG7KvVqFZW0X1XJhdcaSC-Mj5upLKRBnxPEzLWII1ya6n9Uk_YKCecED-4N5ubKcNdCjpLa8Ag1r4wobHIGn-xX1ncBIIujF8cn0O_d5J2Uw2whGid_MJOBOoEnxJsjq0iATPmt4iCvbw";
+  private static final String ACCESS_TOKEN = "sl.BrCwbv3vEgD2sPDgUHsid4w7MU9-brDsGiruzlPAu7qjQezRb2ammZVBN47oexteMgpKCiNB9WmMBj7d7S8yfxJTUe3n8LYqkcxSesf3MsGJHgb1lwnaYEfpdp9DLnzeEebxEK7XkbSsw0b-aMfzJM8";
 
   public String DropBox(String title, String ingredients, String instructions)
       throws DbxException, FileNotFoundException, IOException {
@@ -99,7 +99,7 @@ public class DropBox {
     System.out.println("PDF created successfully at: " + pdfFilePath);
   }
 
-  //for testing purpose
+  // for testing purpose
   public String DropBoxTest(String title, String ingredients, String instructions, String jpgFilePath)
       throws DbxException, FileNotFoundException, IOException {
 
@@ -142,7 +142,7 @@ public class DropBox {
     return url;
   }
 
-   public static void combinePDFTest(String title, String ingredients, String instructions, String jpgFilePath) {
+  public static void combinePDFTest(String title, String ingredients, String instructions, String jpgFilePath) {
 
     // Output PDF file
     String pdfFilePath = title + ".pdf";
@@ -168,16 +168,16 @@ public class DropBox {
     System.out.println("PDF created successfully at: " + pdfFilePath);
   }
 
-  public void delete(String title) throws ListFolderErrorException, DbxException{
+  public void delete(String title) throws ListFolderErrorException, DbxException {
     DbxRequestConfig config1 = DbxRequestConfig.newBuilder("dropbox/java-tutorial").build();
     DbxClientV2 client = new DbxClientV2(config1, ACCESS_TOKEN);
     ListFolderResult result = client.files().listFolder("");
-   for (Metadata metadata : result.getEntries()) {
-        System.out.println(metadata.getPathLower());
-        if (metadata.getName().equals(title + ".pdf")) {
-          client.files().deleteV2("/" + metadata.getName());
-        }
+    for (Metadata metadata : result.getEntries()) {
+      System.out.println(metadata.getPathLower());
+      if (metadata.getName().equals(title + ".pdf")) {
+        client.files().deleteV2("/" + metadata.getName());
       }
+    }
   }
 
 }
