@@ -9,8 +9,12 @@ import javafx.scene.text.TextFlow;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.geometry.Pos;
-import Server.*;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
+
+import Server.*;
+import VoiceInput.*;
 
 public class UserInputScreen {
     private Scene scene;
@@ -113,6 +117,15 @@ public class UserInputScreen {
                 String processedTitle = this.getTitle(recipeGenerated);
                 String processedIngredients = this.getIngredient(recipeGenerated);
                 String processedInstructions = this.getInstructions(recipeGenerated);
+
+                try {
+                    String DallEInput = "Make a recipe image of mealtype " + mealType + 
+                    "with the recipe title " + processedTitle;
+                    
+                    DallE.chefDallE(DallEInput);
+                } catch (IOException | InterruptedException | URISyntaxException e1) {
+                    e1.printStackTrace();
+                }
 
                 RecipeDescriptionScreen generatedRecipeScreen;
                 try {
