@@ -103,7 +103,7 @@ public class RecipeListScreen extends BorderPane {
                     }
                     break;
                 case "Old-New":
-                    recipeListArray.sortZtoA();
+                    recipeListArray.sortOldtoNew();
                     try {
                         recipeList.reloadAll(controller);
                     } catch (Exception e1) {
@@ -111,7 +111,7 @@ public class RecipeListScreen extends BorderPane {
                     }
                     break;
                 case "New-Old":
-                    recipeListArray.sortZtoA();
+                    recipeListArray.sortNewtoOld();
                     try {
                         recipeList.reloadAll(controller);
                     } catch (Exception e1) {

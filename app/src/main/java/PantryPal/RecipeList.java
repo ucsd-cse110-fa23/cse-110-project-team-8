@@ -153,11 +153,11 @@ public class RecipeList {
             CSVWriter writer = new CSVWriter(new FileWriter(filename));
 
             // Write data to the CSV file
-            String[] header = { "Title", "Ingredients", "Instructions" };
+            String[] header = { "Title", "Ingredients", "Instructions", "creationTime" };
             writer.writeNext(header);
             for (int i = 0; i < this.list.size(); i++) {
                 Recipe recipe = (Recipe) this.list.get(i);
-                String[] data = { recipe.getTitle(), recipe.getIngredients(), recipe.getInstructions() };
+                String[] data = { recipe.getTitle(), recipe.getIngredients(), recipe.getInstructions(), recipe.getCreationTime() };
                 writer.writeNext(data);
             }
             // Close the CSV writer
@@ -189,10 +189,24 @@ public class RecipeList {
         }
     }
 
-      private static class ZtoAComparator implements Comparator<Recipe> {
+    private static class ZtoAComparator implements Comparator<Recipe> {
         @Override
         public int compare(Recipe o1, Recipe o2) {
             return o2.getTitle().compareTo(o1.getTitle());
+        }
+    }
+
+    private static class NewtoOldComparator implements Comparator<Recipe> {
+        @Override
+        public int compare(Recipe o1, Recipe o2) {
+            return o2.getCreationTime().compareTo(o1.getCreationTime());
+        }
+    }
+
+    private static class OldtoNewComparator implements Comparator<Recipe> {
+        @Override
+        public int compare(Recipe o1, Recipe o2) {
+            return o1.getCreationTime().compareTo(o2.getCreationTime());
         }
     }
 
@@ -202,6 +216,14 @@ public class RecipeList {
 
     public void sortZtoA() {
         Collections.sort(this.list, new ZtoAComparator());
+    }
+
+    public void sortNewtoOld() {
+        Collections.sort(this.list, new NewtoOldComparator());
+    }
+
+    public void sortOldtoNew() {
+        Collections.sort(this.list, new OldtoNewComparator());
     }
 
     public ArrayList<Recipe> getList(){

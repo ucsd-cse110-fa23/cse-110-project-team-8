@@ -16,7 +16,7 @@ public class Model {
     public static final int timeoutInMillis = 10000;
 
     public String performRequest(String method, String username, String password, String recipeTitle,
-            String ingredients, String instructions, String action) { // action can only be either "createAccount" or
+            String ingredients, String instructions, String creationTime, String action) { // action can only be either "createAccount" or
                                                                       // "Login"
         // Implement your HTTP request logic here and return the response
 
@@ -42,8 +42,8 @@ public class Model {
 
             if ((method.equals("POST") || method.equals("PUT"))) {
                 OutputStreamWriter out = new OutputStreamWriter(conn.getOutputStream());
-                out.write(username + ";" + password + ";" + recipeTitle + ";" + ingredients + ";" + instructions + ";"
-                        + action);
+                out.write(username + ";" + password + ";" + recipeTitle + ";" + ingredients + ";" + instructions + ";" + creationTime
+                    + ";" + action);
                 out.flush();
                 out.close();
             } else if (method.equals("DELETE")) {

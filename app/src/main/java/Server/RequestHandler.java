@@ -80,18 +80,20 @@ public class RequestHandler implements HttpHandler {
         String recipeTitle = recipe.get(2);
         String ingredients = recipe.get(3);
         String instructions = recipe.get(4);
-        String action = recipe.get(5);
+        String creationTime = recipe.get(5);
+        String action = recipe.get(6);
 
         System.out.println(recipeTitle);
         System.out.println(ingredients);
         System.out.println(instructions);
+        System.out.println(creationTime);
 
         if (recipeTitle.equals(" ") && ingredients.equals(" ") && instructions.equals(" ")) { // the POST request is a
                                                                                               // login/create
             response = this.loadAccount(username, password, action); // acoount reques
             System.out.println("if statement");
         } else { // the POST request is a create recipe request
-            insertOneRecipe(recipeCollection, recipeTitle, ingredients, instructions);
+            insertOneRecipe(recipeCollection, recipeTitle, ingredients, instructions, creationTime);
             response = "Posted recipe {" + recipeTitle + "}";
         }
         System.out.println(response);
@@ -129,15 +131,15 @@ public class RequestHandler implements HttpHandler {
     }
 
     private static void insertOneRecipe(MongoCollection<Document> recipeCollection, String recipeTitle,
-            String ingredients, String instructions) {
-        recipeCollection.insertOne(generateNewRecipe(recipeTitle, ingredients, instructions));
+            String ingredients, String instructions, String creationTime) {
+        recipeCollection.insertOne(generateNewRecipe(recipeTitle, ingredients, instructions, creationTime));
         System.out.println(recipeTitle + " inserted.");
     }
 
-    private static Document generateNewRecipe(String recipeTitle, String ingredients, String instructions) {
+    private static Document generateNewRecipe(String recipeTitle, String ingredients, String instructions, String creationTime) {
 
         return new Document("Title", recipeTitle).append("Ingredients", ingredients)
-                .append("Instructions", instructions);
+                .append("Instructions", instructions).append("creationTime", creationTime);
     }
 
     private static void updateOneRecipe(MongoCollection<Document> recipeCollection, String recipeTitle,
