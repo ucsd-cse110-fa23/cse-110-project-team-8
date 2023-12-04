@@ -16,7 +16,7 @@ import org.json.JSONObject;
 
 //Borrowed from CSE 110 Lab 7 
 //https://docs.google.com/document/d/1lZDUFcTV7NrHEHcYKqH1PnmpRSEjvcAH0Wc2qg6_ec8/edit#heading=h.z1qnwebb5puw 
-public class DallE {
+public class DallE{
 
     private static final String API_ENDPOINT = "https://api.openai.com/v1/images/generations";
     private static final String API_KEY = "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";
@@ -74,8 +74,8 @@ public class DallE {
 
    // Download the Generated Image to Current Directory
    try (InputStream in = new URI(generatedImageURL).toURL().openStream()) {
-    //Files.copy(in, Paths.get("image.jpeg"));
-    Files.copy(in, Paths.get(recipeTitle + ".jpeg"), StandardCopyOption.REPLACE_EXISTING);
+    //Files.copy(in, Paths.get("image.png"));
+    Files.copy(in, Paths.get(recipeTitle + ".png"), StandardCopyOption.REPLACE_EXISTING);
    }
 
    return generatedImageURL;

@@ -68,13 +68,13 @@ public class RecipeListScreen extends BorderPane {
             primaryStage.setScene(logoutScene);
             AutoLogin.clearFile();
             // this.getChildren().clear();
-            try {
-                server.deactivateServer();
-                server.activateServer();
-            } catch (IOException e1) {
-                // TODO Auto-generated catch block
-                e1.printStackTrace();
-            }
+            // try {
+            //     server.deactivateServer();
+            //     server.activateServer();
+            // } catch (IOException e1) {
+            //     // TODO Auto-generated catch block
+            //     e1.printStackTrace();
+            // }
             System.out.println("logout pressed");
         }); // Set the action on the button
     }
