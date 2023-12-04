@@ -121,8 +121,8 @@ public class UserInputScreen {
                 try {
                     String DallEInput = "Make a recipe image of mealtype " + mealType + 
                     "with the recipe title " + processedTitle;
-                    
-                    DallE.chefDallE(DallEInput);
+
+                    DallE.chefDallE(DallEInput, processedTitle);
                 } catch (IOException | InterruptedException | URISyntaxException e1) {
                     e1.printStackTrace();
                 }

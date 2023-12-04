@@ -5,7 +5,12 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.net.URISyntaxException;
+
 import Server.*;
+import VoiceInput.DallE;
 
 
 
@@ -29,6 +34,15 @@ public class RecipeListBody extends VBox {
         recipe1.getRecipe().setIngredients(recipe.getIngredients());
         recipe1.getRecipe().setInstructions(recipe.getInstructions());
         recipe1.setDescription(mainScene);
+
+        try {
+            String DallEInput = "Make a recipe image of mealtype " +
+            "with the recipe title " + recipe.getTitle();
+
+            DallE.chefDallE(DallEInput, recipe.getTitle());
+        } catch (IOException | InterruptedException | URISyntaxException e2) {
+            e2.printStackTrace();
+        }
 
         this.getChildren().add(recipe1);
         RecipeDescriptionScreen screen = new RecipeDescriptionScreen(recipe1,

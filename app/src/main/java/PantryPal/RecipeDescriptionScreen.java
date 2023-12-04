@@ -15,12 +15,15 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
+
 
 import org.bson.Document;
 
 import com.dropbox.core.DbxException;
 
 import Server.*;
+import VoiceInput.DallE;
 
 public class RecipeDescriptionScreen {
     private Scene scene;
@@ -106,7 +109,8 @@ public class RecipeDescriptionScreen {
         // make a hBox for the image and the recipe Ingredients to be side to side
         HBox imageingredientsRoot = new HBox();
         if (dishImage == true) { // this inserts the image into the recipe description
-            DishImage.uploadImage(imageingredientsRoot, imageStage, "image.png");
+            DishImage.uploadImage(imageingredientsRoot, imageStage, title + ".png");
+        
 
             imageingredientsRoot.getChildren().add(ingredientsRoot);
 
