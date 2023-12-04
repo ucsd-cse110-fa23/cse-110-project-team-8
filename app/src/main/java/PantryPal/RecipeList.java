@@ -4,6 +4,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
@@ -12,6 +15,7 @@ import com.opencsv.exceptions.CsvValidationException;
 public class RecipeList {
     private int numRecipe;
     private ArrayList<Recipe> list;
+    private int currentIndex;
 
     public RecipeList() {
         this.numRecipe = 0;
@@ -149,11 +153,11 @@ public class RecipeList {
             CSVWriter writer = new CSVWriter(new FileWriter(filename));
 
             // Write data to the CSV file
-            String[] header = { "Title", "Ingredients", "Instructions" };
+            String[] header = { "Title", "Ingredients", "Instructions", "creationTime" };
             writer.writeNext(header);
             for (int i = 0; i < this.list.size(); i++) {
                 Recipe recipe = (Recipe) this.list.get(i);
-                String[] data = { recipe.getTitle(), recipe.getIngredients(), recipe.getInstructions() };
+                String[] data = { recipe.getTitle(), recipe.getIngredients(), recipe.getInstructions(), recipe.getCreationTime() };
                 writer.writeNext(data);
             }
             // Close the CSV writer
@@ -176,5 +180,53 @@ public class RecipeList {
 
     public int getNum() {
         return this.numRecipe;
+    }
+
+    private static class AtoZComparator implements Comparator<Recipe> {
+        @Override
+        public int compare(Recipe o1, Recipe o2) {
+            return o1.getTitle().compareTo(o2.getTitle());
+        }
+    }
+
+    private static class ZtoAComparator implements Comparator<Recipe> {
+        @Override
+        public int compare(Recipe o1, Recipe o2) {
+            return o2.getTitle().compareTo(o1.getTitle());
+        }
+    }
+
+    private static class NewtoOldComparator implements Comparator<Recipe> {
+        @Override
+        public int compare(Recipe o1, Recipe o2) {
+            return o2.getCreationTime().compareTo(o1.getCreationTime());
+        }
+    }
+
+    private static class OldtoNewComparator implements Comparator<Recipe> {
+        @Override
+        public int compare(Recipe o1, Recipe o2) {
+            return o1.getCreationTime().compareTo(o2.getCreationTime());
+        }
+    }
+
+    public void sortAtoZ() {
+        Collections.sort(this.list, new AtoZComparator());
+    }
+
+    public void sortZtoA() {
+        Collections.sort(this.list, new ZtoAComparator());
+    }
+
+    public void sortNewtoOld() {
+        Collections.sort(this.list, new NewtoOldComparator());
+    }
+
+    public void sortOldtoNew() {
+        Collections.sort(this.list, new OldtoNewComparator());
+    }
+
+    public ArrayList<Recipe> getList(){
+        return this.list;
     }
 }

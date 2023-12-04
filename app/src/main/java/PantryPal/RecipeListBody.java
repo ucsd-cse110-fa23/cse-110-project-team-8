@@ -39,6 +39,26 @@ public class RecipeListBody extends VBox {
                 this, controller);
     }
 
+    //reload all recipes for sorting
+    public void reloadAll(Controller controller) throws Exception {
+        this.getChildren().clear();
+        for (Recipe recipe: recipeListArray.getList()){
+            RecipeTitleButton recipe1 = new RecipeTitleButton(recipe);
+            recipe1.getRecipe().setTitle(recipe.getTitle());
+            recipe1.getRecipe().setIngredients(recipe.getIngredients());
+            recipe1.getRecipe().setInstructions(recipe.getInstructions());
+            recipe1.setDescription(mainScene);
+
+            this.getChildren().add(recipe1);
+            RecipeDescriptionScreen screen = new RecipeDescriptionScreen(recipe1,
+                recipe.getTitle(),
+                recipe.getIngredients(),
+                recipe.getInstructions(),
+                primaryStage, mainScene,
+                this, controller);
+        }
+    }
+
     // Deletes the recipe from the recipe list
     public void delete(Node recipe) {
         this.getChildren().remove(recipe);

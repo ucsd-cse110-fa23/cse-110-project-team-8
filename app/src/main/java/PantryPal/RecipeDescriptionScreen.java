@@ -259,6 +259,8 @@ public class RecipeDescriptionScreen {
                 recipe.getRecipe().setTitle(title);
                 recipe.getRecipe().setIngredients(ingredientsArea.getText());
                 recipe.getRecipe().setInstructions(instructionsArea.getText());
+                recipe.getRecipe().setCreationTime();
+
 
                 savedHit = true;
                 recipe.setDescription(scene);

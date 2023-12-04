@@ -26,7 +26,8 @@ import com.itextpdf.text.pdf.PdfWriter;
 import com.dropbox.core.*;
 
 public class DropBox {
-  private static final String ACCESS_TOKEN = "sl.BrCwbv3vEgD2sPDgUHsid4w7MU9-brDsGiruzlPAu7qjQezRb2ammZVBN47oexteMgpKCiNB9WmMBj7d7S8yfxJTUe3n8LYqkcxSesf3MsGJHgb1lwnaYEfpdp9DLnzeEebxEK7XkbSsw0b-aMfzJM8";
+
+  private static final String ACCESS_TOKEN = "sl.BrFFd_9iNcZ7xU5l-7zRpyM176H1ALk8pRkFvu8m9ojUPxdykc-RSg4TCJZXxybJDjz5OnxJ2b2NuoWIwe7ydfdfce5YAijBLPlmNMvzlf-zCHGNmO_GG4StasrmUNYbWiWCtswGlndAZEcu0a-Gfao";
 
   public String DropBox(String title, String ingredients, String instructions)
       throws DbxException, FileNotFoundException, IOException {
@@ -73,7 +74,7 @@ public class DropBox {
   public static void combinePDF(String title, String ingredients, String instructions) {
 
     // Input JPG file and text
-    String jpgFilePath = "image.png";
+    String jpgFilePath = title + ".png";
 
     // Output PDF file
     String pdfFilePath = title + ".pdf";

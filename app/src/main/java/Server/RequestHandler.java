@@ -65,6 +65,7 @@ public class RequestHandler implements HttpHandler {
 
     private String handleGet(HttpExchange httpExchange) throws IOException {
         String response = readAllRecipe((userDB.getCollection("Recipe")));
+        //System.out.println("response from handleGet(): \n" + response);
         return response;
     }
 
@@ -79,18 +80,20 @@ public class RequestHandler implements HttpHandler {
         String recipeTitle = recipe.get(2);
         String ingredients = recipe.get(3);
         String instructions = recipe.get(4);
-        String action = recipe.get(5);
+        String creationTime = recipe.get(5);
+        String action = recipe.get(6);
 
         System.out.println(recipeTitle);
         System.out.println(ingredients);
         System.out.println(instructions);
+        System.out.println(creationTime);
 
         if (recipeTitle.equals(" ") && ingredients.equals(" ") && instructions.equals(" ")) { // the POST request is a
                                                                                               // login/create
             response = this.loadAccount(username, password, action); // acoount reques
             System.out.println("if statement");
         } else { // the POST request is a create recipe request
-            insertOneRecipe(recipeCollection, recipeTitle, ingredients, instructions);
+            insertOneRecipe(recipeCollection, recipeTitle, ingredients, instructions, creationTime);
             response = "Posted recipe {" + recipeTitle + "}";
         }
         System.out.println(response);
@@ -128,15 +131,15 @@ public class RequestHandler implements HttpHandler {
     }
 
     private static void insertOneRecipe(MongoCollection<Document> recipeCollection, String recipeTitle,
-            String ingredients, String instructions) {
-        recipeCollection.insertOne(generateNewRecipe(recipeTitle, ingredients, instructions));
+            String ingredients, String instructions, String creationTime) {
+        recipeCollection.insertOne(generateNewRecipe(recipeTitle, ingredients, instructions, creationTime));
         System.out.println(recipeTitle + " inserted.");
     }
 
-    private static Document generateNewRecipe(String recipeTitle, String ingredients, String instructions) {
+    private static Document generateNewRecipe(String recipeTitle, String ingredients, String instructions, String creationTime) {
 
         return new Document("Title", recipeTitle).append("Ingredients", ingredients)
-                .append("Instructions", instructions);
+                .append("Instructions", instructions).append("creationTime", creationTime);
     }
 
     private static void updateOneRecipe(MongoCollection<Document> recipeCollection, String recipeTitle,
@@ -175,10 +178,10 @@ public class RequestHandler implements HttpHandler {
         String recipe_details = "";
         int cnt = 0;
         // TODO why is line 164-165 here?
-        List<Document> studentList = recipeCollection.find().into(new ArrayList<>());
+        List<Document> recipeList = recipeCollection.find().into(new ArrayList<>());
         // System.out.println("length of list" + studentList.size());
 
-        for (Document recipe : recipeCollection.find()) {
+        for (Document recipe : recipeList) {
             recipe_details += recipe.get("Title") + ";" + recipe.get("Ingredients") + ";"
                     + recipe.get("Instructions")
                     + ":";
@@ -187,7 +190,6 @@ public class RequestHandler implements HttpHandler {
                 break;
             }
         }
-
         System.out.println("Recipe Details from readAllRecipe(): \n" + recipe_details);
         return recipe_details;
     }
