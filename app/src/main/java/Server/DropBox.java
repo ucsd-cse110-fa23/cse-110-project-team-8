@@ -9,6 +9,8 @@ import com.itextpdf.text.pdf.PdfWriter;
 import javafx.scene.text.Text;
 
 import com.dropbox.core.v2.DbxClientV2;
+import com.dropbox.core.v2.files.DeleteErrorException;
+import com.dropbox.core.v2.files.DeleteResult;
 import com.dropbox.core.v2.files.FileMetadata;
 import com.dropbox.core.v2.files.ListFolderErrorException;
 import com.dropbox.core.v2.files.ListFolderResult;
@@ -27,48 +29,66 @@ import com.dropbox.core.*;
 
 public class DropBox {
 
-  private static final String ACCESS_TOKEN = "sl.BrFFd_9iNcZ7xU5l-7zRpyM176H1ALk8pRkFvu8m9ojUPxdykc-RSg4TCJZXxybJDjz5OnxJ2b2NuoWIwe7ydfdfce5YAijBLPlmNMvzlf-zCHGNmO_GG4StasrmUNYbWiWCtswGlndAZEcu0a-Gfao";
+  DbxClientV2 client;
+  private static final String ACCESS_TOKEN = "sl.BrGVppKze26dE8IdkNzDizFIPL0b7UjK0xor2NKPnVmlHa5JVeDCAfchpA2hcsCBsV0o5LcsmN85g0_sG_h66pfnqEaOTGDAKQ3sNH-eqTvlscOmloY3YdejR0Lamj4Li8ku4-XpwTa8y_gRFZ9N3Fk";
 
   public String DropBox(String title, String ingredients, String instructions)
       throws DbxException, FileNotFoundException, IOException {
 
     String url = "";
-
+    boolean exists = false;
     combinePDF(title, ingredients, instructions);
 
     // Create Dropbox client
     DbxRequestConfig config1 = DbxRequestConfig.newBuilder("dropbox/java-tutorial").build();
-    DbxClientV2 client = new DbxClientV2(config1, ACCESS_TOKEN);
+    this.client = new DbxClientV2(config1, ACCESS_TOKEN);
     // Get current account info
     FullAccount account = client.users()
         .getCurrentAccount();
     System.out.println(account.getName().getDisplayName());
-
     ListFolderResult result = client.files().listFolder("");
     while (true) {
-      for (Metadata metadata : result.getEntries()) {
-        System.out.println(metadata.getPathLower());
-        if (metadata.getName().equals(title + ".pdf")) {
-          client.files().deleteV2("/" + metadata.getName());
-        }
-      }
+
       if (!result.getHasMore()) {
         break;
       }
       result = client.files().listFolderContinue(result.getCursor());
     }
-    try (InputStream in = new FileInputStream(title + ".pdf")) {
-      FileMetadata metadata = client.files().uploadBuilder("/" + title + ".pdf")
-          .uploadAndFinish(in);
+    String urlTitle = title.replace(" ", "");
+    for (Metadata metadata : result.getEntries()) {
+      if ((metadata.getName()).equals(urlTitle)) {
+        exists = true;
+      }
+    }
+    if (exists == false) {
+      try (InputStream in = new FileInputStream(title + ".pdf")) {
+        client.files().createFolderV2("/" + urlTitle);
+        FileMetadata metadata = client.files().uploadBuilder("/" + urlTitle + "/" + title + ".pdf")
+            .uploadAndFinish(in);
+      }
     }
     try {
-      url = client.sharing().createSharedLinkWithSettings("/" + title +
-          ".pdf").getUrl();
+      url = client.sharing().createSharedLinkWithSettings("/" + urlTitle).getUrl();
       System.out.println(url);
     } catch (Exception e) {
       e.printStackTrace();
     }
     return url;
+  }
+
+  public void updateShare(String title, String ingredients, String instructions)
+      throws DeleteErrorException, DbxException, FileNotFoundException, IOException {
+    combinePDF(title, ingredients, instructions);
+    this.client.files().deleteV2("/" + title.replace(" ", "") + "/" + title + ".pdf");
+    try (InputStream in = new FileInputStream(title + ".pdf")) {
+      FileMetadata metadata = client.files().uploadBuilder("/" + title.replace(" ", "") + "/" + title + ".pdf")
+          .uploadAndFinish(in);
+    }
+  }
+
+  public void deleteFile(String title) throws DeleteErrorException, DbxException {
+    Metadata metadata = this.client.files().delete("/" + title.replace(" ", "") + "/" + title + ".pdf");
+    Metadata metadata1 = this.client.files().delete("/" + title.replace(" ", ""));
   }
 
   public static void combinePDF(String title, String ingredients, String instructions) {

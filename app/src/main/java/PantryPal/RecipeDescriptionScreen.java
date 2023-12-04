@@ -17,7 +17,6 @@ import javafx.geometry.Pos;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
-
 import org.bson.Document;
 
 import com.dropbox.core.DbxException;
@@ -49,6 +48,8 @@ public class RecipeDescriptionScreen {
     private RecipeTitleButton recipe;
     private String newIngre;
     private String newInstruct;
+    private boolean shareclick;
+    private String url;
 
     // Use for rebuild the recipes when reopen the app
     public RecipeDescriptionScreen(RecipeTitleButton recipe1, String title, String ingredients, String instructions,
@@ -62,6 +63,7 @@ public class RecipeDescriptionScreen {
         this.newInstruct = instructions;
 
         DropBox dropBox = new DropBox();
+        this.shareclick = false;
         if (recipe1 == null) {
             savedHit = false;
         } else {
@@ -110,7 +112,6 @@ public class RecipeDescriptionScreen {
         HBox imageingredientsRoot = new HBox();
         if (dishImage == true) { // this inserts the image into the recipe description
             DishImage.uploadImage(imageingredientsRoot, imageStage, title + ".png");
-        
 
             imageingredientsRoot.getChildren().add(ingredientsRoot);
 
@@ -192,7 +193,13 @@ public class RecipeDescriptionScreen {
                 recipe.getRecipe().setInstructions(instructionsArea.getText());
                 this.newIngre = ingredientsArea.getText();
                 this.newInstruct = instructionsArea.getText();
-
+                if (shareclick == true) {
+                    try {
+                        dropBox.updateShare(title, newIngre, newInstruct);
+                    } catch (DbxException | IOException e1) {
+                        e1.printStackTrace();
+                    }
+                }
                 recipeList.getArray().toCSV("RecipeList.csv");
 
                 try {
@@ -265,7 +272,6 @@ public class RecipeDescriptionScreen {
                 recipe.getRecipe().setInstructions(instructionsArea.getText());
                 recipe.getRecipe().setCreationTime();
 
-
                 savedHit = true;
                 recipe.setDescription(scene);
                 recipeList.getChildren().add(0, recipe);
@@ -322,6 +328,11 @@ public class RecipeDescriptionScreen {
             recipeList.getArray().delete(recipe.getRecipe());
             recipeList.getArray().toCSV("RecipeList.csv");
             try {
+                dropBox.deleteFile((title));
+            } catch (DbxException e1) {
+                e1.printStackTrace();
+            }
+            try {
                 // System.out.println("Server Name: "+server.getMongoDB());
                 controller.handleDelete(title);
             } catch (Exception e2) {
@@ -377,15 +388,17 @@ public class RecipeDescriptionScreen {
         share.setStyle(defaultButtonStyle);
         hRoot.getChildren().add(share);
         share.setOnAction(e -> {
-            String url = " ";
             Stage popupwindow = new Stage();
             popupwindow.initModality(Modality.APPLICATION_MODAL);
-            try {
-                url = dropBox.DropBox(title, newIngre, newInstruct);
-            } catch (DbxException | IOException e1) {
-                e1.printStackTrace();
+            if (shareclick == false) {
+                this.url = " ";
+                try {
+                    url = dropBox.DropBox(title, newIngre, newInstruct);
+                } catch (DbxException | IOException e1) {
+                    e1.printStackTrace();
+                }
+                this.shareclick = true;
             }
-
             SharelinkScreen SharelinkScreen = new SharelinkScreen(url, popupwindow);
             popupwindow.showAndWait();
         });
