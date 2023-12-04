@@ -7,7 +7,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -17,7 +17,10 @@ import javafx.geometry.Pos;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
+
 import org.bson.Document;
+
+import com.dropbox.core.DbxException;
 
 import Server.*;
 import VoiceInput.DallE;
@@ -33,6 +36,8 @@ public class RecipeDescriptionScreen {
     private Button deleteButton;
     private Button done;
     private Button cancel;
+    // MS 2
+    private Button share;
 
     private Boolean dishImage;
 
@@ -42,17 +47,21 @@ public class RecipeDescriptionScreen {
     private Button confirmDelete;
     private Button cancelDelete;
     private RecipeTitleButton recipe;
+    private String newIngre;
+    private String newInstruct;
 
     // Use for rebuild the recipes when reopen the app
     public RecipeDescriptionScreen(RecipeTitleButton recipe1, String title, String ingredients, String instructions,
             Stage primaryStage, Scene mainScene, RecipeListBody recipeList, Controller controller)
             throws Exception {
 
-        //Change this to TRUE when you want to create images
-        //Change this to FALSE when you dont want to create images
+        // Change this to TRUE when you want to create images
+        // Change this to FALSE when you dont want to create images
         dishImage = true;
-        
+        this.newIngre = ingredients;
+        this.newInstruct = instructions;
 
+        DropBox dropBox = new DropBox();
         if (recipe1 == null) {
             savedHit = false;
         } else {
@@ -71,7 +80,6 @@ public class RecipeDescriptionScreen {
         titleBox.setPadding(new Insets(0, 0, 30, 0)); // Add pixels of padding at the bottom
         titleBox.setStyle("-fx-border-color: #FFFFFF; -fx-border-width:  0 0 2 0;");
         titleBox.setAlignment(Pos.CENTER);
-
 
         // INGREDIENTS
         Text ingredientsLabel = new Text("Ingredients: "); // ingredients title
@@ -98,12 +106,12 @@ public class RecipeDescriptionScreen {
         instructionsArea.setWrapText(true);
         instructionsArea.setEditable(false);
 
-
         // make a hBox for the image and the recipe Ingredients to be side to side
         HBox imageingredientsRoot = new HBox();
         if (dishImage == true) { // this inserts the image into the recipe description
             DishImage.uploadImage(imageingredientsRoot, imageStage, title + ".png");
         
+
             imageingredientsRoot.getChildren().add(ingredientsRoot);
 
         } else { // this else just sets the area were the image would go to be an empty text box
@@ -112,7 +120,6 @@ public class RecipeDescriptionScreen {
             imageingredientsRoot.getChildren().add(ingredientsRoot);
 
         }
-
 
         newRoot.getChildren().add(titleBox);
         newRoot.getChildren().add(imageingredientsRoot);
@@ -141,7 +148,6 @@ public class RecipeDescriptionScreen {
             // ADD: GOBACK, EDIT, DELETE
             hRoot.getChildren().add(goBack);
             hRoot.getChildren().add(editButton);
-            ;
 
             if (savedHit == false) {
                 hRoot.getChildren().add(save);
@@ -150,6 +156,7 @@ public class RecipeDescriptionScreen {
                 hRoot.getChildren().add(deleteButton);
             }
 
+            hRoot.getChildren().add(share);
             // REMOVE: CANCEL, DONE
             hRoot.getChildren().remove(done);
             hRoot.getChildren().remove(cancel);
@@ -173,15 +180,19 @@ public class RecipeDescriptionScreen {
             // ADD: GOBACK, EDIT, DELETE
             hRoot.getChildren().add(goBack);
             hRoot.getChildren().add(editButton);
-
+            hRoot.getChildren().remove(share);
             // if previously saved or not
             if (savedHit == false) {
                 hRoot.getChildren().add(save);
             }
             if (savedHit == true) {
                 hRoot.getChildren().add(deleteButton);
+                hRoot.getChildren().add(share);
                 recipe.getRecipe().setIngredients(ingredientsArea.getText());
                 recipe.getRecipe().setInstructions(instructionsArea.getText());
+                this.newIngre = ingredientsArea.getText();
+                this.newInstruct = instructionsArea.getText();
+
                 recipeList.getArray().toCSV("RecipeList.csv");
 
                 try {
@@ -227,6 +238,7 @@ public class RecipeDescriptionScreen {
             // REMOVE: GOBACK, DELETE
             hRoot.getChildren().remove(editButton);
             hRoot.getChildren().remove(goBack);
+            hRoot.getChildren().remove(share);
 
             if (savedHit == false) {
                 hRoot.getChildren().remove(save);
@@ -254,7 +266,7 @@ public class RecipeDescriptionScreen {
 
                 savedHit = true;
                 recipe.setDescription(scene);
-                recipeList.getChildren().add(0,recipe);
+                recipeList.getChildren().add(0, recipe);
                 recipeList.getArray().add(recipeOB);
                 recipeList.getArray().toCSV("RecipeList.csv");
                 Button titleButton = recipe.getRecipeTitleButton();
@@ -263,7 +275,9 @@ public class RecipeDescriptionScreen {
                 });
 
                 hRoot.getChildren().remove(save);
+                hRoot.getChildren().remove(share);
                 hRoot.getChildren().add(deleteButton);
+                hRoot.getChildren().add(share);
                 try {
                     controller.handleSave();
                 } catch (Exception e2) {
@@ -287,6 +301,7 @@ public class RecipeDescriptionScreen {
             hRoot.getChildren().remove(deleteButton);
             hRoot.getChildren().remove(editButton);
             hRoot.getChildren().remove(goBack);
+            hRoot.getChildren().remove(share);
 
             System.out.println("OG Delete Button Clicked");
         });
@@ -325,7 +340,7 @@ public class RecipeDescriptionScreen {
             hRoot.getChildren().add(goBack);
             hRoot.getChildren().add(editButton);
             hRoot.getChildren().add(deleteButton);
-
+            hRoot.getChildren().add(share);
             hRoot.getChildren().remove(confirmDelete);
             hRoot.getChildren().remove(cancelDelete);
 
@@ -354,6 +369,24 @@ public class RecipeDescriptionScreen {
             newRoot.getChildren().add(hRoot);
             this.scene = new Scene(newRoot, 800, 800); // Create a new scene
         }
+
+        // MS2 SHARE BUTTON
+        share = new Button("Share");
+        share.setStyle(defaultButtonStyle);
+        hRoot.getChildren().add(share);
+        share.setOnAction(e -> {
+            String url = " ";
+            Stage popupwindow = new Stage();
+            popupwindow.initModality(Modality.APPLICATION_MODAL);
+            try {
+                url = dropBox.DropBox(title, newIngre, newInstruct);
+            } catch (DbxException | IOException e1) {
+                e1.printStackTrace();
+            }
+
+            SharelinkScreen SharelinkScreen = new SharelinkScreen(url, popupwindow);
+            popupwindow.showAndWait();
+        });
     }
 
     public Scene getScene() {
