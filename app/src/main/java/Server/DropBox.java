@@ -26,7 +26,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 import com.dropbox.core.*;
 
 public class DropBox {
-  private static final String ACCESS_TOKEN = "sl.BrCbfVixcEuH2syZIJWeNDedayzTHSTPfLFtS9Vh8MSMjM2kRJYC66ubhR3TPREnlV7F23lPFAb8XBqV1EsRyicxiXK6YjfByyUAfsvH1APrveaIhTCYM-SFU-6zUbDMd39mbF_RNSylezpVSKAO7Qk";
+  private static final String ACCESS_TOKEN = "sl.BrFFd_9iNcZ7xU5l-7zRpyM176H1ALk8pRkFvu8m9ojUPxdykc-RSg4TCJZXxybJDjz5OnxJ2b2NuoWIwe7ydfdfce5YAijBLPlmNMvzlf-zCHGNmO_GG4StasrmUNYbWiWCtswGlndAZEcu0a-Gfao";
 
   public String DropBox(String title, String ingredients, String instructions)
       throws DbxException, FileNotFoundException, IOException {
