@@ -97,7 +97,7 @@ public class LoginUI extends BorderPane {
                         homeScreen.switchToThisScene(); // Switches to the main screen of RLS
                         this.password.clear();
                         this.username.clear();
-                        this.autoLogin.fire();
+                        this.autoLogin.setSelected(false);
                         primaryStage.setScene(homeScreen.getRecipeListScene());
                     } else {
                         System.out.println("incorrect password or username doesn't exist");
@@ -134,7 +134,7 @@ public class LoginUI extends BorderPane {
 
                         this.password.clear();
                         this.username.clear();
-                        this.autoLogin.fire();
+                        this.autoLogin.setSelected(false);
                         primaryStage.setScene(homeScreen.getRecipeListScene());
                         System.out.println("account created");
 

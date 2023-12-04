@@ -31,8 +31,8 @@ public class DishImage {
             Image image = new Image(selectedFile.toURI().toString());
 
             imageView.setImage(image);
-            imageView.setFitWidth(250); // Set the fixed width
-            imageView.setFitHeight(250); // Set the fixed height
+            imageView.setFitWidth(265); // Set the fixed width
+            imageView.setFitHeight(265); // Set the fixed height
         } else {
             System.out.println("File not found: " + filePath);
             return;
@@ -45,6 +45,6 @@ public class DishImage {
 
         // Assuming that this class extends some kind of Pane or Node
         //hbox.getChildren().set(0, vbox);
-        hbox.getChildren().add(vbox);
+        hbox.getChildren().add(0,vbox);
     }
 }

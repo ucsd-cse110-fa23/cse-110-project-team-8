@@ -38,7 +38,7 @@ public class RecipeDescriptionScreen {
     private Button cancel;
     // MS 2
     private Button share;
-
+    private Button regenerate;
     private Boolean dishImage;
 
     private String ingredientsOG;
@@ -49,17 +49,20 @@ public class RecipeDescriptionScreen {
     private RecipeTitleButton recipe;
     private String newIngre;
     private String newInstruct;
+    private Generate generate;
+    HBox imageingredientsRoot;
 
     // Use for rebuild the recipes when reopen the app
     public RecipeDescriptionScreen(RecipeTitleButton recipe1, String title, String ingredients, String instructions,
-            Stage primaryStage, Scene mainScene, RecipeListBody recipeList, Controller controller)
+            Stage primaryStage, Scene mainScene, RecipeListBody recipeList, Controller controller, String MealType, Generate generate)
             throws Exception {
 
         // Change this to TRUE when you want to create images
         // Change this to FALSE when you dont want to create images
-        dishImage = true;
+        dishImage = false;
         this.newIngre = ingredients;
         this.newInstruct = instructions;
+        this.generate = generate;
 
         DropBox dropBox = new DropBox();
         if (recipe1 == null) {
@@ -107,7 +110,7 @@ public class RecipeDescriptionScreen {
         instructionsArea.setEditable(false);
 
         // make a hBox for the image and the recipe Ingredients to be side to side
-        HBox imageingredientsRoot = new HBox();
+        imageingredientsRoot = new HBox();
         if (dishImage == true) { // this inserts the image into the recipe description
             DishImage.uploadImage(imageingredientsRoot, imageStage, title + ".png");
         
@@ -223,6 +226,48 @@ public class RecipeDescriptionScreen {
         });
         hRoot.getChildren().add(goBack);
 
+        // REGENERATE BUTTON
+        // -----------------------------------------------------------------------
+        regenerate = new Button("Regenerate");
+        regenerate.setStyle(defaultButtonStyle);
+        if (savedHit == false){
+            hRoot.getChildren().add(regenerate);
+        } else {
+            hRoot.getChildren().remove(regenerate);
+        }
+        regenerate.setOnAction(e -> {
+            String recipeRegenerated = this.generate.processUserInput(MealType, ingredients);
+            String reprocessedTitle = UserInputScreen.getTitle(recipeRegenerated);
+            String reprocessedInstructions = UserInputScreen.getInstructions(recipeRegenerated);
+
+            titleText.setText(reprocessedTitle);
+            instructionsArea.setText(reprocessedInstructions);
+            instructionsOG = reprocessedInstructions;
+
+            try {
+                String DallEInput = "Make a recipe image of mealtype " + MealType +
+                "with the recipe title " + reprocessedTitle;
+
+                DallE.chefDallE(DallEInput, reprocessedTitle);
+            } catch (IOException | InterruptedException | URISyntaxException e1) {
+                e1.printStackTrace();
+            }
+    
+            if (dishImage == true) { // this inserts the image into the recipe description
+                DishImage.uploadImage(imageingredientsRoot, imageStage, reprocessedTitle + ".png");
+                imageingredientsRoot.getChildren().remove(1);
+
+                //imageingredientsRoot.getChildren().add(ingredientsRoot);
+
+            } else { // this else just sets the area were the image would go to be an empty text box
+                TextArea imagetestarea = new TextArea("Images Test");
+                imageingredientsRoot.getChildren().add(imagetestarea);
+                imageingredientsRoot.getChildren().add(ingredientsRoot);
+
+            }
+            
+            // newRoot.getChildren().add(1, imageingredientsRoot);
+            });
         // EDIT BUTTON
         // --------------------------------------------------------------------------------------------
         editButton = new Button("Edit");
