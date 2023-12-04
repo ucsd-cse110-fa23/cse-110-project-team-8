@@ -2,6 +2,7 @@ package PantryPal;
 
 import java.io.IOException;
 
+import com.dropbox.core.DbxException;
 import com.opencsv.exceptions.CsvValidationException;
 
 import javafx.scene.Scene;
@@ -11,7 +12,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
 import Server.*;
-
 
 public class RecipeListScreen extends BorderPane {
     private RecipeListHeader header;
@@ -71,21 +71,28 @@ public class RecipeListScreen extends BorderPane {
         }); // Set the action on the button
 
         logout.setOnAction(e -> {
+            DropBox dropBox = new DropBox();
+            try {
+                dropBox.deleteAll();
+            } catch (DbxException e1) {
+                e1.printStackTrace();
+            }
+            ;
             primaryStage.setScene(logoutScene);
             AutoLogin.clearFile();
             // this.getChildren().clear();
             // try {
-            //     server.deactivateServer();
-            //     server.activateServer();
+            // server.deactivateServer();
+            // server.activateServer();
             // } catch (IOException e1) {
-            //     // TODO Auto-generated catch block
-            //     e1.printStackTrace();
+            // // TODO Auto-generated catch block
+            // e1.printStackTrace();
             // }
             System.out.println("logout pressed");
         }); // Set the action on the button
 
         sortButton.setOnAction(e -> {
-            switch (( String) sortOptions.getValue()) {
+            switch ((String) sortOptions.getValue()) {
                 case "A-Z":
                     recipeListArray.sortAtoZ();
                     try {
@@ -137,10 +144,12 @@ public class RecipeListScreen extends BorderPane {
     public void switchToThisScene() {
         primaryStage.setScene(this.getScene());
     }
-    public Scene getRecipeListScene(){
+
+    public Scene getRecipeListScene() {
         return this.scene;
     }
-    public void setLogoutScene(Scene scene){
+
+    public void setLogoutScene(Scene scene) {
         this.logoutScene = scene;
     }
 }

@@ -48,7 +48,6 @@ public class DropBox {
     System.out.println(account.getName().getDisplayName());
     ListFolderResult result = client.files().listFolder("");
     while (true) {
-
       if (!result.getHasMore()) {
         break;
       }
@@ -67,12 +66,15 @@ public class DropBox {
             .uploadAndFinish(in);
       }
     }
-    try {
-      url = client.sharing().createSharedLinkWithSettings("/" + urlTitle).getUrl();
-      System.out.println(url);
-    } catch (Exception e) {
-      e.printStackTrace();
+    if (exists == false) {
+      try {
+        url = client.sharing().createSharedLinkWithSettings("/" + urlTitle).getUrl();
+        System.out.println(url);
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
     }
+
     return url;
   }
 
@@ -89,6 +91,25 @@ public class DropBox {
   public void deleteFile(String title) throws DeleteErrorException, DbxException {
     Metadata metadata = this.client.files().delete("/" + title.replace(" ", "") + "/" + title + ".pdf");
     Metadata metadata1 = this.client.files().delete("/" + title.replace(" ", ""));
+  }
+
+  public void deleteAll() throws DeleteErrorException, DbxException {
+    // Create Dropbox client
+    DbxRequestConfig config1 = DbxRequestConfig.newBuilder("dropbox/java-tutorial").build();
+    this.client = new DbxClientV2(config1, ACCESS_TOKEN);
+    // Get current account info
+    FullAccount account = client.users()
+        .getCurrentAccount();
+    ListFolderResult result = this.client.files().listFolder("");
+    while (true) {
+      if (!result.getHasMore()) {
+        break;
+      }
+      result = client.files().listFolderContinue(result.getCursor());
+    }
+    for (Metadata metadata : result.getEntries()) {
+      this.client.files().delete("/" + metadata.getName());
+    }
   }
 
   public static void combinePDF(String title, String ingredients, String instructions) {
