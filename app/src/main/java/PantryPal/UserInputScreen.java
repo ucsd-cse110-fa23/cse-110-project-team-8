@@ -131,7 +131,7 @@ public class UserInputScreen {
                 try {
                     generatedRecipeScreen = new RecipeDescriptionScreen(null, processedTitle,
                             processedIngredients, processedInstructions,
-                            primaryStage, mainScene, recipeList, this.controller);
+                            primaryStage, mainScene, recipeList, this.controller, mealType, generate);
                     generatedRecipeScreen.switchToThisScene();
                 } catch (Exception e1) {
                     // TODO Auto-generated catch block
@@ -165,7 +165,7 @@ public class UserInputScreen {
     // ------------------------------------------------------------------------------------------------------
 
     // Gets the title of a freshly generated recipe
-    public String getTitle(String recipeGenerated) {
+    public static String getTitle(String recipeGenerated) {
         System.out.println(recipeGenerated);
         String output = "";
         String[] words = recipeGenerated.split("\\s+");
@@ -194,7 +194,7 @@ public class UserInputScreen {
     }
 
     // Gets the ingredients of a freshly generated recipe
-    public String getIngredient(String recipeGenerated) {
+    public static String getIngredient(String recipeGenerated) {
         String output = "";
         String[] words = recipeGenerated.split("\\s+");
         int index = 0;
@@ -214,7 +214,7 @@ public class UserInputScreen {
     }
 
     // Gets the instructions of a freshly generated recipe
-    public String getInstructions(String recipeGenerated) {
+    public static String getInstructions(String recipeGenerated) {
         String output = "";
         String[] words = recipeGenerated.split("\\s+");
         int index = 0;
