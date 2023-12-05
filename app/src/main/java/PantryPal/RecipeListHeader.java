@@ -10,6 +10,8 @@ public class RecipeListHeader extends HBox {
 
     private ComboBox<String> sortOptions;
     private Button sortButton;
+    private ComboBox<String> filterOptions;
+    private Button filterButton;
     private static final String defaultButtonStyle = "-fx-font-style: italic; -fx-background-color: #FFFFFF; " +
     "-fx-font-weight: bold; -fx-font: 15 Arial; -fx-text-fill: #000000;" +
     " -fx-pref-width: 170; -fx-pref-height: 40;";
@@ -28,11 +30,24 @@ public class RecipeListHeader extends HBox {
         sortOptions.getItems().add("Z-A");
         sortOptions.getItems().add("Old-New");
         sortOptions.getItems().add("New-Old");
-
+        
         this.getChildren().add(sortOptions);
 
         sortButton = new Button("Sort");
         this.getChildren().add(sortButton);
+
+        //Filter
+        filterOptions = new ComboBox<String>();
+        filterOptions.getItems().add("Breakfast");
+        filterOptions.getItems().add("Lunch");
+        filterOptions.getItems().add("Dinner");
+        filterOptions.getItems().add("All");
+        
+        this.getChildren().add(filterOptions);
+
+        filterButton = new Button("Filter");
+        this.getChildren().add(filterButton);
+
     }
     public Button getSortButton() {
         return sortButton;
@@ -41,5 +56,14 @@ public class RecipeListHeader extends HBox {
     public ComboBox<String> getSortOptions() {
         return sortOptions;
     }
+
+    public Button getFilterButton() {
+        return filterButton;
+    }
+
+    public ComboBox<String> getFilterOptions() {
+        return filterOptions;
+    }
+
 
 }

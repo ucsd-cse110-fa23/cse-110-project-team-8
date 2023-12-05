@@ -23,6 +23,10 @@ public class RecipeListScreen extends BorderPane {
     private Button logout;
     private Button sortButton;
     private ComboBox sortOptions;
+
+    private Button filterButton;
+    private ComboBox filterOptions;
+
     private Stage primaryStage;
     private Scene mainScene; // Field to store the main scene
     private Scene logoutScene;
@@ -51,6 +55,8 @@ public class RecipeListScreen extends BorderPane {
         logout = footer.getLogoutButton();
         sortButton = header.getSortButton();
         sortOptions = header.getSortOptions();
+        filterButton = header.getFilterButton();
+        filterOptions = header.getFilterOptions();
         addListeners();
         this.scene = new Scene(this);
     }
@@ -127,6 +133,44 @@ public class RecipeListScreen extends BorderPane {
                     break;
             }
         });
+
+        filterButton.setOnAction(e -> {
+            switch ((String) filterOptions.getValue()) {
+                case "Breakfast":
+                    recipeListArray.filterMealType("breakfast");
+                    try {
+                        recipeList.reloadAll(controller);
+                    } catch (Exception e1) {
+                        e1.printStackTrace();
+                    }
+                    break;
+                case "Lunch":
+                    recipeListArray.filterMealType("lunch");
+                    try {
+                        recipeList.reloadAll(controller);
+                    } catch (Exception e1) {
+                        e1.printStackTrace();
+                    }
+                    break;
+                case "Dinner":
+                    recipeListArray.filterMealType("dinner");
+                    try {
+                        recipeList.reloadAll(controller);
+                    } catch (Exception e1) {
+                        e1.printStackTrace();
+                    }
+                    break;
+                case "All":
+                    recipeListArray.filterMealType("all");
+                    try {
+                        recipeList.reloadAll(controller);
+                    } catch (Exception e1) {
+                        e1.printStackTrace();
+                    }
+                    break;
+            }
+        });
+        
     }
 
     public Generate getGenerate() {

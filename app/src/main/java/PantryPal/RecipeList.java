@@ -71,7 +71,7 @@ public class RecipeList {
             for (int i = recipes.length - 1; i >= 0; i--) {
                 String[] data = recipes[i].split(";");
                 System.out.println("data: " + data[0]);
-                Recipe newRecipe = new Recipe(data[0], data[1], data[2]);
+                Recipe newRecipe = new Recipe(data[0], data[1], data[2] ,null);
                 list.add(newRecipe);
                 recipeList.load(newRecipe, controller);
             }
@@ -88,7 +88,7 @@ public class RecipeList {
             // Read the CSV file and process each row
             while (reader.peek() != null) {
                 String[] row = reader.readNext();
-                Recipe recipe = new Recipe(row[0], row[1], row[2]);
+                Recipe recipe = new Recipe(row[0], row[1], row[2], null);
                 list.add(recipe);
 
                 recipeList.load(recipe, controller);
@@ -134,7 +134,7 @@ public class RecipeList {
             // Read the CSV file and process each row
             while (reader.peek() != null) {
                 String[] row = reader.readNext();
-                Recipe recipe = new Recipe(row[0], row[1], row[2]);
+                Recipe recipe = new Recipe(row[0], row[1], row[2], null);
 
                 list.add(recipe);
             }
@@ -153,11 +153,11 @@ public class RecipeList {
             CSVWriter writer = new CSVWriter(new FileWriter(filename));
 
             // Write data to the CSV file
-            String[] header = { "Title", "Ingredients", "Instructions", "creationTime" };
+            String[] header = { "Title", "Ingredients", "Instructions", "creationTime", "mealType" };
             writer.writeNext(header);
             for (int i = 0; i < this.list.size(); i++) {
                 Recipe recipe = (Recipe) this.list.get(i);
-                String[] data = { recipe.getTitle(), recipe.getIngredients(), recipe.getInstructions(), recipe.getCreationTime() };
+                String[] data = { recipe.getTitle(), recipe.getIngredients(), recipe.getInstructions(), recipe.getCreationTime(), recipe.getMealType() };
                 writer.writeNext(data);
             }
             // Close the CSV writer
@@ -224,6 +224,20 @@ public class RecipeList {
 
     public void sortOldtoNew() {
         Collections.sort(this.list, new OldtoNewComparator());
+    }
+
+    public void filterMealType(String mealType) {
+        ArrayList<Recipe> untouchedList = this.list;
+        ArrayList<Recipe> newList = this.list;
+        if (mealType.equals("All")){
+            this.list =  untouchedList;
+        }
+        for (Recipe recipe: this.list){
+            if(!recipe.getMealType().toLowerCase().contains(mealType.toLowerCase())){
+                newList.remove(recipe);
+            }
+        }
+        this.list = newList;
     }
 
     public ArrayList<Recipe> getList(){
