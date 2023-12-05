@@ -17,6 +17,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
+import com.dropbox.core.DbxException;
+
 public class App extends Application {
 
     public LoginUI root;
@@ -69,8 +71,10 @@ public class App extends Application {
                 // Handle the close event
                 try {
                     server.deactivateServer();
+                    DropBox dropBox = new DropBox();
+                    dropBox.deleteAll();
                     primaryStage.close();
-                } catch (IOException e) {
+                } catch (IOException | DbxException e) {
                     e.printStackTrace();
                 }
 
