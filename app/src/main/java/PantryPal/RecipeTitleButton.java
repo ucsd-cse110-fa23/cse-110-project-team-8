@@ -28,6 +28,10 @@ public class RecipeTitleButton extends HBox {
         return this.recipe;
     }
 
+    public void setRecipeTitle(String newTitle) {
+        this.titleButton.setText(newTitle);
+    }
+
     public Button getRecipeTitleButton() {
         return this.titleButton;
     }

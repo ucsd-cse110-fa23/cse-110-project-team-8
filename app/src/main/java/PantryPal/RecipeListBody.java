@@ -50,7 +50,7 @@ public class RecipeListBody extends VBox {
                 recipe.getIngredients(),
                 recipe.getInstructions(),
                 primaryStage, mainScene,
-                this, controller);
+                this, controller, null, null);
     }
 
     //reload all recipes for sorting
@@ -69,7 +69,7 @@ public class RecipeListBody extends VBox {
                 recipe.getIngredients(),
                 recipe.getInstructions(),
                 primaryStage, mainScene,
-                this, controller);
+                this, controller, null, null);
         }
     }
 

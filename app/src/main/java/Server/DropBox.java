@@ -27,7 +27,7 @@ import com.dropbox.core.*;
 
 public class DropBox {
 
-  private static final String ACCESS_TOKEN = "sl.BrFFd_9iNcZ7xU5l-7zRpyM176H1ALk8pRkFvu8m9ojUPxdykc-RSg4TCJZXxybJDjz5OnxJ2b2NuoWIwe7ydfdfce5YAijBLPlmNMvzlf-zCHGNmO_GG4StasrmUNYbWiWCtswGlndAZEcu0a-Gfao";
+  private static final String ACCESS_TOKEN = "sl.BrKabeYmB0qpiFBXnBVl3JZ0MHtY9immPA03NSQHv7kh9OQlAfmPgk0FmRl-utf_aQp_XJXTLB4CzhO10hmDQEftHmK-dnFZJ9rNvuD2gJAR-BgGdTJ4n4crtXC_hnVRwKtehr-8D_AcbFKjQrQGAiw";
 
   public String DropBox(String title, String ingredients, String instructions)
       throws DbxException, FileNotFoundException, IOException {
