@@ -1,5 +1,7 @@
 package PantryPal;
 
+import static com.mongodb.client.model.Filters.in;
+
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -15,11 +17,18 @@ import com.opencsv.exceptions.CsvValidationException;
 public class RecipeList {
     private int numRecipe;
     private ArrayList<Recipe> list;
+    ArrayList<Recipe> breakfastList;
+    ArrayList<Recipe> lunchList;
+    ArrayList<Recipe> dinnerList; 
+
     private int currentIndex;
 
     public RecipeList() {
         this.numRecipe = 0;
         list = new ArrayList<Recipe>();
+        breakfastList = new ArrayList<Recipe>();
+        lunchList = new ArrayList<Recipe>();
+        dinnerList = new ArrayList<Recipe>();
     }
 
     public void delete(Recipe recipe) {
@@ -227,20 +236,61 @@ public class RecipeList {
     }
 
     public void filterMealType(String mealType) {
-        ArrayList<Recipe> untouchedList = this.list;
-        ArrayList<Recipe> newList = this.list;
-        if (mealType.equals("All")){
-            this.list =  untouchedList;
-        }
+        final   ArrayList<Recipe> untouchedList = this.list;
+        
+
+        ArrayList<Recipe> newList = new ArrayList<>();
+        // if (mealType.equals("All")){
+        //     this.list =  untouchedList;
+        // }
         for (Recipe recipe: this.list){
-            if(!recipe.getMealType().toLowerCase().contains(mealType.toLowerCase())){
-                newList.remove(recipe);
+            if(recipe.getMealType().toLowerCase().contains("breakfast")){
+                this.breakfastList.add(recipe);
+            }
+            if(recipe.getMealType().toLowerCase().contains("lunch")){
+                this.lunchList.add(recipe);
+            }
+            if(recipe.getMealType().toLowerCase().contains("dinner")){
+                this.dinnerList.add(recipe);
             }
         }
+        if(mealType.equals("all")){
+            for (Recipe breakfast: breakfastList){
+                newList.add(breakfast);
+            }
+            for (Recipe lunch: lunchList){
+                newList.add(lunch);
+            }
+            for (Recipe dinner: dinnerList){
+                newList.add(dinner);
+            }
+        }
+        if (mealType.equals("breakfast")){
+            newList = breakfastList;
+        }
+        if (mealType.equals("lunch")){
+            newList = lunchList;
+        }
+        if (mealType.equals("dinner")){
+            newList = dinnerList;
+        }
+
         this.list = newList;
     }
 
     public ArrayList<Recipe> getList(){
         return this.list;
     }
+
+    public ArrayList<Recipe> getBreakfastList(){
+        return this.breakfastList;
+    }
+
+    public ArrayList<Recipe> getLunchList(){
+        return this.lunchList;
+    }
+    public ArrayList<Recipe> getDinnerList(){
+        return this.dinnerList;
+    }
+
 }

@@ -332,11 +332,11 @@ public class RecipeDescriptionScreen {
                 //TODO
                 Recipe recipeOB = new Recipe(this.title + " - " + MealType, ingredients, instructions, MealType);
                 
-                recipeOB.setMealType(MealType);
+                //recipeOB.setMealType(MealType);
                 //
                 System.out.println(recipeOB.getMealType());
-                recipe = new RecipeTitleButton(recipeOB);
-                recipe.getRecipe().setTitle(this.title);
+                recipe = new RecipeTitleButton(recipeOB );
+                recipe.getRecipe().setTitle(this.title + " - " + MealType);
                 recipe.getRecipe().setIngredients(ingredientsArea.getText());
                 recipe.getRecipe().setInstructions(instructionsArea.getText());
                 recipe.getRecipe().setCreationTime();
@@ -398,12 +398,14 @@ public class RecipeDescriptionScreen {
             recipeList.delete(recipe);
             recipeList.getArray().delete(recipe.getRecipe());
             recipeList.getArray().toCSV("RecipeList.csv");
-            //TODO
-            // try {
-            //     dropBox.deleteFile((title));
-            // } catch (DbxException e1) {
-            //     e1.printStackTrace();
-            // }
+            if (shareclick == true){
+                try {
+                    dropBox.deleteFile((title));
+                } catch (DbxException e1) {
+                    e1.printStackTrace();
+                }
+            }
+           
             try {
                 // System.out.println("Server Name: "+server.getMongoDB());
                 controller.handleDelete(this.title);
