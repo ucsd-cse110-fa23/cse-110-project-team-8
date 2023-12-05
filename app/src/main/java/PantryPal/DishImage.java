@@ -31,8 +31,8 @@ public class DishImage {
             Image image = new Image(selectedFile.toURI().toString());
 
             imageView.setImage(image);
-            imageView.setFitWidth(265); // Set the fixed width
-            imageView.setFitHeight(265); // Set the fixed height
+            imageView.setFitWidth(260); // Set the fixed width
+            imageView.setFitHeight(260); // Set the fixed height
         } else {
             System.out.println("File not found: " + filePath);
             return;

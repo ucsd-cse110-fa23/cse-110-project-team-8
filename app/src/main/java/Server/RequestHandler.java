@@ -59,12 +59,13 @@ public class RequestHandler implements HttpHandler {
         httpExchange.sendResponseHeaders(200, response.length());
         OutputStream outStream = httpExchange.getResponseBody();
         System.out.println("response in handler: " + response);
+        
         outStream.write(response.getBytes());
         outStream.close();
     }
 
     private String handleGet(HttpExchange httpExchange) throws IOException {
-        String response = readAllRecipe((userDB.getCollection("Recipe")));
+        String response = readAllRecipe((userDB.getCollection("Recipe"))); // here
         //System.out.println("response from handleGet(): \n" + response);
         return response;
     }

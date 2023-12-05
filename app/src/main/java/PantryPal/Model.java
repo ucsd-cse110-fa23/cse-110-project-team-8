@@ -13,7 +13,7 @@ import java.net.*;
 import java.util.*;
 
 public class Model {
-    public static final int timeoutInMillis = 10000;
+    public static final int timeoutInMillis = 100000;
 
     public String performRequest(String method, String username, String password, String recipeTitle,
             String ingredients, String instructions, String creationTime, String action) { // action can only be either "createAccount" or
@@ -21,7 +21,7 @@ public class Model {
         // Implement your HTTP request logic here and return the response
 
         try {
-            String urlString = "http://localhost:8100/";
+            String urlString = "http://localhost:8100/" + username;
             if (recipeTitle != null) {
                 urlString += "?=" + recipeTitle.replace(" ", "%20");
 
