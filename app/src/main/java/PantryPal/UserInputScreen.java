@@ -13,7 +13,6 @@ import javafx.geometry.Pos;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
-import Server.*;
 import VoiceInput.*;
 
 public class UserInputScreen {
@@ -48,7 +47,6 @@ public class UserInputScreen {
 
         TextFlow recipeInstructions = new TextFlow(text1, text3); // adding all lines of text into one big text
         recipeInstructions.setPrefSize(200, 600);
-        // recipeInstructions.setStyle("-fx-font-style: italic; ");
         recipeInstructions.setStyle("-fx-font-style: italic; -fx-background-color: #FFFFFF; " +
                 "-fx-font-weight: bold; -fx-font: 25 Arial; -fx-text-fill: #000000;");
         recipeInstructions.setTextAlignment(TextAlignment.CENTER); // aligning text to the center
@@ -72,7 +70,6 @@ public class UserInputScreen {
             generate.startRecording();
             System.out.println("Start Recording on Meal scene pressed");
         });
-        // newRoot.getChildren().add(startRecButton); // Add the new button to the new
         // root
 
         // STOP RECORDING
@@ -90,7 +87,7 @@ public class UserInputScreen {
                         this.mealType = userInput;
                         System.out.println("Stop Recording on meal scene pressed");
                         System.out.println(this.mealType);
-        
+
                         text1.setText("\n\n\n\n Please state your ingredients. \n\n");
                         text3.setText("(Example: 'salt, pepper, eggs, and bacon!') \n\n\n\n" +
                                 "Press 'Start Recording' then say your ingredients. \n\n" +
@@ -102,7 +99,8 @@ public class UserInputScreen {
                                 "(Breakfast, Lunch, Dinner)\n\n");
                         text3.setText("Press 'Start Recording' then say your meal type. \n\n" +
                                 "Press 'Stop Recording' when you are done speaking.");
-                        text1.setText("\n\n\n\n Your meal type was not of the type.  \n\n (Breakfast, Lunch, Dinner) \n\n");
+                        text1.setText(
+                                "\n\n\n\n Your meal type was not of the type.  \n\n (Breakfast, Lunch, Dinner) \n\n");
                         text3.setText("Please try again. \n\n\n\n" +
                                 "Press 'Start Recording' then say your meal type. \n\n" +
                                 "Press 'Stop Recording' when you are done speaking. ");
@@ -119,8 +117,8 @@ public class UserInputScreen {
                 String processedInstructions = this.getInstructions(recipeGenerated);
 
                 try {
-                    String DallEInput = "Make a recipe image of mealtype " + mealType + 
-                    "with the recipe title " + processedTitle;
+                    String DallEInput = "Make a recipe image of mealtype " + mealType +
+                            "with the recipe title " + processedTitle;
 
                     DallE.chefDallE(DallEInput, processedTitle);
                 } catch (IOException | InterruptedException | URISyntaxException e1) {
@@ -235,12 +233,8 @@ public class UserInputScreen {
     // Helper method to check if the meal type is valid
     private boolean isValidMealType(String mealType) {
         return mealType.equalsIgnoreCase("Breakfast") ||
-               mealType.equalsIgnoreCase("Lunch") ||
-               mealType.equalsIgnoreCase("Dinner") ||
-               mealType.equalsIgnoreCase("Breakfast.") ||
-               mealType.equalsIgnoreCase("Lunch.") ||
-               mealType.equalsIgnoreCase("Dinner.")
-               ;
+                mealType.equalsIgnoreCase("Lunch") ||
+                mealType.equalsIgnoreCase("Dinner");
     }
 
     public Scene getScene() {

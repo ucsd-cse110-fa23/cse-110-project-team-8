@@ -1,18 +1,11 @@
 package PantryPalTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.util.ArrayList;
-
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import PantryPal.Model;
 import PantryPal.Recipe;
 import PantryPal.RecipeList;
-import Server.RequestHandler;
-import Server.Server;
 import VoiceInput.Filter;
 
 public class FilterMealTypeTest {

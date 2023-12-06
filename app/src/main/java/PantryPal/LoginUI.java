@@ -13,8 +13,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
-
 import Server.*;
 
 public class LoginUI extends BorderPane {
@@ -84,7 +82,6 @@ public class LoginUI extends BorderPane {
                     if ((controller.login(username.getText(), password.getText())).equals("Login Successfully")) {
                         System.out.println("Logging in with username: " + username.getText() + " and password: "
                                 + password.getText());
-                                
 
                         if (autologin == true) {
                             AutoLogin.createFile(username.getText(), password.getText());
@@ -92,7 +89,7 @@ public class LoginUI extends BorderPane {
                         RecipeListScreen homeScreen = new RecipeListScreen(primaryStage, controller, server);
                         homeScreen.setLogoutScene(this.scene);
                         homeScreen.setMainScene(homeScreen.getRecipeListScene()); // Saves the main screen of RLS to
-                                                                                    // save when "go back" is pressed
+                                                                                  // save when "go back" is pressed
                         homeScreen.rebuild();
                         homeScreen.switchToThisScene(); // Switches to the main screen of RLS
                         this.password.clear();
@@ -116,12 +113,13 @@ public class LoginUI extends BorderPane {
             try {
 
                 if (!(username.getText()).equals("") && !(password.getText()).equals("")) {
-                    if ((controller.createAccount(username.getText(), password.getText())).equals("Username already exists")) {
+                    if ((controller.createAccount(username.getText(), password.getText()))
+                            .equals("Username already exists")) {
                         System.out.println("account already exists");
 
                     } else {
 
-                      if (autologin == true) {
+                        if (autologin == true) {
                             AutoLogin.createFile(username.getText(), password.getText());
                         }
                         controller.createAccount(username.getText(), password.getText());
@@ -129,7 +127,6 @@ public class LoginUI extends BorderPane {
                         homeScreen.setLogoutScene(this.scene);
                         homeScreen.setMainScene(homeScreen.getRecipeListScene()); // Saves the main screen of RLS to
                                                                                   // save when "go back" is pressed
-                        // homeScreen.rebuild();
                         homeScreen.switchToThisScene(); // Switches to the main screen of RLS
 
                         this.password.clear();
@@ -142,13 +139,6 @@ public class LoginUI extends BorderPane {
                 } else {
                     System.out.println("empty password or username");
                 }
-
-                // User actions: they input their username and password and press create account
-                // check if account exists in data base
-                // case 1 is does not exist in db
-                // we want to upload username as name of collection
-                // case 2 is does exist in db
-                // we tell them account already exists
 
             } catch (Exception e1) {
                 e1.printStackTrace();

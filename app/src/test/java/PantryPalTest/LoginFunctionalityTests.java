@@ -1,40 +1,25 @@
 package PantryPalTest;
 
 import org.junit.jupiter.api.Test;
-
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoDatabase;
-import com.opencsv.CSVReader;
 import java.io.File;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import PantryPal.*;
 
-
-import Server.*;
-import java.util.ArrayList;
-
-
-import java.io.FileReader;
-import com.opencsv.exceptions.CsvValidationException;
-
 public class LoginFunctionalityTests {
     File Testfile;
-
 
     @BeforeEach
     void setUp() throws IOException {
         Testfile = new File("TestFile.txt");
     }
-       
+
     @AfterEach
     void closeDown() throws IOException {
         Testfile.delete();
     }
-
 
     // US2 BDD1
     // Test login with autologin disabled

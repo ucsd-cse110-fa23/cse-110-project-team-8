@@ -3,21 +3,16 @@ package PantryPal;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-
-import org.bson.Document;
 
 import com.dropbox.core.DbxException;
 
@@ -330,11 +325,8 @@ public class RecipeDescriptionScreen {
             save.setStyle(defaultButtonStyle);
 
             save.setOnAction(e -> {
-                // TODO
                 Recipe recipeOB = new Recipe(this.title + " - " + MealType, ingredients, instructions, MealType);
 
-                // recipeOB.setMealType(MealType);
-                //
                 recipe = new RecipeTitleButton(recipeOB);
                 recipe.getRecipe().setTitle(this.title + " - " + MealType);
                 recipe.getRecipe().setIngredients(ingredientsArea.getText());
@@ -407,7 +399,6 @@ public class RecipeDescriptionScreen {
             }
 
             try {
-                // System.out.println("Server Name: "+server.getMongoDB());
                 controller.handleDelete(this.title);
             } catch (Exception e2) {
                 e2.printStackTrace();

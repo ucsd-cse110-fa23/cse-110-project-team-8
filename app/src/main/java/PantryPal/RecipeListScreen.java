@@ -1,9 +1,7 @@
 package PantryPal;
 
-import java.io.IOException;
 
 import com.dropbox.core.DbxException;
-import com.opencsv.exceptions.CsvValidationException;
 
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -18,7 +16,6 @@ public class RecipeListScreen extends BorderPane {
     public RecipeListFooter footer;
     private RecipeListBody recipeList;
     private RecipeList recipeListArray;
-    private RecipeList recipeListArrayCopy;
 
     private Button addButton;
     private Button logout;
@@ -87,14 +84,7 @@ public class RecipeListScreen extends BorderPane {
             ;
             primaryStage.setScene(logoutScene);
             AutoLogin.clearFile();
-            // this.getChildren().clear();
-            // try {
-            // server.deactivateServer();
-            // server.activateServer();
-            // } catch (IOException e1) {
-            // // TODO Auto-generated catch block
-            // e1.printStackTrace();
-            // }
+            
             System.out.println("logout pressed");
         }); // Set the action on the button
 
