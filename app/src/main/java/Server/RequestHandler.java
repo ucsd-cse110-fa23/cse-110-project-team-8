@@ -187,8 +187,9 @@ public class RequestHandler implements HttpHandler {
 
         for (Document recipe : recipeList) {
             recipe_details += recipe.get("Title") + ";" + recipe.get("Ingredients") + ";"
-                    + recipe.get("Instructions")
-                    + ":";
+                    + recipe.get("Instructions") + ";" + recipe.get("creationTime") + ";"
+                    + recipe.get("mealType")
+                    + "@";
             cnt++;
             if (cnt == 16) {
                 break;

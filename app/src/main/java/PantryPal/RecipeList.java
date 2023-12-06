@@ -68,17 +68,34 @@ public class RecipeList {
         System.out.println("response: " + response);
         System.out.println("HELLO from LOADDB");
         if (response != null) {
-            String[] recipes = response.split(":");
+            String[] recipes = response.split("@");
         
             // Start adding recipes from the end of the array to the beginning
             for (int i = recipes.length - 1; i >= 0; i--) {
                 String[] data = recipes[i].split(";");
                 System.out.println("DATA0: " + data[0]);
-                System.out.println("DATA0: " + data[1]);
-                System.out.println("DATA0: " + data[2]);
-                Recipe newRecipe = new Recipe(data[0], data[1], data[2] ,null);
+                System.out.println("DATA1: " + data[1]);
+                System.out.println("DATA2: " + data[2]);
+                System.out.println("DATA3: " + data[3]);
+                System.out.println("DATA4: " + data[4]);
+                
+                // if (data[0].toLowerCase().contains("breakfast")) {
+                //     Recipe newRecipe = new Recipe(data[0], data[1], data[2] , "breakfast");
+                // }
+                // if (data[0].toLowerCase().contains("lunch")) {
+                //     Recipe newRecipe = new Recipe(data[0], data[1], data[2] , "lunch");
+                // }
+                // if (data[0].toLowerCase().contains("dinner")) {
+                //     Recipe newRecipe = new Recipe(data[0], data[1], data[2] , "dinner");
+                //     list.add(newRecipe);
+                //     recipeList.load(newRecipe, controller);
+                // }
+
+                Recipe newRecipe = new Recipe(data[0], data[1], data[2] , data[4]);
+                newRecipe.setCreationTime(data[3]);
                 list.add(newRecipe);
                 recipeList.load(newRecipe, controller);
+                
             }
         }
     }
@@ -232,34 +249,7 @@ public class RecipeList {
     }
 
     public void filterMealType(String mealType) {
-        ArrayList<Recipe> breakfastList;
-        ArrayList<Recipe> lunchList;
-        ArrayList<Recipe> dinnerList; 
-        breakfastList = new ArrayList<Recipe>();
-        lunchList = new ArrayList<Recipe>();
-        dinnerList = new ArrayList<Recipe>();
-
-        for (int i = 0; i<this.list.size(); i++){
-            if((this.list.get(i)).getMealType().toLowerCase().contains("breakfast")){
-                breakfastList.add((this.list.get(i)));
-            }
-            if((this.list.get(i)).getMealType().toLowerCase().contains("lunch")){
-                lunchList.add((this.list.get(i)));
-            }
-            if((this.list.get(i)).getMealType().toLowerCase().contains("dinner")){
-                dinnerList.add((this.list.get(i)));
-            }
-        }
         
-        if (mealType.equals("breakfast")){
-            this.list = breakfastList;
-        }
-        if (mealType.equals("lunch")){
-            this.list = lunchList;
-        }
-        if (mealType.equals("dinner")){
-            this.list = dinnerList;
-        }
     }
 
     public ArrayList<Recipe> getList(){

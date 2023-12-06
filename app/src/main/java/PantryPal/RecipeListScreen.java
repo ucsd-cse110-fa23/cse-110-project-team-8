@@ -103,7 +103,7 @@ public class RecipeListScreen extends BorderPane {
                 case "A-Z":
                     recipeListArray.sortAtoZ();
                     try {
-                        recipeList.reloadAll(controller);
+                        recipeList.reloadAll(controller, "sort", primaryStage, mainScene);
                     } catch (Exception e1) {
                         e1.printStackTrace();
                     }
@@ -111,7 +111,7 @@ public class RecipeListScreen extends BorderPane {
                 case "Z-A":
                     recipeListArray.sortZtoA();
                     try {
-                        recipeList.reloadAll(controller);
+                        recipeList.reloadAll(controller, "sort",  primaryStage, mainScene);
                     } catch (Exception e1) {
                         e1.printStackTrace();
                     }
@@ -119,7 +119,7 @@ public class RecipeListScreen extends BorderPane {
                 case "Old-New":
                     recipeListArray.sortOldtoNew();
                     try {
-                        recipeList.reloadAll(controller);
+                        recipeList.reloadAll(controller, "sort",  primaryStage, mainScene);
                     } catch (Exception e1) {
                         e1.printStackTrace();
                     }
@@ -127,7 +127,7 @@ public class RecipeListScreen extends BorderPane {
                 case "New-Old":
                     recipeListArray.sortNewtoOld();
                     try {
-                        recipeList.reloadAll(controller);
+                        recipeList.reloadAll(controller, "sort",  primaryStage, mainScene);
                     } catch (Exception e1) {
                         e1.printStackTrace();
                     }
@@ -136,48 +136,39 @@ public class RecipeListScreen extends BorderPane {
         });
 
         filterButton.setOnAction(e -> {
-            recipeListArrayCopy = new RecipeList();
-            for (int i = 0; i<this.recipeListArray.size(); i++){
-                recipeListArrayCopy.add((this.recipeListArray.get(i)));
-            }
             System.out.println("filter button pressed");
             switch ((String) filterOptions.getValue()) {
                 case "Breakfast":
-                    recipeListArray.filterMealType("breakfast");
                     try {
-                        recipeList.reloadAll(controller);
+                        recipeList.reloadAll(controller, "breakfast",  primaryStage, mainScene);
                     } catch (Exception e1) {
                         e1.printStackTrace();
                     }
                     break;
+
                 case "Lunch":
-                    recipeListArray.filterMealType("lunch");
                     try {
-                        recipeList.reloadAll(controller);
+                        recipeList.reloadAll(controller, "lunch",  primaryStage, mainScene);
                     } catch (Exception e1) {
                         e1.printStackTrace();
                     }
                     break;
+
                 case "Dinner":
-                    recipeListArray.filterMealType("dinner");
                     try {
-                        recipeList.reloadAll(controller);
+                        recipeList.reloadAll(controller, "dinner",  primaryStage, mainScene);
                     } catch (Exception e1) {
                         e1.printStackTrace();
                     }
                     break;
+
                 case "All":
-                    recipeListArray.filterMealType("all");
                     try {
-                        recipeList.reloadAll(controller);
+                        recipeList.reloadAll(controller, "all",  primaryStage, mainScene);
                     } catch (Exception e1) {
                         e1.printStackTrace();
                     }
                     break;
-            }
-            recipeListArray = new RecipeList();
-            for (int i = 0; i<this.recipeListArrayCopy.size(); i++){
-                recipeListArray.add((this.recipeListArrayCopy.get(i)));
             }
         });
         

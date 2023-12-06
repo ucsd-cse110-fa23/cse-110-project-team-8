@@ -48,6 +48,10 @@ public class Recipe {
         this.creationTime = dtf.format(now);
     }
 
+    public void setCreationTime(String creationTime){
+        this.creationTime = creationTime;
+    }
+    
     public String getObjectID(){
         return this.objectID;
     }
