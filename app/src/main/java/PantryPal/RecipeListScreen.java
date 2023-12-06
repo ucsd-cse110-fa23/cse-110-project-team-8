@@ -1,9 +1,7 @@
 package PantryPal;
 
-import java.io.IOException;
 
 import com.dropbox.core.DbxException;
-import com.opencsv.exceptions.CsvValidationException;
 
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -23,6 +21,10 @@ public class RecipeListScreen extends BorderPane {
     private Button logout;
     private Button sortButton;
     private ComboBox sortOptions;
+
+    private Button filterButton;
+    private ComboBox filterOptions;
+
     private Stage primaryStage;
     private Scene mainScene; // Field to store the main scene
     private Scene logoutScene;
@@ -51,6 +53,8 @@ public class RecipeListScreen extends BorderPane {
         logout = footer.getLogoutButton();
         sortButton = header.getSortButton();
         sortOptions = header.getSortOptions();
+        filterButton = header.getFilterButton();
+        filterOptions = header.getFilterOptions();
         addListeners();
         this.scene = new Scene(this);
     }
@@ -80,14 +84,7 @@ public class RecipeListScreen extends BorderPane {
             ;
             primaryStage.setScene(logoutScene);
             AutoLogin.clearFile();
-            // this.getChildren().clear();
-            // try {
-            // server.deactivateServer();
-            // server.activateServer();
-            // } catch (IOException e1) {
-            // // TODO Auto-generated catch block
-            // e1.printStackTrace();
-            // }
+            
             System.out.println("logout pressed");
         }); // Set the action on the button
 
@@ -96,7 +93,7 @@ public class RecipeListScreen extends BorderPane {
                 case "A-Z":
                     recipeListArray.sortAtoZ();
                     try {
-                        recipeList.reloadAll(controller);
+                        recipeList.reloadAll(controller, "sort", primaryStage, mainScene);
                     } catch (Exception e1) {
                         e1.printStackTrace();
                     }
@@ -104,7 +101,7 @@ public class RecipeListScreen extends BorderPane {
                 case "Z-A":
                     recipeListArray.sortZtoA();
                     try {
-                        recipeList.reloadAll(controller);
+                        recipeList.reloadAll(controller, "sort",  primaryStage, mainScene);
                     } catch (Exception e1) {
                         e1.printStackTrace();
                     }
@@ -112,7 +109,7 @@ public class RecipeListScreen extends BorderPane {
                 case "Old-New":
                     recipeListArray.sortOldtoNew();
                     try {
-                        recipeList.reloadAll(controller);
+                        recipeList.reloadAll(controller, "sort",  primaryStage, mainScene);
                     } catch (Exception e1) {
                         e1.printStackTrace();
                     }
@@ -120,13 +117,51 @@ public class RecipeListScreen extends BorderPane {
                 case "New-Old":
                     recipeListArray.sortNewtoOld();
                     try {
-                        recipeList.reloadAll(controller);
+                        recipeList.reloadAll(controller, "sort",  primaryStage, mainScene);
                     } catch (Exception e1) {
                         e1.printStackTrace();
                     }
                     break;
             }
         });
+
+        filterButton.setOnAction(e -> {
+            System.out.println("filter button pressed");
+            switch ((String) filterOptions.getValue()) {
+                case "Breakfast":
+                    try {
+                        recipeList.reloadAll(controller, "breakfast",  primaryStage, mainScene);
+                    } catch (Exception e1) {
+                        e1.printStackTrace();
+                    }
+                    break;
+
+                case "Lunch":
+                    try {
+                        recipeList.reloadAll(controller, "lunch",  primaryStage, mainScene);
+                    } catch (Exception e1) {
+                        e1.printStackTrace();
+                    }
+                    break;
+
+                case "Dinner":
+                    try {
+                        recipeList.reloadAll(controller, "dinner",  primaryStage, mainScene);
+                    } catch (Exception e1) {
+                        e1.printStackTrace();
+                    }
+                    break;
+
+                case "All":
+                    try {
+                        recipeList.reloadAll(controller, "all",  primaryStage, mainScene);
+                    } catch (Exception e1) {
+                        e1.printStackTrace();
+                    }
+                    break;
+            }
+        });
+        
     }
 
     public Generate getGenerate() {

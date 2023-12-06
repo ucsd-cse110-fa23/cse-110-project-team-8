@@ -15,9 +15,10 @@ import java.net.http.HttpResponse;
 //https://docs.google.com/document/d/1SvT4yFlK7UthOz139vH6BciSiTEQojHBl_RaP0TiWH0/edit#heading=h.1jpl89njwrif
 public class ChatGPT {
     private static final String API_ENDPOINT = "https://api.openai.com/v1/completions";
-    private static final String API_KEY = "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";
+    private static final String API_KEY = "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";
     // Jonathan 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
     // Henry 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
+    // Heiko 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
     private static final String MODEL = "text-davinci-003";
 
     public String chefGPT(String userInsructions) throws IOException, InterruptedException, URISyntaxException {

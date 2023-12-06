@@ -1,26 +1,18 @@
 package Server;
 
 import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.model.InsertManyOptions;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
-
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.bson.json.JsonWriterSettings;
-import org.bson.types.ObjectId;
-
-import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Updates.*;
-
 import com.sun.net.httpserver.*;
 import java.io.*;
-import java.net.*;
 import java.util.*;
 
 public class RequestHandler implements HttpHandler {
@@ -59,14 +51,13 @@ public class RequestHandler implements HttpHandler {
         httpExchange.sendResponseHeaders(200, response.length());
         OutputStream outStream = httpExchange.getResponseBody();
         System.out.println("response in handler: " + response);
-        
+
         outStream.write(response.getBytes());
         outStream.close();
     }
 
     private String handleGet(HttpExchange httpExchange) throws IOException {
         String response = readAllRecipe((userDB.getCollection("Recipe"))); // here
-        //System.out.println("response from handleGet(): \n" + response);
         return response;
     }
 
@@ -82,19 +73,21 @@ public class RequestHandler implements HttpHandler {
         String ingredients = recipe.get(3);
         String instructions = recipe.get(4);
         String creationTime = recipe.get(5);
-        String action = recipe.get(6);
+        String mealType = recipe.get(6);
+        String action = recipe.get(7);
 
         System.out.println(recipeTitle);
         System.out.println(ingredients);
         System.out.println(instructions);
         System.out.println(creationTime);
+        System.out.println(mealType);
 
         if (recipeTitle.equals(" ") && ingredients.equals(" ") && instructions.equals(" ")) { // the POST request is a
                                                                                               // login/create
             response = this.loadAccount(username, password, action); // acoount reques
             System.out.println("if statement");
         } else { // the POST request is a create recipe request
-            insertOneRecipe(recipeCollection, recipeTitle, ingredients, instructions, creationTime);
+            insertOneRecipe(recipeCollection, recipeTitle, ingredients, instructions, creationTime, mealType);
             response = "Posted recipe {" + recipeTitle + "}";
         }
         System.out.println(response);
@@ -114,7 +107,6 @@ public class RequestHandler implements HttpHandler {
         updateOneRecipe(recipeCollection, recipeTitle, ingredients, instructions);
 
         String response = new String("Updated recipe {" + recipeTitle + ", " + ingredients + ", " + instructions + "}");
-        // System.out.println(response);
         scanner.close();
 
         return response;
@@ -132,21 +124,24 @@ public class RequestHandler implements HttpHandler {
     }
 
     private static void insertOneRecipe(MongoCollection<Document> recipeCollection, String recipeTitle,
-            String ingredients, String instructions, String creationTime) {
-        recipeCollection.insertOne(generateNewRecipe(recipeTitle, ingredients, instructions, creationTime));
+            String ingredients, String instructions, String creationTime, String mealType) {
+        recipeCollection.insertOne(generateNewRecipe(recipeTitle, ingredients, instructions, creationTime, mealType));
         System.out.println(recipeTitle + " inserted.");
     }
 
-    private static Document generateNewRecipe(String recipeTitle, String ingredients, String instructions, String creationTime) {
+    private static Document generateNewRecipe(String recipeTitle, String ingredients, String instructions,
+            String creationTime, String mealType) {
 
         return new Document("Title", recipeTitle).append("Ingredients", ingredients)
-                .append("Instructions", instructions).append("creationTime", creationTime);
+                .append("Instructions", instructions).append("creationTime", creationTime)
+                .append("mealType", mealType);
     }
 
     private static void updateOneRecipe(MongoCollection<Document> recipeCollection, String recipeTitle,
             String ingredients, String instructions) {
         JsonWriterSettings prettyPrint = JsonWriterSettings.builder().indent(true).build();
         Bson filter = eq("Title", recipeTitle);
+        System.out.println(recipeTitle);
         Bson updateOperation1 = set("Ingredients", ingredients);
         Bson updateOperation2 = set("Instructions", instructions);
         UpdateResult updateResult1 = recipeCollection.updateOne(filter, updateOperation1);
@@ -178,14 +173,13 @@ public class RequestHandler implements HttpHandler {
     private static String readAllRecipe(MongoCollection<Document> recipeCollection) {
         String recipe_details = "";
         int cnt = 0;
-        // TODO why is line 164-165 here?
         List<Document> recipeList = recipeCollection.find().into(new ArrayList<>());
-        // System.out.println("length of list" + studentList.size());
 
         for (Document recipe : recipeList) {
             recipe_details += recipe.get("Title") + ";" + recipe.get("Ingredients") + ";"
-                    + recipe.get("Instructions")
-                    + ":";
+                    + recipe.get("Instructions") + ";" + recipe.get("creationTime") + ";"
+                    + recipe.get("mealType")
+                    + "@";
             cnt++;
             if (cnt == 16) {
                 break;
@@ -247,7 +241,7 @@ public class RequestHandler implements HttpHandler {
         return false;
     }
 
-    public MongoDatabase getDatabase(){
+    public MongoDatabase getDatabase() {
         return this.userDB;
     }
 

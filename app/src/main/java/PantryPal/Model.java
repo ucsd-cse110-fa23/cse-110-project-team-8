@@ -8,17 +8,15 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URI;
 
-import java.io.*;
-import java.net.*;
-import java.util.*;
-
 public class Model {
     public static final int timeoutInMillis = 100000;
 
     public String performRequest(String method, String username, String password, String recipeTitle,
-            String ingredients, String instructions, String creationTime, String action) { // action can only be either "createAccount" or
-                                                                      // "Login"
-        // Implement your HTTP request logic here and return the response
+            String ingredients, String instructions, String creationTime, String mealType, String action) { // action
+                                                                                                            // can only
+                                                                                                            // be either
+                                                                                                            // "createAccount"
+                                                                                                            // or
 
         try {
             String urlString = "http://localhost:8100/" + username;
@@ -38,12 +36,11 @@ public class Model {
             conn.setConnectTimeout(timeoutInMillis);
             conn.setReadTimeout(timeoutInMillis);
 
-            // System.out.println("actual method"+ conn.getRequestMethod());
-
             if ((method.equals("POST") || method.equals("PUT"))) {
                 OutputStreamWriter out = new OutputStreamWriter(conn.getOutputStream());
-                out.write(username + ";" + password + ";" + recipeTitle + ";" + ingredients + ";" + instructions + ";" + creationTime
-                    + ";" + action);
+                out.write(username + ";" + password + ";" + recipeTitle + ";" + ingredients + ";" + instructions + ";"
+                        + creationTime
+                        + ";" + mealType + ";" + action);
                 out.flush();
                 out.close();
             } else if (method.equals("DELETE")) {
