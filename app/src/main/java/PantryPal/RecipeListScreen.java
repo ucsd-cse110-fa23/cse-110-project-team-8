@@ -18,6 +18,7 @@ public class RecipeListScreen extends BorderPane {
     public RecipeListFooter footer;
     private RecipeListBody recipeList;
     private RecipeList recipeListArray;
+    private RecipeList recipeListArrayCopy;
 
     private Button addButton;
     private Button logout;
@@ -135,6 +136,11 @@ public class RecipeListScreen extends BorderPane {
         });
 
         filterButton.setOnAction(e -> {
+            recipeListArrayCopy = new RecipeList();
+            for (int i = 0; i<this.recipeListArray.size(); i++){
+                recipeListArrayCopy.add((this.recipeListArray.get(i)));
+            }
+            System.out.println("filter button pressed");
             switch ((String) filterOptions.getValue()) {
                 case "Breakfast":
                     recipeListArray.filterMealType("breakfast");
@@ -168,6 +174,10 @@ public class RecipeListScreen extends BorderPane {
                         e1.printStackTrace();
                     }
                     break;
+            }
+            recipeListArray = new RecipeList();
+            for (int i = 0; i<this.recipeListArrayCopy.size(); i++){
+                recipeListArray.add((this.recipeListArrayCopy.get(i)));
             }
         });
         

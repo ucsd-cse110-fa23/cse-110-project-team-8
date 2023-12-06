@@ -16,7 +16,7 @@ public class Recipe {
         this.titleString = title;
         this.ingredient = ingredient;
         this.instructions = instructions;
-        this.mealType =mealType;
+        this.mealType = mealType;
         creationTime = " ";
 
     }

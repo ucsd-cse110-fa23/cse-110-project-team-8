@@ -62,7 +62,7 @@ public class RecipeDescriptionScreen {
 
         // Change this to TRUE when you want to create images
         // Change this to FALSE when you dont want to create images
-        dishImage = true;
+        dishImage = false;
 
         this.newIngre = ingredients;
         this.newInstruct = instructions;
@@ -265,7 +265,7 @@ public class RecipeDescriptionScreen {
             this.title = reprocessedTitle;
             String reprocessedInstructions = UserInputScreen.getInstructions(recipeRegenerated);
 
-            titleText.setText(reprocessedTitle);
+            titleText.setText(reprocessedTitle + " - " + MealType);
             instructionsArea.setText(reprocessedInstructions);
             instructionsOG = reprocessedInstructions;
 
@@ -330,11 +330,10 @@ public class RecipeDescriptionScreen {
 
             save.setOnAction(e -> {
                 //TODO
-                Recipe recipeOB = new Recipe(this.title + " - " + MealType, ingredients, instructions, MealType);
+                Recipe recipeOB =  new Recipe(this.title + " - " + MealType, ingredients, instructions, MealType);
                 
                 //recipeOB.setMealType(MealType);
                 //
-                System.out.println(recipeOB.getMealType());
                 recipe = new RecipeTitleButton(recipeOB );
                 recipe.getRecipe().setTitle(this.title + " - " + MealType);
                 recipe.getRecipe().setIngredients(ingredientsArea.getText());

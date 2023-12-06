@@ -32,7 +32,7 @@ public class RecipeListBody extends VBox {
         RecipeTitleButton recipe1 = new RecipeTitleButton(recipe);
         recipe1.getRecipe().setTitle(recipe.getTitle());
         recipe1.getRecipe().setIngredients(recipe.getIngredients());
-        recipe1.getRecipe().setInstructions(recipe.getInstructions());
+        recipe1.getRecipe().setInstructions(recipe.getInstructions());  
         recipe1.setDescription(mainScene);
 
         try {
@@ -50,7 +50,7 @@ public class RecipeListBody extends VBox {
                 recipe.getIngredients(),
                 recipe.getInstructions(),
                 primaryStage, mainScene,
-                this, controller, null, null);
+                this, controller, recipe.getMealType(), null);
     }
 
     //reload all recipes for sorting
@@ -69,7 +69,7 @@ public class RecipeListBody extends VBox {
                 recipe.getIngredients(),
                 recipe.getInstructions(),
                 primaryStage, mainScene,
-                this, controller, null, null);
+                this, controller, recipe.getMealType(), null);
         }
     }
 

@@ -17,18 +17,12 @@ import com.opencsv.exceptions.CsvValidationException;
 public class RecipeList {
     private int numRecipe;
     private ArrayList<Recipe> list;
-    ArrayList<Recipe> breakfastList;
-    ArrayList<Recipe> lunchList;
-    ArrayList<Recipe> dinnerList; 
 
     private int currentIndex;
 
     public RecipeList() {
         this.numRecipe = 0;
         list = new ArrayList<Recipe>();
-        breakfastList = new ArrayList<Recipe>();
-        lunchList = new ArrayList<Recipe>();
-        dinnerList = new ArrayList<Recipe>();
     }
 
     public void delete(Recipe recipe) {
@@ -79,7 +73,9 @@ public class RecipeList {
             // Start adding recipes from the end of the array to the beginning
             for (int i = recipes.length - 1; i >= 0; i--) {
                 String[] data = recipes[i].split(";");
-                System.out.println("data: " + data[0]);
+                System.out.println("DATA0: " + data[0]);
+                System.out.println("DATA0: " + data[1]);
+                System.out.println("DATA0: " + data[2]);
                 Recipe newRecipe = new Recipe(data[0], data[1], data[2] ,null);
                 list.add(newRecipe);
                 recipeList.load(newRecipe, controller);
@@ -97,7 +93,7 @@ public class RecipeList {
             // Read the CSV file and process each row
             while (reader.peek() != null) {
                 String[] row = reader.readNext();
-                Recipe recipe = new Recipe(row[0], row[1], row[2], null);
+                Recipe recipe = new Recipe(row[0], row[1], row[2], row[4]);
                 list.add(recipe);
 
                 recipeList.load(recipe, controller);
@@ -143,7 +139,7 @@ public class RecipeList {
             // Read the CSV file and process each row
             while (reader.peek() != null) {
                 String[] row = reader.readNext();
-                Recipe recipe = new Recipe(row[0], row[1], row[2], null);
+                Recipe recipe = new Recipe(row[0], row[1], row[2], row[4]);
 
                 list.add(recipe);
             }
@@ -236,61 +232,49 @@ public class RecipeList {
     }
 
     public void filterMealType(String mealType) {
-        final   ArrayList<Recipe> untouchedList = this.list;
-        
+        ArrayList<Recipe> breakfastList;
+        ArrayList<Recipe> lunchList;
+        ArrayList<Recipe> dinnerList; 
+        breakfastList = new ArrayList<Recipe>();
+        lunchList = new ArrayList<Recipe>();
+        dinnerList = new ArrayList<Recipe>();
 
-        ArrayList<Recipe> newList = new ArrayList<>();
-        // if (mealType.equals("All")){
-        //     this.list =  untouchedList;
-        // }
-        for (Recipe recipe: this.list){
-            if(recipe.getMealType().toLowerCase().contains("breakfast")){
-                this.breakfastList.add(recipe);
+        for (int i = 0; i<this.list.size(); i++){
+            if((this.list.get(i)).getMealType().toLowerCase().contains("breakfast")){
+                breakfastList.add((this.list.get(i)));
             }
-            if(recipe.getMealType().toLowerCase().contains("lunch")){
-                this.lunchList.add(recipe);
+            if((this.list.get(i)).getMealType().toLowerCase().contains("lunch")){
+                lunchList.add((this.list.get(i)));
             }
-            if(recipe.getMealType().toLowerCase().contains("dinner")){
-                this.dinnerList.add(recipe);
+            if((this.list.get(i)).getMealType().toLowerCase().contains("dinner")){
+                dinnerList.add((this.list.get(i)));
             }
         }
-        if(mealType.equals("all")){
-            for (Recipe breakfast: breakfastList){
-                newList.add(breakfast);
-            }
-            for (Recipe lunch: lunchList){
-                newList.add(lunch);
-            }
-            for (Recipe dinner: dinnerList){
-                newList.add(dinner);
-            }
-        }
+        
         if (mealType.equals("breakfast")){
-            newList = breakfastList;
+            this.list = breakfastList;
         }
         if (mealType.equals("lunch")){
-            newList = lunchList;
+            this.list = lunchList;
         }
         if (mealType.equals("dinner")){
-            newList = dinnerList;
+            this.list = dinnerList;
         }
-
-        this.list = newList;
     }
 
     public ArrayList<Recipe> getList(){
         return this.list;
     }
 
-    public ArrayList<Recipe> getBreakfastList(){
-        return this.breakfastList;
-    }
+    // public ArrayList<Recipe> getBreakfastList(){
+    //     return this.breakfastList;
+    // }
 
-    public ArrayList<Recipe> getLunchList(){
-        return this.lunchList;
-    }
-    public ArrayList<Recipe> getDinnerList(){
-        return this.dinnerList;
-    }
+    // public ArrayList<Recipe> getLunchList(){
+    //     return this.lunchList;
+    // }
+    // public ArrayList<Recipe> getDinnerList(){
+    //     return this.dinnerList;
+    // }
 
 }

@@ -19,10 +19,12 @@ import org.json.JSONObject;
 public class DallE {
 
   private static final String API_ENDPOINT = "https://api.openai.com/v1/images/generations";
-  private static final String API_KEY = "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";
+  private static final String API_KEY = "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";
   // Jonathan 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
   // Henry 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
   // Gustavo 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
+  // Heiko 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
+
   private static final String MODEL = "dall-e-2";
 
   static public String chefDallE(String userInsructions, String recipeTitle)

@@ -30,6 +30,8 @@ public class Controller {
             // while ((line = reader.readNext()) != null) {
             //     lastline = line;
             // }
+
+            //TODO line[3] or line[4]
             Recipe recipe = new Recipe(line[0], line[1], line[2], line[4]);
             String title = line[0];
             String ingredients = line[1];
