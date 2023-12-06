@@ -42,4 +42,4 @@ You can click on any recipe to update it at any time. Some features you can util
 You are allowed to log out of your account by clicking on the "Logout" button whenever you please. You will be prompted back to the login window.
 
 ***Link To Github Project***
-[https://github.com/ucsd-cse110-fa23/cse-110-project-team-8](url)
+[https://github.com/ucsd-cse110-fa23/cse-110-project-team-8.git](url)
