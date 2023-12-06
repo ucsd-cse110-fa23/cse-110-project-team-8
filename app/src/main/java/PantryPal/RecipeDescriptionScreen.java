@@ -62,7 +62,7 @@ public class RecipeDescriptionScreen {
 
         // Change this to TRUE when you want to create images
         // Change this to FALSE when you dont want to create images
-        dishImage = false;
+        dishImage = true;
 
         this.newIngre = ingredients;
         this.newInstruct = instructions;
@@ -213,7 +213,7 @@ public class RecipeDescriptionScreen {
                 if (shareclick == true) {
                     try {
 
-                        dropBox.updateShare(title, newIngre, newInstruct);
+                        dropBox.updateShare(this.title, newIngre, newInstruct);
                     } catch (DbxException | IOException e1) {
                         e1.printStackTrace();
                     }
@@ -400,7 +400,7 @@ public class RecipeDescriptionScreen {
             recipeList.getArray().toCSV("RecipeList.csv");
             if (shareclick == true) {
                 try {
-                    dropBox.deleteFile((title));
+                    dropBox.deleteFile((this.title));
                 } catch (DbxException e1) {
                     e1.printStackTrace();
                 }
@@ -470,7 +470,7 @@ public class RecipeDescriptionScreen {
             if (shareclick == false) {
                 this.url = " ";
                 try {
-                    url = dropBox.DropBox(title, newIngre, newInstruct);
+                    url = dropBox.DropBox(this.title, newIngre, newInstruct);
                 } catch (DbxException | IOException e1) {
                     e1.printStackTrace();
                 }

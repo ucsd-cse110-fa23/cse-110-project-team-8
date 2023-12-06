@@ -25,15 +25,16 @@ public class ShareFunctionalityTests {
     final String INGREDIENTS = "some_ingredients";
     final String INSTRUCTION = "some_instructions";
     final String IMAGE_PATH = "testImage.jpg";
+
     @BeforeEach
     void setUp() {
         dropBox = new DropBox();
     }
-       
+
     @AfterEach
-    void closeDown() throws ListFolderErrorException, DbxException{
-       dropBox.delete(TITLE);
-       String fileName = TITLE + ".pdf";
+    void closeDown() throws ListFolderErrorException, DbxException {
+        dropBox.delete(TITLE);
+        String fileName = TITLE + ".pdf";
 
         // Get the current working directory
         Path currentDirectory = Paths.get(System.getProperty("user.dir"));
@@ -47,12 +48,13 @@ public class ShareFunctionalityTests {
         } catch (IOException e) {
 
         }
-        
+
     }
 
+    // BDD1
     @Test
     void testDropBoxURL() throws IOException, DbxException {
-        String URL = dropBox.DropBoxTest(TITLE, INGREDIENTS, INSTRUCTION,IMAGE_PATH);
+        String URL = dropBox.DropBoxTest(TITLE, INGREDIENTS, INSTRUCTION, IMAGE_PATH);
         assertNotEquals(" ", URL);
     }
 }

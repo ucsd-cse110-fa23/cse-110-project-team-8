@@ -44,6 +44,7 @@ public class AppStatusTests {
         assertEquals(response, "Fail to connect MongoDB");
     }
 
+    // US6 BDD2
     @Test
     void localServerFail() {
         server.setPort(0);
