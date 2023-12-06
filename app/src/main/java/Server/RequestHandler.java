@@ -150,6 +150,7 @@ public class RequestHandler implements HttpHandler {
             String ingredients, String instructions) {
         JsonWriterSettings prettyPrint = JsonWriterSettings.builder().indent(true).build();
         Bson filter = eq("Title", recipeTitle);
+        System.out.println(recipeTitle);
         Bson updateOperation1 = set("Ingredients", ingredients);
         Bson updateOperation2 = set("Instructions", instructions);
         UpdateResult updateResult1 = recipeCollection.updateOne(filter, updateOperation1);

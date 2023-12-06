@@ -31,7 +31,7 @@ public class DropBox {
 
 
   DbxClientV2 client;
-  private static final String ACCESS_TOKEN = "sl.BrKabeYmB0qpiFBXnBVl3JZ0MHtY9immPA03NSQHv7kh9OQlAfmPgk0FmRl-utf_aQp_XJXTLB4CzhO10hmDQEftHmK-dnFZJ9rNvuD2gJAR-BgGdTJ4n4crtXC_hnVRwKtehr-8D_AcbFKjQrQGAiw";
+  private static final String ACCESS_TOKEN = "sl.BrOVfewhzewcRcJ8d1SpiP_7i3CH8KuDwQlxuGY6K9EENIm7qWfwAWNlLlbwybGyKTsODIZpIQZKhoP2kG0aONiDkueNF8RKDLzMitmvVWCRxKXfBq3mRgFJPgXWAAY4c-2ZCPD8X_Vf83qMSY_h";
 
 
   public String DropBox(String title, String ingredients, String instructions)
